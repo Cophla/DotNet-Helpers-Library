@@ -42,6 +42,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,6 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GDb\DbManager.cs" />
+    <Compile Include="GDb\Fld.cs" />
+    <Compile Include="GDb\GTbl\GCommon\GTblAbstract.cs" />
+    <Compile Include="GDb\GTbl\GCommon\GTblGeneric.cs" />
+    <Compile Include="GDb\GTbl\GCommon\IGTbl.cs" />
+    <Compile Include="GDb\GTbl\GPK\IPKTbl.cs" />
+    <Compile Include="GDb\GTbl\TblFld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SData.cs" />
   </ItemGroup>
