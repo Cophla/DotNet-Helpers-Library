@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Code_Helpers
 {
-    public class Class1
-    {
-    }
+	public static class SCode
+	{
+	}
 }
