@@ -1,5 +1,5 @@
-﻿using System.Configuration;
-using Code_Helpers;
+﻿using Code_Helpers;
+using System.Configuration;
 
 namespace Guide_Helpers.CstSetting
 {
@@ -9,6 +9,8 @@ namespace Guide_Helpers.CstSetting
 		/// </summary>
 		public static class AppSeting
 		{
+			#region Public Properties
+
 			/// <summary>
 			/// </summary>
 			public static int AppExampleValue {
@@ -18,6 +20,8 @@ namespace Guide_Helpers.CstSetting
 					);
 				}
 			}
+
+			#endregion Public Properties
 		}
 	}
 }

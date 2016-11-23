@@ -16,7 +16,11 @@ namespace Sql_Server_Helpers
 	/// </summary>
 	public static class AdoProvider
 	{
+		#region Public Delegates
+
 		public delegate bool ApplySqlTransActionMethod(SqlTransaction transaction, out string errorMsg);
+
+		#endregion Public Delegates
 
 		#region Public Methods
 

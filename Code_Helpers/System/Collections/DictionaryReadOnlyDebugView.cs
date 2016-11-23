@@ -12,6 +12,16 @@ namespace Code_Helpers.System.Collections
 	/// </typeparam>
 	internal sealed class DictionaryReadOnlyDebugView<TKey, TValue>
 	{
+		#region Private Fields
+
+		/// <summary>
+		/// </summary>
+		private IDictionary<TKey, TValue> dict;
+
+		#endregion Private Fields
+
+		#region Public Constructors
+
 		/// <summary>
 		/// </summary>
 		/// <param name="dictionary">
@@ -27,6 +37,10 @@ namespace Code_Helpers.System.Collections
 			dict = dictionary;
 		}
 
+		#endregion Public Constructors
+
+		#region Public Properties
+
 		/// <summary>
 		/// </summary>
 		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
@@ -39,8 +53,6 @@ namespace Code_Helpers.System.Collections
 			}
 		}
 
-		/// <summary>
-		/// </summary>
-		private IDictionary<TKey, TValue> dict;
+		#endregion Public Properties
 	}
 }
