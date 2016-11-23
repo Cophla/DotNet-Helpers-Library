@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC_Helpers", "MVC_Helpers\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guide_Helpers", "Guide_Helpers\Guide_Helpers.csproj", "{95B073CA-7EF1-44FE-9D0C-AC4644FD01EC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data_Helpers", "Data_Helpers\Data_Helpers.csproj", "{CBC2E068-3422-4B94-92C0-49684E687970}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{95B073CA-7EF1-44FE-9D0C-AC4644FD01EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95B073CA-7EF1-44FE-9D0C-AC4644FD01EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95B073CA-7EF1-44FE-9D0C-AC4644FD01EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBC2E068-3422-4B94-92C0-49684E687970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBC2E068-3422-4B94-92C0-49684E687970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBC2E068-3422-4B94-92C0-49684E687970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBC2E068-3422-4B94-92C0-49684E687970}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

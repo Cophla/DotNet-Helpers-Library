@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
 using System.Web.Caching;
 
@@ -9,8 +6,14 @@ namespace Code_Helpers
 {
 	public static class InMemoryCache
 	{
+		#region Private Fields
+
 		private static readonly int PROFILE_DURATION_IN_MINUTES = 60;
 		private static Cache casheList = HttpRuntime.Cache;
+
+		#endregion Private Fields
+
+		#region Private Methods
 
 		private static TValue Get<TValue>(string cacheKey, int durationInMinutes, Func<TValue> getItemCallback) where TValue : class
 		{
@@ -22,5 +25,7 @@ namespace Code_Helpers
 			}
 			return item;
 		}
+
+		#endregion Private Methods
 	}
 }
