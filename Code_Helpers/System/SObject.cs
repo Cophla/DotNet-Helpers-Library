@@ -81,5 +81,27 @@ namespace Code_Helpers.System
 		{
 			return SCode.Equals<T>(ConvertAs<T>(obj), ConvertAs<T>(otherObj));
 		}
+
+		public static T DbValueAs<T>(this object obj, T defaultValue)
+		{
+			T result = defaultValue;
+			if (IsNotNullOrDBNull(obj))
+			{
+				if (result is string)
+				{
+					result = CastAs<T>(ConvertAs<string>(obj).Trim());
+				}
+				else
+				{
+					result = ConvertAs<T>(obj);
+				}
+			}
+			return result;
+		}
+
+		public static T DbValueAs<T>(this object obj)
+		{
+			return DbValueAs(obj, default(T));
+		}
 	}
 }

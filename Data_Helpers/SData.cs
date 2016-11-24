@@ -1,4 +1,5 @@
 ﻿using Code_Helpers;
+using Code_Helpers.System;
 using System;
 using System.ComponentModel;
 using System.Data;
@@ -39,27 +40,9 @@ namespace Data_Helpers
 			return HasRows<DataSet>(dataSet);
 		}
 
-		public static T ValueAs<T>(object obj)
-		{
-			return ValueAs(obj, default(T));
-		}
+		
 
-		public static T ValueAs<T>(object obj, T defaultValue)
-		{
-			T result = defaultValue;
-			if (SCode.IsNotNullOrDBNull(obj))
-			{
-				if (result is string)
-				{
-					result = SCode.CastAs<T>(SCode.ConvertAs<string>(obj).Trim());
-				}
-				else
-				{
-					result = SCode.ConvertAs<T>(obj);
-				}
-			}
-			return result;
-		}
+		
 
 		#endregion Public Methods
 
@@ -69,7 +52,7 @@ namespace Data_Helpers
 							where T : MarshalByValueComponent, ISupportInitializeNotification, ISupportInitialize
 		{
 			DataRow dataRow = null;
-			if (SCode.IsNotNull(data))
+			if (SObject.IsNotNull(data))
 			{
 				if (
 					SCode.IsTypeInList(
@@ -100,7 +83,7 @@ namespace Data_Helpers
 					else if (data is DataView)
 					{
 						DataView dataView = data as DataView;
-						if (SCode.IsNotNull(dataView.Table))
+						if (SObject.IsNotNull(dataView.Table))
 						{
 							if (dataView.Table.Rows.Count > 0)
 							{
@@ -120,7 +103,7 @@ namespace Data_Helpers
 		private static bool HasRows<T>(T data)
 			where T : MarshalByValueComponent, ISupportInitializeNotification, ISupportInitialize
 		{
-			return SCode.IsNotNull(GetFirstRow(data));
+			return SObject.IsNotNull(GetFirstRow(data));
 		}
 
 		#endregion Private Methods
