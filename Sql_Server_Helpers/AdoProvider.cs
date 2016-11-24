@@ -18,60 +18,10 @@ namespace Sql_Server_Helpers
 	{
 		#region Public Delegates
 
-		public delegate bool ApplySqlTransActionMethod(SqlTransaction transaction, out string errorMsg);
 
 		#endregion Public Delegates
 
 		#region Public Methods
-
-		#region SqlParameter Methods
-
-		/// <summary>
-		/// </summary>
-		/// <param name="parameterName">
-		/// </param>
-		/// <param name="value">
-		/// </param>
-		/// <returns>
-		/// </returns>
-		public static SqlParameter GenerateSqlInputParm(string parameterName, object value)
-		{
-			return new SqlParameter(parameterName, value);
-		}
-
-		/// <summary>
-		/// </summary>
-		/// <param name="parameterName">
-		/// </param>
-		/// <param name="sqlDbType">
-		/// </param>
-		/// <returns>
-		/// </returns>
-		public static SqlParameter GenerateSqlOutputParm(string parameterName, SqlDbType sqlDbType)
-		{
-			SqlParameter newParm = new SqlParameter(parameterName, sqlDbType);
-			newParm.Direction = ParameterDirection.Output;
-			return newParm;
-		}
-
-		/// <summary>
-		/// </summary>
-		/// <param name="parameterName">
-		/// </param>
-		/// <param name="sqlDbType">
-		/// </param>
-		/// <param name="size">
-		/// </param>
-		/// <returns>
-		/// </returns>
-		public static SqlParameter GenerateSqlOutputParm(string parameterName, SqlDbType sqlDbType, int size)
-		{
-			SqlParameter newParm = new SqlParameter(parameterName, sqlDbType, size);
-			newParm.Direction = ParameterDirection.Output;
-			return newParm;
-		}
-
-		#endregion SqlParameter Methods
 
 		public static bool ApplyTransaction(SqlTransaction transaction, out string errorMsg)
 		{

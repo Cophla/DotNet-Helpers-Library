@@ -7,7 +7,7 @@ namespace Code_Helpers.System.Drawing
 	{
 		#region Public Methods
 
-		public static Image CreateThumb(Image originalImage, int size)
+		public static Image CreateThumb(this Image originalImage, int size)
 		{
 			Image thumbImage = null;
 			using (Image mainImg = (Image)originalImage.Clone())
@@ -40,7 +40,7 @@ namespace Code_Helpers.System.Drawing
 			return thumbImage;
 		}
 
-		public static Image CreateThumbThenDispose(Image originalImage, int size)
+		public static Image CreateThumbThenDispose(this Image originalImage, int size)
 		{
 			Image thumbImage = null;
 			using (originalImage)

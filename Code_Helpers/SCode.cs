@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Code_Helpers.System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,46 +9,11 @@ namespace Code_Helpers
 	{
 		#region Public Methods
 
-		public static T CastAs<T>(object obj)
-		{
-			if (IsDBNull(obj))
-			{ obj = null; return (T)obj; }
-			return (T)obj;
-		}
+		
 
-		public static T ConvertAs<T>(object obj)
-		{
-			return ConvertAs(obj, default(T));
-		}
+		
 
-		public static T ConvertAs<T>(object obj, T defaultValue)
-		{
-			T result = defaultValue;
-
-			if (IsNotNullOrDBNull(obj))
-			{
-				Type normalType = typeof(T);
-				Type nullableType = Nullable.GetUnderlyingType(normalType);
-
-				result = CastAs<T>(
-					(IsNotNull(nullableType)) ?
-					Convert.ChangeType(obj, nullableType) :
-					Convert.ChangeType(obj, normalType)
-				);
-			}
-
-			return result;
-		}
-
-		public static bool Equals(string text, string otherText)
-		{
-			return Equals<string>(text, otherText);
-		}
-
-		public static bool Equals<T>(object obj, object otherObj)
-		{
-			return Equals(ConvertAs<T>(obj), ConvertAs<T>(otherObj));
-		}
+		
 
 		public static bool Equals<T>(T value, T otherValue)
 		{
@@ -74,13 +40,10 @@ namespace Code_Helpers
 
 		public static bool IsBetween<T>(T value, object startValue, object endValue)
 		{
-			return IsBetween(value, ConvertAs<T>(startValue), ConvertAs<T>(endValue));
+			return IsBetween(value, SObject.ConvertAs<T>(startValue), SObject.ConvertAs<T>(endValue));
 		}
 
-		public static bool IsDBNull(object obj)
-		{
-			return Convert.IsDBNull(obj);
-		}
+		
 
 		public static bool IsNotBetween<T>(T value, T startValue, T endValue)
 		{
@@ -92,30 +55,7 @@ namespace Code_Helpers
 			return !IsBetween(value, startValue, endValue);
 		}
 
-		public static bool IsNotDBNull(object obj)
-		{
-			return !IsDBNull(obj);
-		}
-
-		public static bool IsNotNull(object obj)
-		{
-			return obj != null;
-		}
-
-		public static bool IsNotNullOrDBNull(object obj)
-		{
-			return !IsNullOrDBNull(obj);
-		}
-
-		public static bool IsNull(object obj)
-		{
-			return obj == null;
-		}
-
-		public static bool IsNullOrDBNull(object obj)
-		{
-			return IsNull(obj) || IsDBNull(obj);
-		}
+		
 
 		public static bool IsTypeInList<T>(T value, params Type[] checkList)
 		{
@@ -124,15 +64,15 @@ namespace Code_Helpers
 
 		public static bool IsTypeInList<T>(T value, IEnumerable<Type> checkList)
 		{
-			if (IsNull(checkList))
+			if (SObject.IsNull(checkList))
 				return false;
-			if (IsNull(value))
+			if (SObject.IsNull(value))
 				return IsTypeInList<T>(checkList);
 
 			bool result = false;
 			Type valueType = value.GetType();
 			result = (
-				IsNotNull(
+				SObject.IsNotNull(
 					checkList.First((item) => valueType.IsAssignableFrom(item))
 				)
 			);
@@ -142,11 +82,11 @@ namespace Code_Helpers
 		public static bool IsTypeInList<T>(IEnumerable<Type> checkList)
 		{
 			bool result = false;
-			if (IsNotNull(checkList))
+			if (SObject.IsNotNull(checkList))
 			{
 				Type valueType = typeof(T);
 				result = (
-					IsNotNull(
+					SObject.IsNotNull(
 						checkList.First((item) => valueType.IsAssignableFrom(item))
 					)
 				);
@@ -162,11 +102,11 @@ namespace Code_Helpers
 		public static bool IsTypeInListParallel<T>(T value, IEnumerable<Type> checkList)
 		{
 			bool result = false;
-			if (IsNotNull(value) && IsNotNull(checkList))
+			if (SObject.IsNotNull(value) && SObject.IsNotNull(checkList))
 			{
 				Type valueType = value.GetType();
 				result = (
-					IsNotNull(
+					SObject.IsNotNull(
 						checkList.AsParallel().First((item) => valueType.IsAssignableFrom(item))
 					)
 				);
@@ -202,7 +142,7 @@ namespace Code_Helpers
 		public static bool IsValueInAllEqual<T>(T value, IEnumerable<T> checkList)
 		{
 			bool result = false;
-			if (IsNotNull(value) && IsNotNull(checkList))
+			if (SObject.IsNotNull(value) && SObject.IsNotNull(checkList))
 			{
 				if (value is string)
 				{
@@ -240,7 +180,7 @@ namespace Code_Helpers
 		public static bool IsValueInAllEqualParallel<T>(T value, IEnumerable<T> checkList)
 		{
 			bool result = false;
-			if (IsNotNull(value) && IsNotNull(checkList))
+			if (SObject.IsNotNull(value) && SObject.IsNotNull(checkList))
 			{
 				if (value is string)
 				{
@@ -270,7 +210,7 @@ namespace Code_Helpers
 		public static bool IsValueInList<T>(T value, IEnumerable<T> checkList)
 		{
 			bool result = false;
-			if (IsNotNull(value) && IsNotNull(checkList))
+			if (SObject.IsNotNull(value) && SObject.IsNotNull(checkList))
 			{
 				if (value is string)
 				{
@@ -304,7 +244,7 @@ namespace Code_Helpers
 		public static bool IsValueInListParallel<T>(T value, IEnumerable<T> checkList)
 		{
 			bool result = false;
-			if (IsNotNull(value) && IsNotNull(checkList))
+			if (SObject.IsNotNull(value) && SObject.IsNotNull(checkList))
 			{
 				if (value is string)
 				{
@@ -373,15 +313,7 @@ namespace Code_Helpers
 			return !IsValueInListParallel(value, checkList);
 		}
 
-		public static bool NotEquals(string text, string otherText)
-		{
-			return !Equals(text, otherText);
-		}
-
-		public static bool NotEquals<T>(object obj, object otherObj)
-		{
-			return !Equals<T>(obj, otherObj);
-		}
+		
 
 		public static bool NotEquals<T>(T value, T otherValue)
 		{

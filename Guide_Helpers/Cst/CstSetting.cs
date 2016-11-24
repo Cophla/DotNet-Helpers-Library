@@ -1,5 +1,4 @@
-﻿using Code_Helpers;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace Guide_Helpers.CstSetting
 {
@@ -15,7 +14,7 @@ namespace Guide_Helpers.CstSetting
 			/// </summary>
 			public static int AppExampleValue {
 				get {
-					return SCode.ConvertAs<int>(
+					return int.Parse(
 						ConfigurationManager.AppSettings[AppExampleValue]
 					);
 				}
