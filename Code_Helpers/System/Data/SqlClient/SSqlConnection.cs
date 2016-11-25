@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data_Helpers.GDb.GTbl.GCommon;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -77,13 +78,18 @@ namespace Code_Helpers.System.Data.SqlClient
 			return result;
 		}
 
-		private static SqlDataReader Get(this SqlConnection connection, string sqlNameOrText, CommandType commandType, CommandBehavior commandBehavior, IEnumerable<SqlParameter> parmList, out string errorMsg)
+		public static SqlDataReader Get(this SqlConnection connection, string sqlText, CommandType commandType, out string errorMsg)
+		{
+			IEnumerable<SqlParameter> parmList = null;
+			return Get(connection, sqlText, commandType, CommandBehavior.Default, parmList, out errorMsg);
+		}
+		public static SqlDataReader Get(this SqlConnection connection, string sqlText, CommandType commandType, CommandBehavior commandBehavior, IEnumerable<SqlParameter> parmList, out string errorMsg)
 		{
 			errorMsg = string.Empty;
 			SqlDataReader dataReader = null;
 			if (IsOpened(connection, out errorMsg))
 			{
-				using (SqlCommand command = new SqlCommand(sqlNameOrText, connection))
+				using (SqlCommand command = new SqlCommand(sqlText, connection))
 				{
 					try
 					{
@@ -108,19 +114,17 @@ namespace Code_Helpers.System.Data.SqlClient
 			return dataReader;
 		}
 
-		
-
-		public static T ExecScalar<T>(this SqlConnection connection, SqlTransaction transaction, string storedPrcedure, IEnumerable<SqlParameter> parmList, T defaultValue, out string errorMsg)
+		public static T ExecScalar<T>(this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText, IEnumerable<SqlParameter> parmList, T defaultValue, out string errorMsg)
 		{
 			errorMsg = string.Empty;
 			T result = defaultValue;
 			if (IsOpened(connection, out errorMsg))
 			{
-				using (SqlCommand command = new SqlCommand(storedPrcedure, connection))
+				using (SqlCommand command = new SqlCommand(sqlText, connection))
 				{
 					try
 					{
-						command.CommandType = CommandType.StoredProcedure;
+						command.CommandType = commandType;
 
 						if (transaction != null)
 						{
@@ -137,6 +141,20 @@ namespace Code_Helpers.System.Data.SqlClient
 						result = SObject.DbValueAs<T>(command.ExecuteScalar());
 					}
 					catch (Exception ex) { errorMsg = ex.ToString(); }
+				}
+			}
+			return result;
+		}
+
+		public static bool IsReady(SqlConnection connection)
+		{
+			bool result = false;
+			string errorMsg;
+			using (SqlDataReader dataReader = Get(connection, "SELECT TOP 1 1", CommandType.Text, out errorMsg))
+			{
+				if (dataReader != null)
+				{
+					result = true;
 				}
 			}
 			return result;

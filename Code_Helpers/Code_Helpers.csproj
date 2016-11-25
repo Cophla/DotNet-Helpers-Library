@@ -59,7 +59,10 @@
     <Compile Include="SSecurity.cs" />
     <Compile Include="System\Collections\DictionaryReadOnly.cs" />
     <Compile Include="System\Collections\DictionaryReadOnlyDebugView.cs" />
+    <Compile Include="System\Data\SDataRow.cs" />
     <Compile Include="System\Data\SDataSet.cs" />
+    <Compile Include="System\Data\SDataTable.cs" />
+    <Compile Include="System\Data\SDataView.cs" />
     <Compile Include="System\Data\SqlClient\SSqlConnection.cs" />
     <Compile Include="System\Data\SqlClient\SSqlDataReader.cs" />
     <Compile Include="System\Data\SqlClient\SSqlParameter.cs" />
@@ -73,6 +76,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data_Helpers\Data_Helpers.csproj">
+      <Project>{CBC2E068-3422-4B94-92C0-49684E687970}</Project>
+      <Name>Data_Helpers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Guide_Helpers\Guide_Helpers.csproj">
       <Project>{95B073CA-7EF1-44FE-9D0C-AC4644FD01EC}</Project>
       <Name>Guide_Helpers</Name>

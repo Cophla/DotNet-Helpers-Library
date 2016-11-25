@@ -1,54 +1,16 @@
-﻿using Code_Helpers;
-using Code_Helpers.System;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Data_Helpers
+namespace Code_Helpers.System.Data
 {
-	public static class SData
+	public static class SDataRow
 	{
-		#region Public Methods
-
-		public static DataRow GetFirstRow(DataSet dataSet)
-		{
-			return GetFirstRow<DataSet>(dataSet);
-		}
-
-		public static DataRow GetFirstRow(DataTable dataTable)
-		{
-			return GetFirstRow<DataTable>(dataTable);
-		}
-
-		public static DataRow GetFirstRow(DataView dataView)
-		{
-			return GetFirstRow<DataView>(dataView);
-		}
-
-		public static bool HasRows(DataView dataView)
-		{
-			return HasRows<DataView>(dataView);
-		}
-
-		public static bool HasRows(DataTable dataTable)
-		{
-			return HasRows<DataTable>(dataTable);
-		}
-
-		public static bool HasRows(DataSet dataSet)
-		{
-			return HasRows<DataSet>(dataSet);
-		}
-
-		
-
-		
-
-		#endregion Public Methods
-
-		#region Private Methods
-
-		private static DataRow GetFirstRow<T>(T data)
+		public static DataRow GetFirstRow<T>(T data)
 							where T : MarshalByValueComponent, ISupportInitializeNotification, ISupportInitialize
 		{
 			DataRow dataRow = null;
@@ -100,12 +62,10 @@ namespace Data_Helpers
 			return dataRow;
 		}
 
-		private static bool HasRows<T>(T data)
+		public static bool HasRows<T>(T data)
 			where T : MarshalByValueComponent, ISupportInitializeNotification, ISupportInitialize
 		{
 			return SObject.IsNotNull(GetFirstRow(data));
 		}
-
-		#endregion Private Methods
 	}
 }

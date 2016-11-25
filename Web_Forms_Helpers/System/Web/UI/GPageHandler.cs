@@ -1,4 +1,5 @@
-﻿using Sql_Server_Helpers;
+﻿using Code_Helpers.System.Data.SqlClient;
+using Sql_Server_Helpers;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
@@ -28,7 +29,7 @@ namespace Web_Forms_Helpers.System.Web.UI
 
 					if (connection != null)
 					{
-						if (!AdoProvider.IsConnectionReady(connection))
+						if (!SSqlConnection.IsReady(connection))
 						{
 							if (currentHandler != null)
 							{
@@ -71,7 +72,7 @@ namespace Web_Forms_Helpers.System.Web.UI
 
 					if (connection != null)
 					{
-						if (!AdoProvider.IsConnectionReady(connection))
+						if (!SSqlConnection.IsReady(connection))
 						{
 							if (currentHandler != null)
 							{
