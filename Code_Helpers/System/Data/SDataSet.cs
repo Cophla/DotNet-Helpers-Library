@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 
 namespace Code_Helpers.System.Data
 {
 	public static class SDataSet
 	{
-		public static bool HasRows(this DataSet dataSet)
-		{
-			return SDataRow.HasRows<DataSet>(dataSet);
-		}
+		#region Public Methods
 
 		public static DataRow GetFirstRow(this DataSet dataSet)
 		{
 			return SDataRow.GetFirstRow<DataSet>(dataSet);
 		}
+
+		public static bool HasRows(this DataSet dataSet)
+		{
+			return SDataRow.HasRows<DataSet>(dataSet);
+		}
+
+		#endregion Public Methods
 	}
 }

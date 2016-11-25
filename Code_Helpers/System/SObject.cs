@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Code_Helpers.System
 {
 	public static class SObject
 	{
+		#region Public Methods
+
 		public static T CastAs<T>(this object obj)
 		{
 			if (IsDBNull(obj))
@@ -40,6 +38,33 @@ namespace Code_Helpers.System
 			}
 
 			return result;
+		}
+
+		public static T DbValueAs<T>(this object obj, T defaultValue)
+		{
+			T result = defaultValue;
+			if (IsNotNullOrDBNull(obj))
+			{
+				if (result is string)
+				{
+					result = CastAs<T>(ConvertAs<string>(obj).Trim());
+				}
+				else
+				{
+					result = ConvertAs<T>(obj);
+				}
+			}
+			return result;
+		}
+
+		public static T DbValueAs<T>(this object obj)
+		{
+			return DbValueAs(obj, default(T));
+		}
+
+		public static bool Equals<T>(this object obj, object otherObj)
+		{
+			return SCode.Equals<T>(ConvertAs<T>(obj), ConvertAs<T>(otherObj));
 		}
 
 		public static bool IsDBNull(this object obj)
@@ -77,31 +102,6 @@ namespace Code_Helpers.System
 			return !Equals<T>(obj, otherObj);
 		}
 
-		public static bool Equals<T>(this object obj, object otherObj)
-		{
-			return SCode.Equals<T>(ConvertAs<T>(obj), ConvertAs<T>(otherObj));
-		}
-
-		public static T DbValueAs<T>(this object obj, T defaultValue)
-		{
-			T result = defaultValue;
-			if (IsNotNullOrDBNull(obj))
-			{
-				if (result is string)
-				{
-					result = CastAs<T>(ConvertAs<string>(obj).Trim());
-				}
-				else
-				{
-					result = ConvertAs<T>(obj);
-				}
-			}
-			return result;
-		}
-
-		public static T DbValueAs<T>(this object obj)
-		{
-			return DbValueAs(obj, default(T));
-		}
+		#endregion Public Methods
 	}
 }

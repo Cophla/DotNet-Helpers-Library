@@ -18,6 +18,11 @@ namespace Code_Helpers.System
 			);
 		}
 
+		public static bool Equals(this string text, string otherText)
+		{
+			return SCode.Equals(text, otherText);
+		}
+
 		public static bool IsNone(this string value)
 		{
 			if (SObject.IsNull(value))
@@ -60,11 +65,6 @@ namespace Code_Helpers.System
 		public static bool NotContainsInsensitive(this string text, string value)
 		{
 			return !text.ContainsInsensitive(value);
-		}
-
-		public static bool Equals(this string text, string otherText)
-		{
-			return SCode.Equals(text, otherText);
 		}
 
 		public static bool NotEquals(this string text, string otherText)

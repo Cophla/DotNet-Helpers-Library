@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Code_Helpers.System.Data
 {
 	public static class SDataRow
 	{
+		#region Public Methods
+
 		public static DataRow GetFirstRow<T>(T data)
 							where T : MarshalByValueComponent, ISupportInitializeNotification, ISupportInitialize
 		{
@@ -67,5 +65,7 @@ namespace Code_Helpers.System.Data
 		{
 			return SObject.IsNotNull(GetFirstRow(data));
 		}
+
+		#endregion Public Methods
 	}
 }

@@ -9,12 +9,6 @@ namespace Code_Helpers
 	{
 		#region Public Methods
 
-		
-
-		
-
-		
-
 		public static bool Equals<T>(T value, T otherValue)
 		{
 			if (value is string)
@@ -43,8 +37,6 @@ namespace Code_Helpers
 			return IsBetween(value, SObject.ConvertAs<T>(startValue), SObject.ConvertAs<T>(endValue));
 		}
 
-		
-
 		public static bool IsNotBetween<T>(T value, T startValue, T endValue)
 		{
 			return !IsBetween(value, startValue, endValue);
@@ -54,8 +46,6 @@ namespace Code_Helpers
 		{
 			return !IsBetween(value, startValue, endValue);
 		}
-
-		
 
 		public static bool IsTypeInList<T>(T value, params Type[] checkList)
 		{
@@ -312,8 +302,6 @@ namespace Code_Helpers
 		{
 			return !IsValueInListParallel(value, checkList);
 		}
-
-		
 
 		public static bool NotEquals<T>(T value, T otherValue)
 		{

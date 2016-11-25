@@ -30,7 +30,7 @@ namespace Code_Helpers.System.Data.SqlClient
 
 		#region Private Methods
 
-		private static T Get<T>(this SqlDataReader dataReader) 
+		private static T Get<T>(this SqlDataReader dataReader)
 			where T : MarshalByValueComponent, ISupportInitializeNotification, ISupportInitialize, new()
 		{
 			T data = null;

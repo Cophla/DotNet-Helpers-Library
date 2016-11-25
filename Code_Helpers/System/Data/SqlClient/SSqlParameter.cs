@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Code_Helpers.System.Data.SqlClient
 {
 	public static class SSqlParameter
 	{
+		#region Public Methods
+
 		public static SqlParameter Create(string parameterName, object value)
 		{
 			return new SqlParameter(parameterName, value);
@@ -28,5 +25,7 @@ namespace Code_Helpers.System.Data.SqlClient
 			newParm.Direction = ParameterDirection.Output;
 			return newParm;
 		}
+
+		#endregion Public Methods
 	}
 }

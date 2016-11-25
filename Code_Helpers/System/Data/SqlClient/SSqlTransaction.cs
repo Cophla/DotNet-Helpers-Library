@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Guide_Helpers.Cst;
+using System;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Guide_Helpers.Cst;
 
 namespace Code_Helpers.System.Data.SqlClient
 {
 	public static class SSqlTransaction
 	{
+		#region Public Delegates
+
 		public delegate bool ApplyMethod(SqlTransaction transaction, out string errorMsg);
+
+		#endregion Public Delegates
+
+		#region Public Methods
 
 		public static bool ApplyTransaction(this SqlTransaction transaction, out string errorMsg)
 		{
@@ -77,5 +79,7 @@ namespace Code_Helpers.System.Data.SqlClient
 
 			return result;
 		}
+
+		#endregion Public Methods
 	}
 }
