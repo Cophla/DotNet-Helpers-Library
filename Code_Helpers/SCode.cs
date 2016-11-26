@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Code_Helpers
 {
-	public static class SCode
+	public static class SCode  
 	{
 		#region Public Methods
 
