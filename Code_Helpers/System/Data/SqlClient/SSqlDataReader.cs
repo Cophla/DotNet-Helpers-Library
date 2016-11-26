@@ -35,8 +35,7 @@ namespace Code_Helpers.System.Data.SqlClient
 		{
 			T data = null;
 			if (
-				!SObject.IsTypeInList(
-					data,
+				!SObject.IsTypeInList<T>(
 					typeof(DataSet), typeof(DataView), typeof(DataTable)
 				)
 			)

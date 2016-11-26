@@ -41,8 +41,7 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 					bool isValidParameters = false;
 
 					if (
-						SObject.IsTypeInList(
-							data,
+						SObject.IsTypeInList<T>(
 							typeof(IEnumerable), typeof(IListSource), typeof(IDataSource)
 						)
 					)

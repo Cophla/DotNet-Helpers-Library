@@ -59,21 +59,19 @@ namespace Web_Forms_Helpers.System.Web.UI
 			where U : class
 			where T : class
 		{
-			if (dataControl != null)
-			{
+			if (dataControl.IsNull()) return;
+
 				bool isValidParameters = false;
 
 				if (
-					SObject.IsTypeInList(
-						dataControl,
+					SObject.IsTypeInList<U>(
 						typeof(BaseDataList), typeof(Repeater), typeof(BaseDataBoundControl)
 					)
 				)
 				{
 					if (
 						(data == null) ||
-						SObject.IsTypeInList(
-							data,
+						SObject.IsTypeInList<T>(
 							typeof(IListSource), typeof(IEnumerable), typeof(IDataSource)
 						)
 					)
@@ -124,7 +122,7 @@ namespace Web_Forms_Helpers.System.Web.UI
 						data.GetType().GetMethod("Close").Invoke(data, null);
 					}
 				}
-			}
+			
 		}
 
 		public static void FillThenDispose(this BaseDataList dataList, IDataSource dataSource)

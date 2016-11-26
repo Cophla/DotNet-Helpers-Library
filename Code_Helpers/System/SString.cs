@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Code_Helpers.System
 {
@@ -70,6 +71,11 @@ namespace Code_Helpers.System
 		public static bool NotEquals(this string text, string otherText)
 		{
 			return SBool.Not(Equals(text, otherText));
+		}
+
+		public static string Format(string format, params object[] args)
+		{
+			return string.Format(CultureInfo.InvariantCulture, format, args);
 		}
 
 		#endregion Public Methods
