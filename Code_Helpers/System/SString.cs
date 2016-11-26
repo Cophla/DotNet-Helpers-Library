@@ -20,7 +20,7 @@ namespace Code_Helpers.System
 
 		public static bool Equals(this string text, string otherText)
 		{
-			return SCode.Equals(text, otherText);
+			return SObject.Equals(text, otherText);
 		}
 
 		public static bool IsNone(this string value)

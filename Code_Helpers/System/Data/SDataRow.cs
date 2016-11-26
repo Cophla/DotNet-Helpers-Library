@@ -15,7 +15,7 @@ namespace Code_Helpers.System.Data
 			if (SObject.IsNotNull(data))
 			{
 				if (
-					SCode.IsTypeInList(
+					SObject.IsTypeInList(
 						data,
 						typeof(DataSet), typeof(DataTable), typeof(DataView)
 					)
