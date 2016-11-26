@@ -2,7 +2,7 @@
 {
 	/// <summary>
 	/// </summary>
-	public class IGPKTbl
+	public interface IGPKTbl
 	{
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace Code_Helpers.System
@@ -7,7 +8,21 @@ namespace Code_Helpers.System
 	public static class SObject
 	{
 		#region Public Methods
-
+		public static string GetFormattedValue<T>(object obj, string format)
+		{
+			string result = string.Empty;
+			if (obj != null && !Convert.IsDBNull(obj))
+			{
+				result = string.Format(
+					CultureInfo.InvariantCulture,
+					string.Format(
+						"{{0:{0}}}", format
+					),
+					(obj is T ? obj : ConvertAs<T>(obj))
+				);
+			}
+			return result;
+		}
 		public static bool Equals<T>(T value, T otherValue)
 		{
 			if (value is string)
