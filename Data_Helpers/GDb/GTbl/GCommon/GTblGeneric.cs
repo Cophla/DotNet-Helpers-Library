@@ -28,14 +28,16 @@
 
 		/// <summary>
 		/// </summary>
-		public virtual bool Enabled {
+		public virtual bool Enabled
+		{
 			get { return enabled; }
 			set { enabled = value; }
 		}
 
 		/// <summary>
 		/// </summary>
-		public string ModelName {
+		public string ModelName
+		{
 			get { return modelName; }
 			set { modelName = value; }
 		}
@@ -61,7 +63,8 @@
 
 		/// <summary>
 		/// </summary>
-		public T PrimaryKey {
+		public T PrimaryKey
+		{
 			get { return primaryKey; }
 			set { primaryKey = value; }
 		}

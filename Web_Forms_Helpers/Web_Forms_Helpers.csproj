@@ -66,9 +66,14 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="System\Web\UI\SControl.cs" />
+    <Compile Include="System\Web\UI\WebControls\SCheckBoxList.cs" />
+    <Compile Include="System\Web\UI\WebControls\SDataGrid.cs" />
     <Compile Include="System\Web\UI\WebControls\SDataList.cs" />
+    <Compile Include="System\Web\UI\WebControls\SDropDownList.cs" />
     <Compile Include="System\Web\UI\WebControls\SGridView.cs" />
+    <Compile Include="System\Web\UI\WebControls\SListBox.cs" />
     <Compile Include="System\Web\UI\WebControls\SListControl.cs" />
+    <Compile Include="System\Web\UI\WebControls\SRadioButtonList.cs" />
     <Compile Include="System\Web\UI\WebControls\SRepeater.cs" />
   </ItemGroup>
   <ItemGroup>
