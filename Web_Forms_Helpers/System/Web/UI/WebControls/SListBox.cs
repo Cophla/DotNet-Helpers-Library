@@ -1,6 +1,6 @@
 ﻿namespace Web_Forms_Helpers.System.Web.UI.WebControls
 {
-	internal class SListBox
+	public static class SListBox
 	{
 	}
 }

@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Data.SqlClient;
+using System.Data.Common;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -119,7 +119,7 @@ namespace Web_Forms_Helpers.System.Web.UI
 						}
 					}
 
-					if ((data != null) && (data is SqlDataReader))
+					if ((data != null) && (data is DbDataReader))
 					{
 						data.GetType().GetMethod("Close").Invoke(data, null);
 					}

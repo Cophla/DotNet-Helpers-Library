@@ -4,31 +4,27 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.Common;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace Web_Forms_Helpers.System.Web.UI.WebControls
 {
 	public static class SListControl
 	{
-		public static void Fill(this ListControl listControl, SqlDataReader dataReader, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
+		public static void Fill(this ListControl listControl, IDataSource dataSource, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
 		{
-			Fill<SqlDataReader>(listControl, dataReader, valueField, textField, positionZeroItem, emptyCaseItem);
+			Fill<IDataSource>(listControl, dataSource, valueField, textField, positionZeroItem, emptyCaseItem);
 		}
 
-		public static void Fill(this ListControl listControl, DataTable dataTable, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
+		public static void Fill(this ListControl listControl, IListSource listSource, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
 		{
-			Fill<DataTable>(listControl, dataTable, valueField, textField, positionZeroItem, emptyCaseItem);
+			Fill<IListSource>(listControl, listSource, valueField, textField, positionZeroItem, emptyCaseItem);
 		}
 
-		public static void Fill(this ListControl listControl, DataView dataView, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
+		public static void Fill(this ListControl listControl, IEnumerable enumerable, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
 		{
-			Fill<DataView>(listControl, dataView, valueField, textField, positionZeroItem, emptyCaseItem);
-		}
-
-		public static void Fill(this ListControl listControl, DataSet dataSet, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
-		{
-			Fill<DataSet>(listControl, dataSet, valueField, textField, positionZeroItem, emptyCaseItem);
+			Fill<IEnumerable>(listControl, enumerable, valueField, textField, positionZeroItem, emptyCaseItem);
 		}
 
 		private static void Fill<T>(this ListControl listControl, T data, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
@@ -47,7 +43,7 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 					if (
 						SObject.IsTypeInList(
 							data,
-							typeof(SqlDataReader), typeof(DataTable), typeof(DataSet), typeof(DataView), typeof(IList)
+							typeof(IEnumerable), typeof(IListSource), typeof(IDataSource)
 						)
 					)
 					{
@@ -60,9 +56,8 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 					if (isValidParameters)
 					{
 						listControl.Items.Clear();
-
 						if (
-							(data is SqlDataReader && (!(data as SqlDataReader).HasRows)) ||
+							(data is DbDataReader && (!(data as DbDataReader).HasRows)) ||
 							(data is DataSet && SDataSet.GetFirstRow(data as DataSet) == null) ||
 							(data is DataTable && SDataTable.GetFirstRow(data as DataTable) == null) ||
 							(data is IList && (data as IList).Count == 0)
@@ -93,7 +88,7 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 								listControl.DataTextField = textField;
 								listControl.DataBind();
 
-								if (data is SqlDataReader)
+								if (data is DbDataReader)
 								{
 									data.GetType().GetMethod("Close").Invoke(data, null);
 								}
@@ -128,33 +123,58 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 			}
 		}
 
-		public static void FillThenDispose(this ListControl listControl, SqlDataReader dataReader, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
+		public static void FillThenDispose(this ListControl listControl, IEnumerable enumerable, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
 		{
-			FillThenDispose<SqlDataReader>(listControl, dataReader, valueField, textField, positionZeroItem, emptyCaseItem);
+			FillThenDispose<IEnumerable>(listControl, enumerable, valueField, textField, positionZeroItem, emptyCaseItem);
 		}
 
-		public static void FillThenDispose(this ListControl listControl, DataTable dataTable, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
+		public static void FillThenDispose(this ListControl listControl, IListSource listSource, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
 		{
-			FillThenDispose<DataTable>(listControl, dataTable, valueField, textField, positionZeroItem, emptyCaseItem);
+			FillThenDispose<IListSource>(listControl, listSource, valueField, textField, positionZeroItem, emptyCaseItem);
 		}
 
-		public static void FillThenDispose(this ListControl listControl, DataView dataView, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
+		public static void FillThenDispose(this ListControl listControl, IDataSource dataSource, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
 		{
-			FillThenDispose<DataView>(listControl, dataView, valueField, textField, positionZeroItem, emptyCaseItem);
-		}
-
-		public static void FillThenDispose(this ListControl listControl, DataSet dataSet, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
-		{
-			FillThenDispose<DataSet>(listControl, dataSet, valueField, textField, positionZeroItem, emptyCaseItem);
+			FillThenDispose<IDataSource>(listControl, dataSource, valueField, textField, positionZeroItem, emptyCaseItem);
 		}
 
 		private static void FillThenDispose<T>(this ListControl listControl, T data, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
-			where T : class, IDisposable
+			where T : class
 		{
-			using (data)
+			IDisposable disposableData = data as IDisposable;
+			if (disposableData == null) return;
+
+			using (disposableData)
 			{
 				Fill(listControl, data, valueField, textField, positionZeroItem, emptyCaseItem);
 			}
+		}
+
+		public static bool SetByValue(this ListControl listControl, object value)
+		{
+			if (listControl == null) return false;
+			listControl.ClearSelection();
+			string valueToSelect = SObject.ConvertAs<string>(value);
+			if (listControl.Items.FindByValue(valueToSelect) != null)
+			{
+				listControl.SelectedValue = valueToSelect;
+				return true;
+			}
+			return false;
+		}
+
+		public static bool SetByText(this ListControl listControl, object text)
+		{
+			if (listControl == null) return false;
+			listControl.ClearSelection();
+			string textToSelect = SObject.ConvertAs<string>(text);
+			ListItem textItem = listControl.Items.FindByText(textToSelect);
+			if (textItem != null)
+			{
+				textItem.Selected = true;
+				return true;
+			}
+			return false;
 		}
 	}
 }
