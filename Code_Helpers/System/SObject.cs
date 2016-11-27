@@ -24,8 +24,8 @@ namespace Code_Helpers.System
 		{
 			if (value is string)
 				return (value as string).Equals(otherValue as string, StringComparison.InvariantCultureIgnoreCase);
-			else
-				return value.Equals(otherValue);
+
+			return value.Equals(otherValue);
 		}
 
 		public static bool IsBetween<T>(this T value, T startValue, T endValue)
@@ -185,6 +185,14 @@ namespace Code_Helpers.System
 		public static bool IsValueInList<T>(this T value, params T[] checkList)
 		{
 			return IsValueInList(value, checkList.AsEnumerable());
+		}
+
+		public static bool IsNullInList(params object[] checkList)
+		{
+			foreach (object obj in checkList)
+				if (obj.IsNull())
+					return true;
+			return false;
 		}
 
 		public static bool IsValueInList<T>(this T value, IEnumerable<T> checkList)

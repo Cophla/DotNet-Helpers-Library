@@ -21,6 +21,7 @@ namespace Code_Helpers.System
 
 		public static bool Equals(this string text, string otherText)
 		{
+
 			return SObject.Equals(text, otherText);
 		}
 
