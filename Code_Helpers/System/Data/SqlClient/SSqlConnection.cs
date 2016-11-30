@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Guide_Helpers.Cst;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -8,6 +9,34 @@ namespace Code_Helpers.System.Data.SqlClient
 	public static class SSqlConnection
 	{
 		#region Public Methods
+
+		public static bool ApplyTransaction(
+			this SqlConnection connection, out string transactionError, SSqlTransaction.BoolMethod myMethodCall)
+		{
+			bool result = false;
+			string TRANSACTION_NAME = Guid.NewGuid().ToString().Substring(
+				0, CstVars.MAX_SQL_TRANSACTION_NAME_LENGTH
+			);
+			using (SqlTransaction transaction = connection.BeginTransaction(TRANSACTION_NAME))
+			{
+				result = myMethodCall(transaction, out transactionError);
+				if (SBool.IsTrue(result))
+					result = SSqlTransaction.Apply(transaction, TRANSACTION_NAME, out transactionError);
+				else
+				{
+					try
+					{
+						transaction.Rollback(TRANSACTION_NAME);
+					}
+					catch (Exception ex)
+					{
+						transactionError = $"{transactionError}{ex.ToString()}";
+					}
+				}
+			}
+
+			return result;
+		}
 
 		public static bool Exec(this SqlConnection connection, CommandType commandType, string sqlText, out string errorMsg)
 		{

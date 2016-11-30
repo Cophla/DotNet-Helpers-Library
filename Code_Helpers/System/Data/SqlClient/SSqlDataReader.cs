@@ -33,66 +33,61 @@ namespace Code_Helpers.System.Data.SqlClient
 		private static T Get<T>(this SqlDataReader dataReader)
 			where T : MarshalByValueComponent, ISupportInitializeNotification, ISupportInitialize, new()
 		{
-			T data = null;
-			if (
-				!SObject.IsTypeInList<T>(
-					typeof(DataSet), typeof(DataView), typeof(DataTable)
-				)
-			)
+			if (dataReader.IsNull())
+				return null;
+
+			if (SObject.IsTypeNotInList<T>(typeof(DataSet), typeof(DataView), typeof(DataTable)))
 			{
 				throw new Exception("You are not allowed to use this type of object. You are only allowed to use DataSet, DataView or DataTable");
 			}
+
 			DataTable dtbl = null;
 			using (dataReader)
 			{
-				if (dataReader != null)
-				{
-					dtbl = new DataTable();
-					dtbl.Load(dataReader);
-				}
+				dtbl = new DataTable();
+				dtbl.Load(dataReader);
 			}
-			if (dtbl != null)
-			{
-				data = new T();
 
-				if (data is DataSet)
-				{
-					(data as DataSet).Tables.Add(dtbl);
-				}
-				else if (data is DataView)
-				{
-					(data as DataView).Table = dtbl;
-				}
-				else if (data is DataTable)
-				{
-					data = SObject.ConvertAs<T>(dtbl);
-				}
+			T data = new T();
+			if (data is DataSet)
+			{
+				(data as DataSet).Tables.Add(dtbl);
 			}
+			else if (data is DataView)
+			{
+				(data as DataView).Table = dtbl;
+			}
+			else if (data is DataTable)
+			{
+				data = SObject.CastAs<T>(dtbl);
+			}
+
 			return data;
 		}
 
 		#endregion Private Methods
 
-		public static IEnumerable<T> GetObjList<T>(this SqlDataReader dataReader, out string errorMsg) where T : IGTbl, new()
+		public static IEnumerable<T> GetObjList<T>(this SqlDataReader dataReader, out string errorMsg)
+			where T : IGTbl, new()
 		{
 			errorMsg = string.Empty;
+			if (dataReader.IsNull())
+				return null;
+
 			ICollection<T> objList = null;
 			using (dataReader)
 			{
-				if (dataReader != null)
+				try
 				{
-					try
+					objList = new List<T>(40);
+					while (dataReader.Read())
 					{
-						objList = new List<T>(40);
-						while (dataReader.Read())
-						{
-							T obj = new T();
-							obj.Fill(dataReader);
-							objList.Add(obj);
-						}
+						T obj = new T();
+						obj.Fill(dataReader);
+						objList.Add(obj);
 					}
-					catch (Exception ex) { errorMsg = ex.ToString(); }
 				}
+				catch (Exception ex) { errorMsg = ex.ToString(); }
 			}
 			return objList;
 		}
