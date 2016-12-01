@@ -51,6 +51,28 @@ namespace Code_Helpers.System
 			return DbValueAs(obj, default(T));
 		}
 
+		public static bool Dispose<T>(ref T disposableObject, Func<bool> boolMethod)
+			where T : IDisposable
+		{
+			if (disposableObject.IsNull())
+				return false;
+
+			bool result = false;
+			using (disposableObject)
+			{
+				result = boolMethod();
+			}
+			disposableObject = default(T);
+
+			return result;
+		}
+
+		public static bool Dispose<T>(this T disposableObject, Func<bool> boolMethod)
+			where T : IDisposable
+		{
+			return Dispose(ref disposableObject, boolMethod);
+		}
+
 		public static bool Equals<T>(this T value, T otherValue)
 		{
 			if (value is string)

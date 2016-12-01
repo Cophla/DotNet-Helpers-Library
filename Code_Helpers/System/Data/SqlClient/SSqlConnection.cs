@@ -13,29 +13,25 @@ namespace Code_Helpers.System.Data.SqlClient
 		public static bool ApplyTransaction(
 			this SqlConnection connection, out string transactionError, SSqlTransaction.BoolMethod myMethodCall)
 		{
-			bool result = false;
 			string TRANSACTION_NAME = Guid.NewGuid().ToString().Substring(
 				0, CstVars.MAX_SQL_TRANSACTION_NAME_LENGTH
 			);
 			using (SqlTransaction transaction = connection.BeginTransaction(TRANSACTION_NAME))
 			{
-				result = myMethodCall(transaction, out transactionError);
-				if (SBool.IsTrue(result))
-					result = SSqlTransaction.Apply(transaction, TRANSACTION_NAME, out transactionError);
-				else
+				if (myMethodCall(transaction, out transactionError).IsTrue())
+					return SSqlTransaction.Apply(transaction, TRANSACTION_NAME, out transactionError);
+
+				try
 				{
-					try
-					{
-						transaction.Rollback(TRANSACTION_NAME);
-					}
-					catch (Exception ex)
-					{
-						transactionError = $"{transactionError}{ex.ToString()}";
-					}
+					transaction.Rollback(TRANSACTION_NAME);
+				}
+				catch (Exception ex)
+				{
+					transactionError = $"{transactionError}{ex.ToString()}";
 				}
 			}
 
-			return result;
+			return false;
 		}
 
 		public static bool Exec(this SqlConnection connection, CommandType commandType, string sqlText, out string errorMsg)
@@ -128,7 +124,9 @@ namespace Code_Helpers.System.Data.SqlClient
 			return Get(connection, sqlText, commandType, CommandBehavior.Default, parmList, out errorMsg);
 		}
 
-		public static SqlDataReader Get(this SqlConnection connection, string sqlText, CommandType commandType, CommandBehavior commandBehavior, IEnumerable<SqlParameter> parmList, out string errorMsg)
+		public static SqlDataReader Get(
+			this SqlConnection connection, string sqlText, CommandType commandType, CommandBehavior commandBehavior,
+			IEnumerable<SqlParameter> parmList, out string errorMsg)
 		{
 			errorMsg = string.Empty;
 
@@ -173,12 +171,9 @@ namespace Code_Helpers.System.Data.SqlClient
 		public static bool IsReady(SqlConnection connection)
 		{
 			string errorMsg;
-			using (SqlDataReader dataReader = Get(connection, "SELECT TOP 1 1", CommandType.Text, out errorMsg))
-			{
-				if (dataReader.IsNotNull())
-					return true;
-			}
-			return false;
+			SqlDataReader dataReader = Get(connection, "SELECT TOP 1 1", CommandType.Text, out errorMsg);
+			return SObject.Dispose(ref dataReader, delegate ()
+			{ return true; });
 		}
 
 		#endregion Public Methods
