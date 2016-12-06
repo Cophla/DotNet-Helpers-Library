@@ -10,6 +10,54 @@ namespace Web_Forms_Helpers.System.Web.UI
 {
 	public static class SControl
 	{
+		public static void Clear(this Repeater repeater)
+		{
+			Clear<Repeater>(repeater);
+		}
+
+		public static void Clear(this BaseDataBoundControl dataBoundControl)
+		{
+			Clear<BaseDataBoundControl>(dataBoundControl);
+		}
+		public static void Clear(this BaseDataList dataList)
+		{
+			Clear<BaseDataList>(dataList);
+		}
+
+		private static void Clear<T>(T dataControl)
+			where T : Control
+		{
+			if (SObject.IsTypeNotInList<T>(typeof(BaseDataList), typeof(Repeater), typeof(BaseDataBoundControl)))
+				throw new InvalidCastException("Control parameter is not valid, you are only alowed to use: BaseDataList, Repeater and BaseDataBoundControl");
+
+			object data = null;
+			try
+			{
+				dataControl.GetType().GetProperty("DataSource").SetValue(dataControl, data);
+				dataControl.GetType().GetMethod("DataBind").Invoke(dataControl, null);
+			}
+			catch (Exception)
+			{
+				if (dataControl is BaseDataList)
+				{
+					BaseDataList dl = dataControl as BaseDataList;
+					dl.DataSource = data;
+					dl.DataBind();
+				}
+				else if (dataControl is Repeater)
+				{
+					Repeater rptr = dataControl as Repeater;
+					rptr.DataSource = data;
+					rptr.DataBind();
+				}
+				else if (dataControl is BaseDataBoundControl)
+				{
+					BaseDataBoundControl grv = dataControl as BaseDataBoundControl;
+					grv.DataSource = data;
+					grv.DataBind();
+				}
+			}
+		}
 		public static void Fill(this BaseDataList dataList, IDataSource dataSource)
 		{
 			Fill<BaseDataList, IDataSource>(dataList, dataSource);
@@ -56,73 +104,55 @@ namespace Web_Forms_Helpers.System.Web.UI
 		}
 
 		private static void Fill<U, T>(U dataControl, T data)
-			where U : class
+			where U : Control
 			where T : class
 		{
-			if (dataControl.IsNull()) return;
+			if (dataControl.IsNull())
+				return;
 
-				bool isValidParameters = false;
+			if (data.IsNull())
+			{
+				Clear<U>(dataControl);
+				return;
+			}
 
-				if (
-					SObject.IsTypeInList<U>(
-						typeof(BaseDataList), typeof(Repeater), typeof(BaseDataBoundControl)
-					)
-				)
+			if (SObject.IsTypeNotInList<U>(typeof(BaseDataList), typeof(Repeater), typeof(BaseDataBoundControl)))
+				throw new InvalidCastException("Control parameter is not valid, you are only alowed to use: BaseDataList, Repeater and BaseDataBoundControl");
+
+			if (SObject.IsTypeNotInList<T>(typeof(IListSource), typeof(IEnumerable), typeof(IDataSource)))
+				throw new InvalidCastException("Data parameter is not valid, you are only alowed to use: IDataSource, IEnumerable and IListSource");
+
+			try
+			{
+				dataControl.GetType().GetProperty("DataSource").SetValue(dataControl, data);
+				dataControl.GetType().GetMethod("DataBind").Invoke(dataControl, null);
+			}
+			catch (Exception)
+			{
+				if (dataControl is BaseDataList)
 				{
-					if (
-						(data == null) ||
-						SObject.IsTypeInList<T>(
-							typeof(IListSource), typeof(IEnumerable), typeof(IDataSource)
-						)
-					)
-					{
-						isValidParameters = true;
-					}
-					else
-					{
-						throw new InvalidCastException("Data parameter is not valid, you are only alowed to use: SqlDataReader, IDataSource, IEnumerable and IListSource");
-					}
+					BaseDataList dl = dataControl as BaseDataList;
+					dl.DataSource = data;
+					dl.DataBind();
 				}
-				else
+				else if (dataControl is Repeater)
 				{
-					throw new InvalidCastException("Control parameter is not valid, you are only alowed to use: DataList, Repeater and GridView");
+					Repeater rptr = dataControl as Repeater;
+					rptr.DataSource = data;
+					rptr.DataBind();
 				}
-
-				if (isValidParameters)
+				else if (dataControl is BaseDataBoundControl)
 				{
-					try
-					{
-						dataControl.GetType().GetProperty("DataSource").SetValue(dataControl, data);
-						dataControl.GetType().GetMethod("DataBind").Invoke(dataControl, null);
-					}
-					catch (Exception)
-					{
-						if (dataControl is BaseDataList)
-						{
-							BaseDataList dl = dataControl as BaseDataList;
-							dl.DataSource = data;
-							dl.DataBind();
-						}
-						else if (dataControl is Repeater)
-						{
-							Repeater rptr = dataControl as Repeater;
-							rptr.DataSource = data;
-							rptr.DataBind();
-						}
-						else if (dataControl is BaseDataBoundControl)
-						{
-							BaseDataBoundControl grv = dataControl as BaseDataBoundControl;
-							grv.DataSource = data;
-							grv.DataBind();
-						}
-					}
-
-					if ((data != null) && (data is DbDataReader))
-					{
-						data.GetType().GetMethod("Close").Invoke(data, null);
-					}
+					BaseDataBoundControl grv = dataControl as BaseDataBoundControl;
+					grv.DataSource = data;
+					grv.DataBind();
 				}
-			
+			}
+
+			if (data is DbDataReader)
+			{
+				data.GetType().GetMethod("Close").Invoke(data, null);
+			}
 		}
 
 		public static void FillThenDispose(this BaseDataList dataList, IDataSource dataSource)
@@ -171,11 +201,12 @@ namespace Web_Forms_Helpers.System.Web.UI
 		}
 
 		private static void FillThenDispose<U, T>(U dataControl, T data)
-			where U : class
+			where U : Control
 			where T : class
 		{
 			IDisposable disposableData = data as IDisposable;
-			if (disposableData == null) return;
+			if (disposableData == null)
+				Fill<U, T>(dataControl, data);
 
 			using (disposableData)
 			{

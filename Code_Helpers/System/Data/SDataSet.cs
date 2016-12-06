@@ -16,6 +16,11 @@ namespace Code_Helpers.System.Data
 			return SDataRow.HasRows<DataSet>(dataSet);
 		}
 
+		public static bool HasNoRows(this DataSet dataSet)
+		{
+			return HasRows(dataSet).Not();
+		}
+
 		#endregion Public Methods
 	}
 }

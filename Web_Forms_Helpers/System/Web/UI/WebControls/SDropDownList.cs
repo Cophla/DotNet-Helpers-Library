@@ -24,11 +24,6 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 			SListControl.Fill(dropDownList, dataSource, valueField, textField, positionZeroItem, emptyCaseItem);
 		}
 
-		public static void Fill(this DropDownList dropDownList, DataSet dataSet, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
-		{
-			SListControl.Fill(dropDownList, dataSet, valueField, textField, positionZeroItem, emptyCaseItem);
-		}
-
 		public static void FillThenDispose(this DropDownList dropDownList, IEnumerable enumerable, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
 		{
 			SListControl.FillThenDispose(dropDownList, enumerable, valueField, textField, positionZeroItem, emptyCaseItem);
@@ -44,11 +39,6 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 			SListControl.FillThenDispose(dropDownList, dataSource, valueField, textField, positionZeroItem, emptyCaseItem);
 		}
 
-		public static void FillThenDispose(this DropDownList dropDownList, DataSet dataSet, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
-		{
-			SListControl.FillThenDispose(dropDownList, dataSet, valueField, textField, positionZeroItem, emptyCaseItem);
-		}
-
 		public static bool SetByValue(this DropDownList dropDownList, object value)
 		{
 			return SListControl.SetByValue(dropDownList, value);
@@ -57,6 +47,11 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 		public static bool SetByText(this DropDownList dropDownList, object text)
 		{
 			return SListControl.SetByText(dropDownList, text);
+		}
+
+		public static void Clear(this DropDownList dropDownList)
+		{
+			SListControl.Clear(dropDownList);
 		}
 	}
 }

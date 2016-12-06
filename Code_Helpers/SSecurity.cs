@@ -21,24 +21,19 @@ namespace Code_Helpers
 		public static string DecryptString(byte[] data)
 		{
 			using (MemoryStream targetBuffer = new MemoryStream())
+			using (SymmetricAlgorithm algorithm = SymmetricAlgorithm.Create())
 			{
-				using (SymmetricAlgorithm algorithm = SymmetricAlgorithm.Create())
+				algorithm.Key = SYMMETRIC_KEY;
+				byte[] IV = new byte[algorithm.IV.Length];
+				Array.Copy(data, IV, IV.Length);
+				algorithm.IV = IV;
+				int readPos = algorithm.IV.Length;
+				using (CryptoStream cs = new CryptoStream(
+						targetBuffer, algorithm.CreateDecryptor(), CryptoStreamMode.Write))
 				{
-					algorithm.Key = SYMMETRIC_KEY;
-					byte[] IV = new byte[algorithm.IV.Length];
-					Array.Copy(data, IV, IV.Length);
-					algorithm.IV = IV;
-					int readPos = algorithm.IV.Length;
-					using (
-						CryptoStream cs = new CryptoStream(
-							targetBuffer, algorithm.CreateDecryptor(), CryptoStreamMode.Write
-						)
-					)
-					{
-						cs.Write(data, readPos, data.Length - readPos);
-						cs.FlushFinalBlock();
-						return Encoding.UTF8.GetString(targetBuffer.ToArray());
-					}
+					cs.Write(data, readPos, data.Length - readPos);
+					cs.FlushFinalBlock();
+					return Encoding.UTF8.GetString(targetBuffer.ToArray());
 				}
 			}
 		}
@@ -46,24 +41,19 @@ namespace Code_Helpers
 		public static byte[] EncryptString(string data)
 		{
 			using (MemoryStream targetBuffer = new MemoryStream())
+			using (SymmetricAlgorithm algorithm = SymmetricAlgorithm.Create())
 			{
-				using (SymmetricAlgorithm algorithm = SymmetricAlgorithm.Create())
-				{
-					algorithm.Key = SYMMETRIC_KEY;
-					algorithm.GenerateIV();
-					targetBuffer.Write(algorithm.IV, 0, algorithm.IV.Length);
+				algorithm.Key = SYMMETRIC_KEY;
+				algorithm.GenerateIV();
+				targetBuffer.Write(algorithm.IV, 0, algorithm.IV.Length);
 
-					using (
-						CryptoStream cs = new CryptoStream(
-							targetBuffer, algorithm.CreateEncryptor(), CryptoStreamMode.Write
-						)
-					)
-					{
-						byte[] ClearData = Encoding.UTF8.GetBytes(data);
-						cs.Write(ClearData, 0, ClearData.Length);
-						cs.FlushFinalBlock();
-						return targetBuffer.ToArray();
-					}
+				using (CryptoStream cs = new CryptoStream(
+						targetBuffer, algorithm.CreateEncryptor(), CryptoStreamMode.Write))
+				{
+					byte[] ClearData = Encoding.UTF8.GetBytes(data);
+					cs.Write(ClearData, 0, ClearData.Length);
+					cs.FlushFinalBlock();
+					return targetBuffer.ToArray();
 				}
 			}
 		}

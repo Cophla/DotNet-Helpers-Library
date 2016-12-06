@@ -165,6 +165,16 @@ namespace Code_Helpers.System
 			return Equals(text, otherText).Not();
 		}
 
+		public static string ToTitleCase(string value)
+		{
+			if (IsNone(value))
+				return string.Empty;
+
+			TextInfo textInfo = CultureInfo.InvariantCulture.TextInfo;
+			return textInfo.ToTitleCase(value);
+
+		}
+
 		#endregion Public Methods
 	}
 }
