@@ -36,6 +36,11 @@ namespace Code_Helpers.System
 			return string.Format(CultureInfo.InvariantCulture, format, args);
 		}
 
+		public static string Format(this string value, string format)
+		{
+			return string.Format(CultureInfo.InvariantCulture, format, value);
+		}
+
 		public static bool IsNone(this string value)
 		{
 			if (value.IsNull())
@@ -165,14 +170,13 @@ namespace Code_Helpers.System
 			return Equals(text, otherText).Not();
 		}
 
-		public static string ToTitleCase(string value)
+		public static string ToTitleCase(this string value)
 		{
 			if (IsNone(value))
 				return string.Empty;
 
 			TextInfo textInfo = CultureInfo.InvariantCulture.TextInfo;
 			return textInfo.ToTitleCase(value);
-
 		}
 
 		#endregion Public Methods

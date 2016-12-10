@@ -1,4 +1,5 @@
-﻿using Guide_Helpers.Cst;
+﻿using Code_Helpers.ObjectHelper;
+using Guide_Helpers.Cst;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -34,26 +35,82 @@ namespace Code_Helpers.System.Data.SqlClient
 			return false;
 		}
 
-		public static bool Exec(this SqlConnection connection, CommandType commandType, string sqlText, out string errorMsg)
+		public static bool ApplyTransaction(
+			this SqlConnection connection, MessageString transactionError,
+			Func<SqlTransaction, MessageString, bool> myMethodCall)
+		{
+			string TRANSACTION_NAME = Guid.NewGuid().ToString().Substring(
+				0, CstVars.MAX_SQL_TRANSACTION_NAME_LENGTH
+			);
+			using (SqlTransaction transaction = connection.BeginTransaction(TRANSACTION_NAME))
+			{
+				if (myMethodCall(transaction, transactionError).IsTrue())
+					return SSqlTransaction.Apply(transaction, TRANSACTION_NAME, transactionError);
+
+				try
+				{
+					transaction.Rollback(TRANSACTION_NAME);
+				}
+				catch (Exception ex)
+				{
+					transactionError.Append(ex.ToString());
+				}
+			}
+
+			return false;
+		}
+
+		public static bool Exec(
+			this SqlConnection connection, CommandType commandType, string sqlText, out string errorMsg)
 		{
 			IEnumerable<SqlParameter> parmList = null;
 			SqlTransaction transaction = null;
 			return Exec(connection, transaction, commandType, sqlText, parmList, out errorMsg);
 		}
 
-		public static bool Exec(this SqlConnection connection, CommandType commandType, string sqlText, IEnumerable<SqlParameter> parmList, out string errorMsg)
+		public static bool Exec(
+			this SqlConnection connection, CommandType commandType, string sqlText, IEnumerable<SqlParameter> parmList,
+			out string errorMsg)
 		{
 			SqlTransaction transaction = null;
 			return Exec(connection, transaction, commandType, sqlText, parmList, out errorMsg);
 		}
 
-		public static bool Exec(this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText, out string errorMsg)
+		public static bool Exec(
+			this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText,
+			out string errorMsg)
 		{
 			IEnumerable<SqlParameter> parmList = null;
 			return Exec(connection, transaction, commandType, sqlText, parmList, out errorMsg);
 		}
 
-		public static bool Exec(this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText, IEnumerable<SqlParameter> parmList, out string errorMsg)
+		public static bool Exec(
+			this SqlConnection connection, CommandType commandType, string sqlText, MessageString errorMsg)
+		{
+			IEnumerable<SqlParameter> parmList = null;
+			SqlTransaction transaction = null;
+			return Exec(connection, transaction, commandType, sqlText, parmList, errorMsg);
+		}
+
+		public static bool Exec(
+			this SqlConnection connection, CommandType commandType, string sqlText, IEnumerable<SqlParameter> parmList,
+			MessageString errorMsg)
+		{
+			SqlTransaction transaction = null;
+			return Exec(connection, transaction, commandType, sqlText, parmList, errorMsg);
+		}
+
+		public static bool Exec(
+			this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText,
+			MessageString errorMsg)
+		{
+			IEnumerable<SqlParameter> parmList = null;
+			return Exec(connection, transaction, commandType, sqlText, parmList, errorMsg);
+		}
+
+		public static bool Exec(
+			this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText,
+			IEnumerable<SqlParameter> parmList, out string errorMsg)
 		{
 			errorMsg = string.Empty;
 			if (IsOpened(connection, out errorMsg).IsNotTrue())
@@ -87,7 +144,44 @@ namespace Code_Helpers.System.Data.SqlClient
 			return false;
 		}
 
-		public static T ExecScalar<T>(this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText, IEnumerable<SqlParameter> parmList, T defaultValue, out string errorMsg)
+		public static bool Exec(
+			this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText,
+			IEnumerable<SqlParameter> parmList, MessageString errorMsg)
+		{
+			if (IsOpened(connection, errorMsg).IsNotTrue())
+				return false;
+
+			using (SqlCommand command = new SqlCommand(sqlText, connection))
+			{
+				try
+				{
+					command.CommandType = commandType;
+
+					if (transaction.IsNotNull())
+					{
+						command.Transaction = transaction;
+					}
+
+					if (parmList.IsNotNull())
+					{
+						foreach (SqlParameter parm in parmList)
+						{
+							command.Parameters.Add(parm);
+						}
+					}
+
+					command.ExecuteNonQuery();
+
+					return true;
+				}
+				catch (Exception ex) { errorMsg.Append(ex.ToString()); }
+			}
+			return false;
+		}
+
+		public static T ExecScalar<T>(
+			this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText,
+			IEnumerable<SqlParameter> parmList, T defaultValue, out string errorMsg)
 		{
 			if (IsOpened(connection, out errorMsg).IsNotTrue())
 				return defaultValue;
@@ -118,18 +212,57 @@ namespace Code_Helpers.System.Data.SqlClient
 			return defaultValue;
 		}
 
-		public static SqlDataReader Get(this SqlConnection connection, string sqlText, CommandType commandType, out string errorMsg)
+		public static T ExecScalar<T>(
+			this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText,
+			IEnumerable<SqlParameter> parmList, T defaultValue, MessageString errorMsg)
+		{
+			if (IsOpened(connection, errorMsg).IsNotTrue())
+				return defaultValue;
+
+			using (SqlCommand command = new SqlCommand(sqlText, connection))
+			{
+				try
+				{
+					command.CommandType = commandType;
+
+					if (transaction.IsNotNull())
+					{
+						command.Transaction = transaction;
+					}
+
+					if (parmList.IsNotNull())
+					{
+						foreach (SqlParameter parm in parmList)
+						{
+							command.Parameters.Add(parm);
+						}
+					}
+					return SObject.DbValueAs<T>(command.ExecuteScalar(), defaultValue);
+				}
+				catch (Exception ex) { errorMsg.Append(ex.ToString()); }
+			}
+
+			return defaultValue;
+		}
+
+		public static SqlDataReader Get(
+			this SqlConnection connection, string sqlText, CommandType commandType, out string errorMsg)
 		{
 			IEnumerable<SqlParameter> parmList = null;
 			return Get(connection, sqlText, commandType, CommandBehavior.Default, parmList, out errorMsg);
 		}
 
 		public static SqlDataReader Get(
+			this SqlConnection connection, string sqlText, CommandType commandType, MessageString errorMsg)
+		{
+			IEnumerable<SqlParameter> parmList = null;
+			return Get(connection, sqlText, commandType, CommandBehavior.Default, parmList, errorMsg);
+		}
+
+		public static SqlDataReader Get(
 			this SqlConnection connection, string sqlText, CommandType commandType, CommandBehavior commandBehavior,
 			IEnumerable<SqlParameter> parmList, out string errorMsg)
 		{
-			errorMsg = string.Empty;
-
 			if (IsOpened(connection, out errorMsg).IsNotTrue())
 				return null;
 
@@ -155,6 +288,47 @@ namespace Code_Helpers.System.Data.SqlClient
 				}
 			}
 			return null;
+		}
+
+		public static SqlDataReader Get(
+			this SqlConnection connection, string sqlText, CommandType commandType, CommandBehavior commandBehavior,
+			IEnumerable<SqlParameter> parmList, MessageString errorMsg)
+		{
+			if (IsOpened(connection, errorMsg).IsNotTrue())
+				return null;
+
+			using (SqlCommand command = new SqlCommand(sqlText, connection))
+			{
+				try
+				{
+					command.CommandType = commandType;
+
+					if (parmList.IsNotNull())
+					{
+						foreach (SqlParameter parm in parmList)
+						{
+							command.Parameters.Add(parm);
+						}
+					}
+
+					return command.ExecuteReader(commandBehavior);
+				}
+				catch (Exception ex)
+				{
+					errorMsg.Append(ex.ToString());
+				}
+			}
+			return null;
+		}
+
+		public static bool IsOpened(this SqlConnection connection, MessageString errorMsg)
+		{
+			if ((connection.State == ConnectionState.Open).IsNotTrue())
+			{
+				errorMsg.Append("Database connection object is not opened");
+				return false;
+			}
+			return true;
 		}
 
 		public static bool IsOpened(this SqlConnection connection, out string errorMsg)

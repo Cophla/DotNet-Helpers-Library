@@ -1,4 +1,5 @@
-﻿using Data_Helpers.GDb.GTbl.GCommon;
+﻿using Code_Helpers.ObjectHelper;
+using Data_Helpers.GDb.GTbl.GCommon;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -88,6 +89,30 @@ namespace Code_Helpers.System.Data.SqlClient
 					}
 				}
 				catch (Exception ex) { errorMsg = ex.ToString(); }
+			}
+			return objList;
+		}
+
+		public static IEnumerable<T> GetObjList<T>(this SqlDataReader dataReader, MessageString errorMsg)
+			where T : IGTbl, new()
+		{
+			if (dataReader.IsNull())
+				return null;
+
+			ICollection<T> objList = null;
+			using (dataReader)
+			{
+				try
+				{
+					objList = new List<T>(40);
+					while (dataReader.Read())
+					{
+						T obj = new T();
+						obj.Fill(dataReader);
+						objList.Add(obj);
+					}
+				}
+				catch (Exception ex) { errorMsg.Append(ex.ToString()); }
 			}
 			return objList;
 		}

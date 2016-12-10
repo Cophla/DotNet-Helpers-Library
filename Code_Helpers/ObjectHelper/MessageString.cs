@@ -6,7 +6,13 @@ namespace Code_Helpers.ObjectHelper
 {
 	public class MessageString : IDisposable
 	{
+		#region Protected Fields
+
 		protected StringBuilder messageBuilder = new StringBuilder();
+
+		#endregion Protected Fields
+
+		#region Public Constructors
 
 		public MessageString()
 		{
@@ -17,7 +23,44 @@ namespace Code_Helpers.ObjectHelper
 			messageBuilder.Capacity = capacity;
 		}
 
-		public MessageString Append<T>(T value)
+		public MessageString(string value)
+		{
+			messageBuilder.Append(value);
+		}
+
+		#endregion Public Constructors
+
+		#region Public Properties
+
+		public int Length
+		{
+			get { return messageBuilder.Length; }
+			set { messageBuilder.Length = value; }
+		}
+
+		public int MaxCapacity
+		{
+			get { return messageBuilder.MaxCapacity; }
+		}
+
+		#endregion Public Properties
+
+		#region Public Methods
+
+		public static implicit operator string(MessageString ms)
+		{
+			return ms.ToString();
+		}
+
+		public static MessageString operator +(MessageString ms1, MessageString ms2)
+		{
+			MessageString ms = new MessageString(ms1.Length + ms2.Length);
+			ms.Append(ms1.ToString());
+			ms.Append(ms2.ToString());
+			return ms;
+		}
+
+		public MessageString Append<T>(T value) where T : IConvertible
 		{
 			messageBuilder.Append(value);
 			return this;
@@ -28,15 +71,14 @@ namespace Code_Helpers.ObjectHelper
 			return Append<string>(value);
 		}
 
+		public MessageString Append(MessageString ms)
+		{
+			return Append(ms.ToString());
+		}
+
 		public MessageString AppendFormat(string format, params object[] args)
 		{
 			messageBuilder.AppendFormat(CultureInfo.InvariantCulture, format, args);
-			return this;
-		}
-
-		public MessageString Clear()
-		{
-			messageBuilder.Clear();
 			return this;
 		}
 
@@ -52,26 +94,28 @@ namespace Code_Helpers.ObjectHelper
 			return this;
 		}
 
-		public MessageString AppendLine<T>(T value)
+		public MessageString AppendLine(MessageString ms)
+		{
+			messageBuilder.AppendLine(ms.ToString());
+			return this;
+		}
+
+		public MessageString AppendLine<T>(T value) where T : IConvertible
 		{
 			Append<T>(value);
 			AppendLine();
 			return this;
 		}
 
+		public MessageString Clear()
+		{
+			messageBuilder.Clear();
+			return this;
+		}
+
 		public int EnsureCapacity(int capacity)
 		{
 			return messageBuilder.EnsureCapacity(capacity);
-		}
-
-		public override string ToString()
-		{
-			return messageBuilder.ToString();
-		}
-
-		public string ToString(int startIndex, int length)
-		{
-			return messageBuilder.ToString(startIndex, length);
 		}
 
 		public bool Equals(MessageString ms)
@@ -89,15 +133,15 @@ namespace Code_Helpers.ObjectHelper
 			return Equals(new StringBuilder(value));
 		}
 
-		public MessageString Remove(int startIndex, int length)
-		{
-			messageBuilder.Remove(startIndex, length);
-			return this;
-		}
-
 		public MessageString Insert<T>(int index, T value)
 		{
 			messageBuilder.Insert(index, value);
+			return this;
+		}
+
+		public MessageString Remove(int startIndex, int length)
+		{
+			messageBuilder.Remove(startIndex, length);
 			return this;
 		}
 
@@ -125,20 +169,30 @@ namespace Code_Helpers.ObjectHelper
 			return this;
 		}
 
-		public int MaxCapacity
+		public override string ToString()
 		{
-			get { return messageBuilder.MaxCapacity; }
+			return messageBuilder.ToString();
 		}
 
-		public int Length
+		public string ToString(int startIndex, int length)
 		{
-			get { return messageBuilder.Length; }
-			set { messageBuilder.Length = value; }
+			return messageBuilder.ToString(startIndex, length);
 		}
+
+		#endregion Public Methods
 
 		#region IDisposable Support
 
 		private bool disposedValue = false; // To detect redundant calls
+
+		// This code added to correctly implement the disposable pattern.
+		public void Dispose()
+		{
+			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+			Dispose(true);
+			// TODO: uncomment the following line if the finalizer is overridden above.
+			// GC.SuppressFinalize(this);
+		}
 
 		private void Dispose(bool disposing)
 		{
@@ -163,15 +217,6 @@ namespace Code_Helpers.ObjectHelper
 		//   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
 		//   Dispose(false);
 		// }
-
-		// This code added to correctly implement the disposable pattern.
-		public void Dispose()
-		{
-			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-			Dispose(true);
-			// TODO: uncomment the following line if the finalizer is overridden above.
-			// GC.SuppressFinalize(this);
-		}
 
 		#endregion IDisposable Support
 	}

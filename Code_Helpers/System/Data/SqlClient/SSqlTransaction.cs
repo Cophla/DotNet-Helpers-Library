@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Code_Helpers.ObjectHelper;
+using System;
 using System.Data.SqlClient;
 
 namespace Code_Helpers.System.Data.SqlClient
@@ -42,6 +43,43 @@ namespace Code_Helpers.System.Data.SqlClient
 				catch (Exception)
 				{
 					errorMsg = $"{errorMsg}{ex.ToString()}";
+				}
+			}
+			return result;
+		}
+
+		#endregion Public Delegates
+
+		#region Public Methods
+
+		public static bool Apply(this SqlTransaction transaction, MessageString errorMsg)
+		{
+			string TRANSACTION_NAME = null;
+			return Apply(transaction, TRANSACTION_NAME, errorMsg);
+		}
+
+		public static bool Apply(
+			this SqlTransaction transaction, string TRANSACTION_NAME, MessageString errorMsg)
+		{
+			bool result = false;
+			try
+			{
+				transaction.Commit();
+				result = true;
+			}
+			catch (Exception ex)
+			{
+				errorMsg.Append(ex.ToString());
+				try
+				{
+					if (SString.IsNotNone(TRANSACTION_NAME))
+						transaction.Rollback(TRANSACTION_NAME);
+					else
+						transaction.Rollback();
+				}
+				catch (Exception)
+				{
+					errorMsg.Append(ex.ToString());
 				}
 			}
 			return result;
