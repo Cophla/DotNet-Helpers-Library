@@ -37,16 +37,16 @@ namespace Web_Forms_Helpers.System.Web.UI
 		/// </param>
 		public GPageHelper(ICollection<KeyValuePair<string, string>> keyValueList)
 		{
-			if (keyValueList != null)
+			if (keyValueList.IsNull())
+				return;
+
+			connectionList = new Dictionary<string, SqlConnection>(keyValueList.Count);
+			foreach (var keyValue in keyValueList)
 			{
-				connectionList = new Dictionary<string, SqlConnection>(keyValueList.Count);
-				foreach (var keyValue in keyValueList)
-				{
-					connectionList.Add(
-						keyValue.Key,
-						new SqlConnection(keyValue.Value)
-					);
-				}
+				connectionList.Add(
+					keyValue.Key,
+					new SqlConnection(keyValue.Value)
+				);
 			}
 		}
 
@@ -62,9 +62,11 @@ namespace Web_Forms_Helpers.System.Web.UI
 		/// </returns>
 		public bool AddToConnectionList(SqlConnection connection)
 		{
-			if (connection.IsNull()) return false;
+			if (connection.IsNull())
+				return false;
 
-			if (connectionList.IsNull()) return false;
+			if (connectionList.IsNull())
+				return false;
 
 			connectionList.Add(
 				Guid.NewGuid().ToString(),
@@ -79,11 +81,13 @@ namespace Web_Forms_Helpers.System.Web.UI
 		{
 			base.Dispose();
 
-			if (connectionList.IsNull()) return;
+			if (connectionList.IsNull())
+				return;
 
 			foreach (var connValue in connectionList.Values)
 			{
-				if (connValue.IsNull()) continue;
+				if (connValue.IsNull())
+					continue;
 				connValue.Dispose();
 			}
 
@@ -97,11 +101,13 @@ namespace Web_Forms_Helpers.System.Web.UI
 		/// </returns>
 		public SqlConnection GetCurrentSqlConnection()
 		{
-			if (connectionList.IsNull()) return null;
+			if (connectionList.IsNull())
+				return null;
 
 			foreach (var connValue in connectionList.Values)
 			{
-				if (connValue.IsNull()) continue;
+				if (connValue.IsNull())
+					continue;
 
 				if (connValue.State != ConnectionState.Open)
 					connValue.Open();
@@ -119,13 +125,16 @@ namespace Web_Forms_Helpers.System.Web.UI
 		/// </returns>
 		public SqlConnection GetCurrentSqlConnection(string connectionStringKeyName)
 		{
-			if (connectionList.IsNull()) return null;
+			if (connectionList.IsNull())
+				return null;
 
-			if (connectionList.ContainsKey(connectionStringKeyName).IsNotTrue()) return null;
+			if (connectionList.ContainsKey(connectionStringKeyName).IsNotTrue())
+				return null;
 
 			SqlConnection connection = connectionList[connectionStringKeyName];
 
-			if (connection.IsNull()) return null;
+			if (connection.IsNull())
+				return null;
 
 			if (connection.State != ConnectionState.Open)
 				connection.Open();
