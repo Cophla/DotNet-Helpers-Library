@@ -6,6 +6,8 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 {
 	public static class SRepeater
 	{
+		#region Public Methods
+
 		public static void Fill(this Repeater repeater, SqlDataReader dataReader)
 		{
 			SControl.Fill(repeater, dataReader);
@@ -45,5 +47,7 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 		{
 			SControl.FillThenDispose(repeater, dataView);
 		}
+
+		#endregion Public Methods
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Code_Helpers.System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -36,17 +37,12 @@ namespace Web_Forms_Helpers.System.Web.UI
 		/// </param>
 		public GMasterHelper(ICollection<KeyValuePair<string, string>> keyValueList)
 		{
-			if (keyValueList != null)
-			{
-				connectionList = new Dictionary<string, SqlConnection>(keyValueList.Count);
-				foreach (var keyValue in keyValueList)
-				{
-					connectionList.Add(
-						keyValue.Key,
-						new SqlConnection(keyValue.Value)
-					);
-				}
-			}
+			if (keyValueList.IsNull())
+				return;
+
+			connectionList = new Dictionary<string, SqlConnection>(keyValueList.Count);
+			foreach (var keyValue in keyValueList)
+				connectionList.Add(keyValue.Key, new SqlConnection(keyValue.Value));
 		}
 
 		#endregion Public Constructors
@@ -61,21 +57,14 @@ namespace Web_Forms_Helpers.System.Web.UI
 		/// </returns>
 		public bool AddToConnectionList(SqlConnection connection)
 		{
-			bool result = false;
+			if (connection.IsNull())
+				return false;
 
-			if (connection != null)
-			{
-				if (connectionList != null)
-				{
-					connectionList.Add(
-						Guid.NewGuid().ToString(),
-						connection
-					);
-					result = true;
-				}
-			}
+			if (connectionList.IsNull())
+				return false;
 
-			return result;
+			connectionList.Add($"{Guid.NewGuid()}", connection);
+			return true;
 		}
 
 		/// <summary>
@@ -84,18 +73,15 @@ namespace Web_Forms_Helpers.System.Web.UI
 		{
 			base.Dispose();
 
-			if (connectionList != null)
-			{
-				foreach (var connValue in connectionList.Values)
-				{
-					if (connValue != null)
-					{
-						connValue.Dispose();
-					}
-				}
-				connectionList.Clear();
-				connectionList = null;
-			}
+			if (connectionList.IsNull())
+				return;
+
+			foreach (var connValue in connectionList.Values)
+				if (connValue.IsNotNull())
+					connValue.Dispose();
+
+			connectionList.Clear();
+			connectionList = null;
 		}
 
 		/// <summary>
@@ -104,23 +90,21 @@ namespace Web_Forms_Helpers.System.Web.UI
 		/// </returns>
 		public SqlConnection GetCurrentSqlConnection()
 		{
-			SqlConnection connection = null;
-			if (connectionList != null)
+			if (connectionList.IsNull())
+				return null;
+
+			foreach (var connValue in connectionList.Values)
 			{
-				foreach (var connValue in connectionList.Values)
-				{
-					if (connValue != null)
-					{
-						connection = connValue;
-						if (connection.State != ConnectionState.Open)
-						{
-							connection.Open();
-						}
-						break;
-					}
-				}
+				if (connValue.IsNull())
+					continue;
+
+				if (connValue.State != ConnectionState.Open)
+					connValue.Open();
+
+				return connValue;
 			}
-			return connection;
+
+			return null;
 		}
 
 		/// <summary>
@@ -131,21 +115,19 @@ namespace Web_Forms_Helpers.System.Web.UI
 		/// </returns>
 		public SqlConnection GetCurrentSqlConnection(string connectionStringKeyName)
 		{
-			SqlConnection connection = null;
-			if (connectionList != null)
-			{
-				if (connectionList.ContainsKey(connectionStringKeyName))
-				{
-					connection = connectionList[connectionStringKeyName];
-					if (connection != null)
-					{
-						if (connection.State != ConnectionState.Open)
-						{
-							connection.Open();
-						}
-					}
-				}
-			}
+			if (connectionList.IsNull())
+				return null;
+
+			if (connectionList.ContainsKey(connectionStringKeyName).IsNotTrue())
+				return null;
+
+			SqlConnection connection = connectionList[connectionStringKeyName];
+			if (connection.IsNull())
+				return null;
+
+			if (connection.State != ConnectionState.Open)
+				connection.Open();
+
 			return connection;
 		}
 

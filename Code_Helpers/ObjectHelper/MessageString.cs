@@ -32,14 +32,12 @@ namespace Code_Helpers.ObjectHelper
 
 		#region Public Properties
 
-		public int Length
-		{
+		public int Length {
 			get { return messageBuilder.Length; }
 			set { messageBuilder.Length = value; }
 		}
 
-		public int MaxCapacity
-		{
+		public int MaxCapacity {
 			get { return messageBuilder.MaxCapacity; }
 		}
 

@@ -11,14 +11,14 @@ namespace Code_Helpers.System.Data
 			return SDataRow.GetFirstRow<DataTable>(dataTable);
 		}
 
-		public static bool HasRows(this DataTable dataTable)
-		{
-			return SDataRow.HasRows<DataTable>(dataTable);
-		}
-
 		public static bool HasNoRows(this DataTable dataTable)
 		{
 			return HasRows(dataTable).Not();
+		}
+
+		public static bool HasRows(this DataTable dataTable)
+		{
+			return SDataRow.HasRows<DataTable>(dataTable);
 		}
 
 		#endregion Public Methods

@@ -6,6 +6,8 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 {
 	public static class SDataList
 	{
+		#region Public Methods
+
 		public static void Fill(this DataList dataList, SqlDataReader dataReader)
 		{
 			SControl.Fill(dataList, dataReader);
@@ -45,5 +47,7 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 		{
 			SControl.FillThenDispose(dataList, dataView);
 		}
+
+		#endregion Public Methods
 	}
 }

@@ -44,10 +44,8 @@ namespace Code_Helpers.System.Collections
 		/// <summary>
 		/// </summary>
 		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-		public KeyValuePair<TKey, TValue>[] Items
-		{
-			get
-			{
+		public KeyValuePair<TKey, TValue>[] Items {
+			get {
 				KeyValuePair<TKey, TValue>[] array =
 					new KeyValuePair<TKey, TValue>[dict.Count];
 				dict.CopyTo(array, 0);

@@ -48,7 +48,7 @@ namespace Code_Helpers.System.Data.SqlClient
 			return result;
 		}
 
-		#endregion Public Delegates
+		#endregion Public Methods
 
 		#region Public Methods
 

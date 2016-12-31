@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Data;
 
@@ -21,7 +20,6 @@ namespace Code_Helpers.System.Data
 				)
 			)
 				throw new InvalidCastException("Data parameter is not valid, you are only alowed to use: DataTable, DataSet and DataView");
-
 
 			if (data is DataSet)
 			{
@@ -59,16 +57,16 @@ namespace Code_Helpers.System.Data
 			return null;
 		}
 
-		public static bool HasRows<T>(T data)
-			where T : MarshalByValueComponent, ISupportInitializeNotification, ISupportInitialize
-		{
-			return GetFirstRow(data).IsNotNull();
-		}
-
 		public static bool HasNoRows<T>(T data)
 		where T : MarshalByValueComponent, ISupportInitializeNotification, ISupportInitialize
 		{
 			return HasRows<T>(data).Not();
+		}
+
+		public static bool HasRows<T>(T data)
+					where T : MarshalByValueComponent, ISupportInitializeNotification, ISupportInitialize
+		{
+			return GetFirstRow(data).IsNotNull();
 		}
 
 		#endregion Public Methods

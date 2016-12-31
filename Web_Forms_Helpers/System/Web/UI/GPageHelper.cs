@@ -42,12 +42,7 @@ namespace Web_Forms_Helpers.System.Web.UI
 
 			connectionList = new Dictionary<string, SqlConnection>(keyValueList.Count);
 			foreach (var keyValue in keyValueList)
-			{
-				connectionList.Add(
-					keyValue.Key,
-					new SqlConnection(keyValue.Value)
-				);
-			}
+				connectionList.Add(keyValue.Key, new SqlConnection(keyValue.Value));
 		}
 
 		#endregion Public Constructors
@@ -68,10 +63,7 @@ namespace Web_Forms_Helpers.System.Web.UI
 			if (connectionList.IsNull())
 				return false;
 
-			connectionList.Add(
-				Guid.NewGuid().ToString(),
-				connection
-			);
+			connectionList.Add($"{Guid.NewGuid()}", connection);
 			return true;
 		}
 
@@ -85,11 +77,8 @@ namespace Web_Forms_Helpers.System.Web.UI
 				return;
 
 			foreach (var connValue in connectionList.Values)
-			{
-				if (connValue.IsNull())
-					continue;
-				connValue.Dispose();
-			}
+				if (connValue.IsNotNull())
+					connValue.Dispose();
 
 			connectionList.Clear();
 			connectionList = null;

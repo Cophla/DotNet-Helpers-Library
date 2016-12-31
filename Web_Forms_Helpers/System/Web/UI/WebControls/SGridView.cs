@@ -6,6 +6,8 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 {
 	public static class SGridView
 	{
+		#region Public Methods
+
 		public static void Fill(this GridView gridView, SqlDataReader dataReader)
 		{
 			SControl.Fill(gridView, dataReader);
@@ -45,5 +47,7 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 		{
 			SControl.FillThenDispose(gridView, dataView);
 		}
+
+		#endregion Public Methods
 	}
 }

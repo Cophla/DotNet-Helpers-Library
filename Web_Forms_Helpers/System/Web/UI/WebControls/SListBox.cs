@@ -7,6 +7,13 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 {
 	public static class SListBox
 	{
+		#region Public Methods
+
+		public static void Clear(this ListBox listBox)
+		{
+			SListControl.Clear(listBox);
+		}
+
 		public static void Fill(this ListBox listBox, IEnumerable enumerable, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
 		{
 			SListControl.Fill(listBox, enumerable, valueField, textField, positionZeroItem, emptyCaseItem);
@@ -37,19 +44,16 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 			SListControl.FillThenDispose(listBox, dataSource, valueField, textField, positionZeroItem, emptyCaseItem);
 		}
 
-		public static bool SetByValue(this ListBox listBox, object value)
-		{
-			return SListControl.SetByValue(listBox, value);
-		}
-
 		public static bool SetByText(this ListBox listBox, object text)
 		{
 			return SListControl.SetByText(listBox, text);
 		}
 
-		public static void Clear(this ListBox listBox)
+		public static bool SetByValue(this ListBox listBox, object value)
 		{
-			SListControl.Clear(listBox);
+			return SListControl.SetByValue(listBox, value);
 		}
+
+		#endregion Public Methods
 	}
 }

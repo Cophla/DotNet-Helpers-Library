@@ -6,6 +6,8 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 {
 	public static class SDataGrid
 	{
+		#region Public Methods
+
 		public static void Fill(this DataGrid dataGrid, SqlDataReader dataReader)
 		{
 			SControl.Fill(dataGrid, dataReader);
@@ -45,5 +47,7 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 		{
 			SControl.FillThenDispose(dataGrid, dataView);
 		}
+
+		#endregion Public Methods
 	}
 }

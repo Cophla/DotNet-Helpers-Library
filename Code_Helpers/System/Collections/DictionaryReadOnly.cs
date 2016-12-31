@@ -80,26 +80,22 @@ namespace Code_Helpers.System.Collections
 		/// <returns>
 		/// The number of key/value pairs contained in the <see cref="T:ReadOnlyDictionary`2"> </see>.
 		/// </returns>
-		public int Count
-		{
+		public int Count {
 			get { return this.source.Count; }
 		}
 
 		/// <summary>
 		/// Gets a value indicating whether access to the dictionary is synchronized (thread safe).
 		/// </summary>
-		bool ICollection.IsSynchronized
-		{
+		bool ICollection.IsSynchronized {
 			get { return false; }
 		}
 
 		/// <summary>
 		/// Gets an object that can be used to synchronize access to dictionary.
 		/// </summary>
-		object ICollection.SyncRoot
-		{
-			get
-			{
+		object ICollection.SyncRoot {
+			get {
 				if (this.syncRoot == null)
 				{
 					ICollection collection = this.source as ICollection;
@@ -121,8 +117,7 @@ namespace Code_Helpers.System.Collections
 		/// <summary>
 		/// Gets a value indicating whether the dictionary is read-only. This value will always be true.
 		/// </summary>
-		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
-		{
+		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly {
 			get { return true; }
 		}
 
@@ -137,8 +132,7 @@ namespace Code_Helpers.System.Collections
 		/// A <see cref="Dictionary{TKey,TValue}.KeyCollection" /> containing the keys in the <see
 		/// cref="Dictionary{TKey,TValue}"> </see>.
 		/// </returns>
-		public ICollection<TKey> Keys
-		{
+		public ICollection<TKey> Keys {
 			get { return this.source.Keys; }
 		}
 
@@ -148,8 +142,7 @@ namespace Code_Helpers.System.Collections
 		/// <value>
 		/// The collection of values.
 		/// </value>
-		public ICollection<TValue> Values
-		{
+		public ICollection<TValue> Values {
 			get { return this.source.Values; }
 		}
 
@@ -174,8 +167,7 @@ namespace Code_Helpers.System.Collections
 		/// <exception cref="T:System.Collections.Generic.KeyNotFoundException">
 		/// The property is retrieved and key does not exist in the collection.
 		/// </exception>
-		public TValue this[TKey key]
-		{
+		public TValue this[TKey key] {
 			get { return this.source[key]; }
 			set { ThrowNotSupportedException(); }
 		}

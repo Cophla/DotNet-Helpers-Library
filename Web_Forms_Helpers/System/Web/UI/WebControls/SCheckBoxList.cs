@@ -13,6 +13,7 @@ namespace Web_Forms_Helpers.System.Web.UI.WebControls
 		{
 			SListControl.Clear(checkBoxList);
 		}
+
 		public static void Fill(this CheckBoxList checkBoxList, IEnumerable enumerable, string valueField, string textField, ListItem positionZeroItem, ListItem emptyCaseItem)
 		{
 			SListControl.Fill(checkBoxList, enumerable, valueField, textField, positionZeroItem, emptyCaseItem);

@@ -4,6 +4,8 @@ namespace Code_Helpers.ObjectHelper
 {
 	public class DataPagingHelper
 	{
+		#region Public Constructors
+
 		public DataPagingHelper(int totalItems, int? page, int pageSize = 10)
 		{
 			// calculate total, start and end pages
@@ -33,6 +35,7 @@ namespace Code_Helpers.ObjectHelper
 			EndPage = endPage;
 		}
 
+		#endregion Public Constructors
 
 		#region Public Properties
 
