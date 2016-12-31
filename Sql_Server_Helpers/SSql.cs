@@ -1,4 +1,5 @@
-﻿using Code_Helpers.System;
+﻿using Code_Helpers.ObjectHelper;
+using Code_Helpers.System;
 using Code_Helpers.System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -20,30 +21,17 @@ namespace Sql_Server_Helpers
 
 		#endregion Private Fields
 
-		private SqlTransaction _sqlTransaction;
+		#region Public Properties
 
-		public SqlTransaction SQLTransaction {
+		public SqlTransaction SQLTransaction
+		{
 			get { return _sqlTransaction; }
 			set { _sqlTransaction = value; }
 		}
 
-		#region Public Constructors
+		#endregion Public Properties
 
-		public SqlDb(int capacity) : this(capacity, false)
-		{
-		}
-
-		public SqlDb(int capacity, bool fullDispose)
-		{
-			_sqlParmDictionary = new Dictionary<string, SqlParameter>(capacity);
-			_isFullDispose = fullDispose;
-			if (_isFullDispose)
-				_commandBehavior = CommandBehavior.CloseConnection;
-			else
-				_commandBehavior = CommandBehavior.Default;
-		}
-
-		#endregion Public Constructors
+		#region Public Methods
 
 		public SqlParameter AddOutParm(string parameterName, SqlDbType dbType)
 		{
@@ -72,10 +60,33 @@ namespace Sql_Server_Helpers
 			return param;
 		}
 
+		public void Dispose()
+		{
+			_sqlString = null;
+			_sqlParmDictionary.Clear();
+			_sqlParmDictionary = null;
+			if (_isFullDispose)
+			{
+				if (_sqlTransaction.IsNotNull())
+					_sqlTransaction.Dispose();
+
+				if (_sqlConnection.IsNotNull())
+					_sqlConnection.Dispose();
+			}
+			_sqlTransaction = null;
+			_sqlConnection = null;
+		}
+
 		public SqlDataReader Get(out string errorMsg)
 		{
 			return _sqlConnection.Get(
 				_sqlString, _commandType, _commandBehavior, _sqlParmDictionary.Values, out errorMsg);
+		}
+
+		public SqlDataReader Get(MessageString errorMsg)
+		{
+			return _sqlConnection.Get(
+				_sqlString, _commandType, _commandBehavior, _sqlParmDictionary.Values, errorMsg);
 		}
 
 		public DataSet GetDataSet(out string errorMsg)
@@ -83,14 +94,29 @@ namespace Sql_Server_Helpers
 			return Get(out errorMsg).GetDataSet();
 		}
 
+		public DataSet GetDataSet(MessageString errorMsg)
+		{
+			return Get(errorMsg).GetDataSet();
+		}
+
 		public DataTable GetDataTable(out string errorMsg)
 		{
 			return Get(out errorMsg).GetDataTable();
 		}
 
+		public DataTable GetDataTable(MessageString errorMsg)
+		{
+			return Get(errorMsg).GetDataTable();
+		}
+
 		public DataView GetDataView(out string errorMsg)
 		{
 			return Get(out errorMsg).GetDataView();
+		}
+
+		public DataView GetDataView(MessageString errorMsg)
+		{
+			return Get(errorMsg).GetDataView();
 		}
 
 		public object GetObjValue(string parameterName)
@@ -106,19 +132,44 @@ namespace Sql_Server_Helpers
 			return GetObjValue(parameterName).DbValueAs<T>();
 		}
 
+		#endregion Public Methods
+
+		private SqlTransaction _sqlTransaction;
+
+		#region Public Constructors
+
+		public SqlDb(int capacity) : this(capacity, false)
+		{
+		}
+
+		public SqlDb(int capacity, bool fullDispose)
+		{
+			_sqlParmDictionary = new Dictionary<string, SqlParameter>(capacity);
+			_isFullDispose = fullDispose;
+			if (_isFullDispose)
+				_commandBehavior = CommandBehavior.CloseConnection;
+			else
+				_commandBehavior = CommandBehavior.Default;
+		}
+
+		#endregion Public Constructors
+
 		#region Public Properties
 
-		public CommandType SQLCommandType {
+		public CommandType SQLCommandType
+		{
 			get { return _commandType; }
 			set { _commandType = value; }
 		}
 
-		public SqlConnection SQLConnection {
+		public SqlConnection SQLConnection
+		{
 			get { return _sqlConnection; }
 			set { _sqlConnection = value; }
 		}
 
-		public string SQLString {
+		public string SQLString
+		{
 			get { return _sqlString; }
 			set { _sqlString = value; }
 		}
@@ -127,61 +178,12 @@ namespace Sql_Server_Helpers
 
 		#region Public Indexers
 
-		public object this[string parameterName] {
+		public object this[string parameterName]
+		{
 			get { return GetObjValue(parameterName); }
 
 			set { AddParm(parameterName, value); }
 		}
-
-		#region IDisposable Support
-
-		private bool disposedValue = false; // To detect redundant calls
-
-		// This code added to correctly implement the disposable pattern.
-		public void Dispose()
-		{
-			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-			Dispose(true);
-			// TODO: uncomment the following line if the finalizer is overridden above.
-			// GC.SuppressFinalize(this);
-		}
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!disposedValue)
-			{
-				if (disposing)
-				{
-					// TODO: dispose managed state (managed objects).
-					_sqlString = null;
-					_sqlParmDictionary.Clear();
-					_sqlParmDictionary = null;
-					if (_isFullDispose)
-					{
-						if (_sqlTransaction.IsNotNull())
-							_sqlTransaction.Dispose();
-
-						if (_sqlConnection.IsNotNull())
-							_sqlConnection.Dispose();
-					}
-					_sqlTransaction = null;
-					_sqlConnection = null;
-				}
-
-				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-				// TODO: set large fields to null.
-
-				disposedValue = true;
-			}
-		}
-
-		// TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-		// ~SqlDb() {
-		//   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-		//   Dispose(false);
-		// }
-
-		#endregion IDisposable Support
 
 		#endregion Public Indexers
 	}

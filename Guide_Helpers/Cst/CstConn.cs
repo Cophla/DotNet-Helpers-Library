@@ -44,7 +44,8 @@ namespace Guide_Helpers.CstConn
 
 		/// <summary>
 		/// </summary>
-		public static IReadOnlyDictionary<string, string> ConnectionKeyValueList {
+		public static IReadOnlyDictionary<string, string> ConnectionKeyValueList
+		{
 			get { return connectionKeyValueList; }
 		}
 

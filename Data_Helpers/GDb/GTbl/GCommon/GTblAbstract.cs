@@ -495,8 +495,6 @@ namespace Data_Helpers.GDb.GTbl.GCommon
 
 		#region IDisposable Support
 
-		private bool disposedValue = false;
-
 		// This code added to correctly implement the disposable pattern.
 		/// <summary>
 		/// </summary>
@@ -504,7 +502,8 @@ namespace Data_Helpers.GDb.GTbl.GCommon
 		{
 			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
 			Dispose(true);
-			// TODO: uncomment the following line if the finalizer is overridden above. GC.SuppressFinalize(this);
+			// TODO: uncomment the following line if the finalizer is overridden above.
+			//       GC.SuppressFinalize(this);
 		}
 
 		/// <summary>
@@ -527,6 +526,7 @@ namespace Data_Helpers.GDb.GTbl.GCommon
 			}
 		}
 
+		private bool disposedValue = false;
 		// To detect redundant calls
 		// TODO: override a finalizer only if Dispose(bool
 		// disposing) above has code to free unmanaged resources. ~GTblAbstract() { // Do not change
