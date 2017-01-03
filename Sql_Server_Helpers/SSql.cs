@@ -17,7 +17,7 @@ namespace Sql_Server_Helpers
 		private bool _isFullDispose;
 		private SqlConnection _sqlConnection;
 		private IDictionary<string, SqlParameter> _sqlParmDictionary;
-		private string _sqlString;private int a;
+		private string _sqlString;
 
 		#endregion Private Fields
 
