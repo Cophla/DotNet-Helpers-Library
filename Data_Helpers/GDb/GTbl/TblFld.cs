@@ -62,25 +62,29 @@ namespace Data_Helpers.GDb.GTbl
 
 		/// <summary>
 		/// </summary>
-		public SqlDbType DbType {
+		public SqlDbType DbType
+		{
 			get { return dbType; }
 		}
 
 		/// <summary>
 		/// </summary>
-		public string FldName {
+		public string FldName
+		{
 			get { return fldName; }
 		}
 
 		/// <summary>
 		/// </summary>
-		public int Size {
+		public int Size
+		{
 			get { return size; }
 		}
 
 		/// <summary>
 		/// </summary>
-		public string StrParm {
+		public string StrParm
+		{
 			get { return strParm; }
 		}
 

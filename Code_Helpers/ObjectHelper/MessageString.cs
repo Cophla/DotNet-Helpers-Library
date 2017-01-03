@@ -32,12 +32,14 @@ namespace Code_Helpers.ObjectHelper
 
 		#region Public Properties
 
-		public int Length {
+		public int Length
+		{
 			get { return messageBuilder.Length; }
 			set { messageBuilder.Length = value; }
 		}
 
-		public int MaxCapacity {
+		public int MaxCapacity
+		{
 			get { return messageBuilder.MaxCapacity; }
 		}
 
@@ -181,8 +183,6 @@ namespace Code_Helpers.ObjectHelper
 
 		#region IDisposable Support
 
-		private bool disposedValue = false; // To detect redundant calls
-
 		// This code added to correctly implement the disposable pattern.
 		public void Dispose()
 		{
@@ -191,6 +191,8 @@ namespace Code_Helpers.ObjectHelper
 			// TODO: uncomment the following line if the finalizer is overridden above.
 			// GC.SuppressFinalize(this);
 		}
+
+		private bool disposedValue = false; // To detect redundant calls
 
 		private void Dispose(bool disposing)
 		{
@@ -210,11 +212,9 @@ namespace Code_Helpers.ObjectHelper
 			}
 		}
 
-		// TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-		// ~MessageString() {
-		//   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-		//   Dispose(false);
-		// }
+		// TODO: override a finalizer only if Dispose(bool disposing) above has code to free
+		//       unmanaged resources. ~MessageString() { // Do not change this code. Put cleanup code
+		// in Dispose(bool disposing) above. Dispose(false); }
 
 		#endregion IDisposable Support
 	}
