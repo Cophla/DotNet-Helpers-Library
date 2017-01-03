@@ -6,6 +6,7 @@ namespace Data_Helpers.GDb
 	/// <summary></summary>
 	public class GDbManager
 	{
+		int a;
 		#region Private Properties
 
 		/// <summary></summary>
