@@ -6,16 +6,13 @@ using System.Web;
 
 namespace Web_Forms_Helpers.System.Web.UI
 {
-	/// <summary>
-	/// </summary>
+	/// <summary></summary>
 	public static class GPageMasterHandler
 	{
 		#region Public Methods
 
-		/// <summary>
-		/// </summary>
-		/// <returns>
-		/// </returns>
+		/// <summary></summary>
+		/// <returns></returns>
 		public static SqlConnection GetCurrentHandlerSqlConnection()
 		{
 			if (HttpContext.Current.IsNull())
@@ -42,12 +39,9 @@ namespace Web_Forms_Helpers.System.Web.UI
 			return connection;
 		}
 
-		/// <summary>
-		/// </summary>
-		/// <param name="connectionStringKeyName">
-		/// </param>
-		/// <returns>
-		/// </returns>
+		/// <summary></summary>
+		/// <param name="connectionStringKeyName"></param>
+		/// <returns></returns>
 		public static SqlConnection GetCurrentHandlerSqlConnection(string connectionStringKeyName)
 		{
 			if (HttpContext.Current.IsNull())

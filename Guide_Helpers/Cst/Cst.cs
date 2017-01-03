@@ -2,14 +2,12 @@
 {
 	namespace DataBaseName
 	{
-		/// <summary>
-		/// </summary>
+		/// <summary></summary>
 		public static class CstTable1
 		{
 			#region Public Fields
 
-			/// <summary>
-			/// </summary>
+			/// <summary></summary>
 			public const int FIELD_NAME_1 = 2;
 
 			#endregion Public Fields

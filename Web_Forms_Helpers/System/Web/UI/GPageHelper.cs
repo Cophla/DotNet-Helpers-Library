@@ -6,35 +6,28 @@ using System.Data.SqlClient;
 
 namespace Web_Forms_Helpers.System.Web.UI
 {
-	/// <summary>
-	/// </summary>
+	/// <summary></summary>
 	public class GPageHelper : GPage, IPageMasterHelper
 	{
 		#region Private Fields
 
-		/// <summary>
-		/// </summary>
+		/// <summary></summary>
 		private Dictionary<string, SqlConnection> connectionList = null;
 
 		#endregion Private Fields
 
 		#region Public Constructors
 
-		/// <summary>
-		/// </summary>
-		/// <param name="connectionStringKey">
-		/// </param>
-		/// <param name="connectionStringValue">
-		/// </param>
+		/// <summary></summary>
+		/// <param name="connectionStringKey"></param>
+		/// <param name="connectionStringValue"></param>
 		public GPageHelper(string connectionStringKey, string connectionStringValue)
 			: this(new Dictionary<string, string>() { { connectionStringKey, connectionStringValue } })
 		{
 		}
 
-		/// <summary>
-		/// </summary>
-		/// <param name="keyValueList">
-		/// </param>
+		/// <summary></summary>
+		/// <param name="keyValueList"></param>
 		public GPageHelper(ICollection<KeyValuePair<string, string>> keyValueList)
 		{
 			if (keyValueList.IsNull())
@@ -49,12 +42,9 @@ namespace Web_Forms_Helpers.System.Web.UI
 
 		#region Public Methods
 
-		/// <summary>
-		/// </summary>
-		/// <param name="connection">
-		/// </param>
-		/// <returns>
-		/// </returns>
+		/// <summary></summary>
+		/// <param name="connection"></param>
+		/// <returns></returns>
 		public bool AddToConnectionList(SqlConnection connection)
 		{
 			if (connection.IsNull())
@@ -67,8 +57,7 @@ namespace Web_Forms_Helpers.System.Web.UI
 			return true;
 		}
 
-		/// <summary>
-		/// </summary>
+		/// <summary></summary>
 		public override void Dispose()
 		{
 			base.Dispose();
@@ -84,10 +73,8 @@ namespace Web_Forms_Helpers.System.Web.UI
 			connectionList = null;
 		}
 
-		/// <summary>
-		/// </summary>
-		/// <returns>
-		/// </returns>
+		/// <summary></summary>
+		/// <returns></returns>
 		public SqlConnection GetCurrentSqlConnection()
 		{
 			if (connectionList.IsNull())
@@ -106,12 +93,9 @@ namespace Web_Forms_Helpers.System.Web.UI
 			return null;
 		}
 
-		/// <summary>
-		/// </summary>
-		/// <param name="connectionStringKeyName">
-		/// </param>
-		/// <returns>
-		/// </returns>
+		/// <summary></summary>
+		/// <param name="connectionStringKeyName"></param>
+		/// <returns></returns>
 		public SqlConnection GetCurrentSqlConnection(string connectionStringKeyName)
 		{
 			if (connectionList.IsNull())

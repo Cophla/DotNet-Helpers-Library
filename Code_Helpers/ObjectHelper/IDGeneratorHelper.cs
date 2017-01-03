@@ -3,31 +3,26 @@ using System.Security.Cryptography;
 
 namespace Code_Helpers.ObjectHelper
 {
-	/// <summary>
-	/// </summary>
+	/// <summary></summary>
 	public class IDGeneratorHelper
 	{
 		#region Private Fields
 
-		/// <summary>
-		/// </summary>
+		/// <summary></summary>
 		private static readonly IDGeneratorHelper _instance = new IDGeneratorHelper();
 
 		// 0, 1, O, I omitted intentionally giving 32 (2^5) symbols
-		/// <summary>
-		/// </summary>
+		/// <summary></summary>
 		private static char[] _charMap = { '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
-		/// <summary>
-		/// </summary>
+		/// <summary></summary>
 		private RNGCryptoServiceProvider _provider = new RNGCryptoServiceProvider();
 
 		#endregion Private Fields
 
 		#region Private Constructors
 
-		/// <summary>
-		/// </summary>
+		/// <summary></summary>
 		private IDGeneratorHelper()
 		{
 		}
@@ -36,10 +31,8 @@ namespace Code_Helpers.ObjectHelper
 
 		#region Public Methods
 
-		/// <summary>
-		/// </summary>
-		/// <returns>
-		/// </returns>
+		/// <summary></summary>
+		/// <returns></returns>
 		public static string NewID()
 		{
 			return _instance.GetBase32UniqueId(20);
@@ -49,34 +42,25 @@ namespace Code_Helpers.ObjectHelper
 
 		#region Private Methods
 
-		/// <summary>
-		/// </summary>
-		/// <returns>
-		/// </returns>
+		/// <summary></summary>
+		/// <returns></returns>
 		private static IDGeneratorHelper GetInstance()
 		{
 			return _instance;
 		}
 
-		/// <summary>
-		/// </summary>
-		/// <param name="numDigits">
-		/// </param>
-		/// <returns>
-		/// </returns>
+		/// <summary></summary>
+		/// <param name="numDigits"></param>
+		/// <returns></returns>
 		private string GetBase32UniqueId(int numDigits)
 		{
 			return GetBase32UniqueId(new byte[0], numDigits);
 		}
 
-		/// <summary>
-		/// </summary>
-		/// <param name="basis">
-		/// </param>
-		/// <param name="numDigits">
-		/// </param>
-		/// <returns>
-		/// </returns>
+		/// <summary></summary>
+		/// <param name="basis"></param>
+		/// <param name="numDigits"></param>
+		/// <returns></returns>
 		private string GetBase32UniqueId(byte[] basis, int numDigits)
 		{
 			int byteCount = 16;
@@ -114,10 +98,8 @@ namespace Code_Helpers.ObjectHelper
 			return ret;
 		}
 
-		/// <summary>
-		/// </summary>
-		/// <param name="bytes">
-		/// </param>
+		/// <summary></summary>
+		/// <param name="bytes"></param>
 		private void GetNext(byte[] bytes)
 		{
 			_provider.GetBytes(bytes);

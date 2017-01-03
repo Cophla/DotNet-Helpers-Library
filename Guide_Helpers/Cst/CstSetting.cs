@@ -4,18 +4,14 @@ namespace Guide_Helpers.CstSetting
 {
 	namespace ApplicationName
 	{
-		/// <summary>
-		/// </summary>
+		/// <summary></summary>
 		public static class AppSeting
 		{
 			#region Public Properties
 
-			/// <summary>
-			/// </summary>
-			public static int AppExampleValue
-			{
-				get
-				{
+			/// <summary></summary>
+			public static int AppExampleValue {
+				get {
 					return int.Parse(
 						ConfigurationManager.AppSettings[AppExampleValue]
 					);

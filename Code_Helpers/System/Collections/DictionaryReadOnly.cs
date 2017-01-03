@@ -7,25 +7,19 @@ using System.Threading;
 
 namespace Code_Helpers.System.Collections
 {
-	/// <summary>
-	/// Provides the base class for a generic read-only dictionary. 
-	/// </summary>
-	/// <typeparam name="TKey">
-	/// The type of keys in the dictionary. 
-	/// </typeparam>
-	/// <typeparam name="TValue">
-	/// The type of values in the dictionary. 
-	/// </typeparam>
+	/// <summary>Provides the base class for a generic read-only dictionary.</summary>
+	/// <typeparam name="TKey">The type of keys in the dictionary.</typeparam>
+	/// <typeparam name="TValue">The type of values in the dictionary.</typeparam>
 	/// <remarks>
 	/// <para>
-	/// An instance of the <b> ReadOnlyDictionary </b> generic class is always read-only. A
-	/// dictionary that is read-only is simply a dictionary with a wrapper that prevents modifying
-	/// the dictionary; therefore, if changes are made to the underlying dictionary, the read-only
+	/// An instance of the <b>ReadOnlyDictionary</b> generic class is always read-only. A dictionary
+	/// that is read-only is simply a dictionary with a wrapper that prevents modifying the
+	/// dictionary; therefore, if changes are made to the underlying dictionary, the read-only
 	/// dictionary reflects those changes. See <see cref="Dictionary{TKey,TValue}"/> for a modifiable
 	/// version of this class.
 	/// </para>
 	/// <para>
-	/// <b> Notes to Implementers </b> This base class is provided to make it easier for implementers
+	/// <b>Notes to Implementers</b> This base class is provided to make it easier for implementers
 	/// to create a generic read-only custom dictionary. Implementers are encouraged to extend this
 	/// base class instead of creating their own.
 	/// </para>
@@ -52,10 +46,10 @@ namespace Code_Helpers.System.Collections
 		/// the supplied <paramref name="dictionaryToWrap"/>.
 		/// </summary>
 		/// <param name="dictionaryToWrap">
-		/// The <see cref="T:IDictionary`2"/> that will be wrapped. 
+		/// The <see cref="T:IDictionary`2"/> that will be wrapped.
 		/// </param>
 		/// <exception cref="T:System.ArgumentNullException">
-		/// Thrown when the dictionary is null. 
+		/// Thrown when the dictionary is null.
 		/// </exception>
 		public DictionaryReadOnly(IDictionary<TKey, TValue> dictionaryToWrap)
 		{
@@ -72,36 +66,48 @@ namespace Code_Helpers.System.Collections
 		#region Public Properties
 
 		/// <summary>
-		/// Gets the number of key/value pairs contained in the <see cref="T:ReadOnlyDictionary`2">
-		/// </see>.
+		/// Gets the number of key/value pairs contained in the <see
+		/// cref="T:ReadOnlyDictionary`2"></see>.
 		/// </summary>
-		/// <value>
-		/// The number of key/value pairs. 
-		/// </value>
+		/// <value>The number of key/value pairs.</value>
 		/// <returns>
-		/// The number of key/value pairs contained in the <see cref="T:ReadOnlyDictionary`2">
-		/// </see>.
+		/// The number of key/value pairs contained in the <see cref="T:ReadOnlyDictionary`2"></see>.
 		/// </returns>
-		public int Count
-		{
+		public int Count {
 			get { return this.source.Count; }
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether access to the dictionary is synchronized (thread safe). 
+		/// Gets a value indicating whether the dictionary is read-only. This value will always be
+		/// true.
 		/// </summary>
-		bool ICollection.IsSynchronized
-		{
+		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly {
+			get { return true; }
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether access to the dictionary is synchronized (thread safe).
+		/// </summary>
+		bool ICollection.IsSynchronized {
 			get { return false; }
 		}
 
 		/// <summary>
-		/// Gets an object that can be used to synchronize access to dictionary. 
+		/// Gets a collection containing the keys in the <see
+		/// cref="T:ReadOnlyDictionary{TKey,TValue}"></see>.
 		/// </summary>
-		object ICollection.SyncRoot
-		{
-			get
-			{
+		/// <value>A <see cref="Dictionary{TKey,TValue}.KeyCollection"/> containing the keys.</value>
+		/// <returns>
+		/// A <see cref="Dictionary{TKey,TValue}.KeyCollection"/> containing the keys in the <see
+		/// cref="Dictionary{TKey,TValue}"></see>.
+		/// </returns>
+		public ICollection<TKey> Keys {
+			get { return this.source.Keys; }
+		}
+
+		/// <summary>Gets an object that can be used to synchronize access to dictionary.</summary>
+		object ICollection.SyncRoot {
+			get {
 				if (this.syncRoot == null)
 				{
 					ICollection collection = this.source as ICollection;
@@ -121,38 +127,10 @@ namespace Code_Helpers.System.Collections
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether the dictionary is read-only. This value will always be
-		/// true.
+		/// Gets a collection containing the values of the <see cref="T:ReadOnlyDictionary`2"/>.
 		/// </summary>
-		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
-		{
-			get { return true; }
-		}
-
-		/// <summary>
-		/// Gets a collection containing the keys in the <see
-		/// cref="T:ReadOnlyDictionary{TKey,TValue}"> </see>.
-		/// </summary>
-		/// <value>
-		/// A <see cref="Dictionary{TKey,TValue}.KeyCollection"/> containing the keys. 
-		/// </value>
-		/// <returns>
-		/// A <see cref="Dictionary{TKey,TValue}.KeyCollection"/> containing the keys in the <see
-		/// cref="Dictionary{TKey,TValue}"> </see>.
-		/// </returns>
-		public ICollection<TKey> Keys
-		{
-			get { return this.source.Keys; }
-		}
-
-		/// <summary>
-		/// Gets a collection containing the values of the <see cref="T:ReadOnlyDictionary`2"/>. 
-		/// </summary>
-		/// <value>
-		/// The collection of values. 
-		/// </value>
-		public ICollection<TValue> Values
-		{
+		/// <value>The collection of values.</value>
+		public ICollection<TValue> Values {
 			get { return this.source.Values; }
 		}
 
@@ -160,25 +138,18 @@ namespace Code_Helpers.System.Collections
 
 		#region Public Indexers
 
-		/// <summary>
-		/// Gets or sets the value associated with the specified key. 
-		/// </summary>
+		/// <summary>Gets or sets the value associated with the specified key.</summary>
 		/// <returns>
 		/// The value associated with the specified key. If the specified key is not found, a get
 		/// operation throws a <see cref="T:System.Collections.Generic.KeyNotFoundException"/>, and a
 		/// set operation creates a new element with the specified key.
 		/// </returns>
-		/// <param name="key">
-		/// The key of the value to get or set. 
-		/// </param>
-		/// <exception cref="T:System.ArgumentNullException">
-		/// Thrown when the key is null. 
-		/// </exception>
+		/// <param name="key">The key of the value to get or set.</param>
+		/// <exception cref="T:System.ArgumentNullException">Thrown when the key is null.</exception>
 		/// <exception cref="T:System.Collections.Generic.KeyNotFoundException">
-		/// The property is retrieved and key does not exist in the collection. 
+		/// The property is retrieved and key does not exist in the collection.
 		/// </exception>
-		public TValue this[TKey key]
-		{
+		public TValue this[TKey key] {
 			get { return this.source[key]; }
 			set { ThrowNotSupportedException(); }
 		}
@@ -188,47 +159,9 @@ namespace Code_Helpers.System.Collections
 		#region Public Methods
 
 		/// <summary>
-		/// Determines whether the <see cref="T:ReadOnlyDictionary`2"/> contains the specified key. 
+		/// This method is not supported by the <see cref="T:ReadOnlyDictionary`2"/>.
 		/// </summary>
-		/// <returns>
-		/// True if the <see cref="T:ReadOnlyDictionary`2"/> contains an element with the specified
-		/// key; otherwise, false.
-		/// </returns>
-		/// <param name="key">
-		/// The key to locate in the <see cref="T:ReadOnlyDictionary`2"> </see>. 
-		/// </param>
-		/// <exception cref="T:System.ArgumentNullException">
-		/// Thrown when the key is null. 
-		/// </exception>
-		public bool ContainsKey(TKey key)
-		{
-			return this.source.ContainsKey(key);
-		}
-
-		/// <summary>
-		/// For a description of this member, see <see cref="ICollection.CopyTo"/>. 
-		/// </summary>
-		/// <param name="array">
-		/// The one-dimensional Array that is the destination of the elements copied from
-		/// ICollection. The Array must have zero-based indexing.
-		/// </param>
-		/// <param name="index">
-		/// The zero-based index in Array at which copying begins. 
-		/// </param>
-		void ICollection.CopyTo(Array array, int index)
-		{
-			ICollection collection =
-				new List<KeyValuePair<TKey, TValue>>(this.source);
-
-			collection.CopyTo(array, index);
-		}
-
-		/// <summary>
-		/// This method is not supported by the <see cref="T:ReadOnlyDictionary`2"/>. 
-		/// </summary>
-		/// <param name="item">
-		/// The object to add to the <see cref="T:ICollection`1"/>. 
-		/// </param>
+		/// <param name="item">The object to add to the <see cref="T:ICollection`1"/>.</param>
 		void ICollection<KeyValuePair<TKey, TValue>>.Add(
 			KeyValuePair<TKey, TValue> item)
 		{
@@ -236,7 +169,17 @@ namespace Code_Helpers.System.Collections
 		}
 
 		/// <summary>
-		/// This method is not supported by the <see cref="T:ReadOnlyDictionary`2"/>. 
+		/// This method is not supported by the <see cref="T:ReadOnlyDictionary`2"/>.
+		/// </summary>
+		/// <param name="key">The object to use as the key of the element to add.</param>
+		/// <param name="value">The object to use as the value of the element to add.</param>
+		void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
+		{
+			ThrowNotSupportedException();
+		}
+
+		/// <summary>
+		/// This method is not supported by the <see cref="T:ReadOnlyDictionary`2"/>.
 		/// </summary>
 		void ICollection<KeyValuePair<TKey, TValue>>.Clear()
 		{
@@ -244,13 +187,11 @@ namespace Code_Helpers.System.Collections
 		}
 
 		/// <summary>
-		/// Determines whether the <see cref="T:ICollection`1"/> contains a specific value. 
+		/// Determines whether the <see cref="T:ICollection`1"/> contains a specific value.
 		/// </summary>
-		/// <param name="item">
-		/// The object to locate in the <see cref="T:ICollection`1"/>. 
-		/// </param>
+		/// <param name="item">The object to locate in the <see cref="T:ICollection`1"/>.</param>
 		/// <returns>
-		/// <b> true </b> if item is found in the <b> ICollection </b>; otherwise, <b> false </b>. 
+		/// <b>true</b> if item is found in the <b>ICollection</b>; otherwise, <b>false</b>.
 		/// </returns>
 		bool ICollection<KeyValuePair<TKey, TValue>>.Contains(
 			KeyValuePair<TKey, TValue> item)
@@ -261,15 +202,45 @@ namespace Code_Helpers.System.Collections
 		}
 
 		/// <summary>
+		/// Determines whether the <see cref="T:ReadOnlyDictionary`2"/> contains the specified key.
+		/// </summary>
+		/// <returns>
+		/// True if the <see cref="T:ReadOnlyDictionary`2"/> contains an element with the specified
+		/// key; otherwise, false.
+		/// </returns>
+		/// <param name="key">
+		/// The key to locate in the <see cref="T:ReadOnlyDictionary`2"></see>.
+		/// </param>
+		/// <exception cref="T:System.ArgumentNullException">Thrown when the key is null.</exception>
+		public bool ContainsKey(TKey key)
+		{
+			return this.source.ContainsKey(key);
+		}
+
+		/// <summary>
+		/// For a description of this member, see <see cref="ICollection.CopyTo"/>.
+		/// </summary>
+		/// <param name="array">
+		/// The one-dimensional Array that is the destination of the elements copied from
+		/// ICollection. The Array must have zero-based indexing.
+		/// </param>
+		/// <param name="index">The zero-based index in Array at which copying begins.</param>
+		void ICollection.CopyTo(Array array, int index)
+		{
+			ICollection collection =
+				new List<KeyValuePair<TKey, TValue>>(this.source);
+
+			collection.CopyTo(array, index);
+		}
+
+		/// <summary>
 		/// Copies the elements of the ICollection to an Array, starting at a particular Array index.
 		/// </summary>
 		/// <param name="array">
 		/// The one-dimensional Array that is the destination of the elements copied from
 		/// ICollection. The Array must have zero-based indexing.
 		/// </param>
-		/// <param name="arrayIndex">
-		/// The zero-based index in array at which copying begins. 
-		/// </param>
+		/// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
 		void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(
 			KeyValuePair<TKey, TValue>[] array, int arrayIndex)
 		{
@@ -277,67 +248,15 @@ namespace Code_Helpers.System.Collections
 			collection.CopyTo(array, arrayIndex);
 		}
 
-		/// <summary>
-		/// This method is not supported by the <see cref="T:ReadOnlyDictionary`2"/>. 
-		/// </summary>
-		/// <param name="item">
-		/// The object to remove from the ICollection. 
-		/// </param>
-		/// <returns>
-		/// Will never return a value. 
-		/// </returns>
-		bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
-		{
-			ThrowNotSupportedException();
-			return false;
-		}
-
-		/// <summary>
-		/// This method is not supported by the <see cref="T:ReadOnlyDictionary`2"/>. 
-		/// </summary>
-		/// <param name="key">
-		/// The object to use as the key of the element to add. 
-		/// </param>
-		/// <param name="value">
-		/// The object to use as the value of the element to add. 
-		/// </param>
-		void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
-		{
-			ThrowNotSupportedException();
-		}
-
-		/// <summary>
-		/// This method is not supported by the <see cref="T:ReadOnlyDictionary`2"/>. 
-		/// </summary>
-		/// <param name="key">
-		/// The key of the element to remove. 
-		/// </param>
-		/// <returns>
-		/// True if the element is successfully removed; otherwise, false. 
-		/// </returns>
-		bool IDictionary<TKey, TValue>.Remove(TKey key)
-		{
-			ThrowNotSupportedException();
-			return false;
-		}
-
-		/// <summary>
-		/// Returns an enumerator that iterates through a collection. 
-		/// </summary>
-		/// <returns>
-		/// An IEnumerator that can be used to iterate through the collection. 
-		/// </returns>
+		/// <summary>Returns an enumerator that iterates through a collection.</summary>
+		/// <returns>An IEnumerator that can be used to iterate through the collection.</returns>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.source.GetEnumerator();
 		}
 
-		/// <summary>
-		/// Returns an enumerator that iterates through the collection. 
-		/// </summary>
-		/// <returns>
-		/// A IEnumerator that can be used to iterate through the collection. 
-		/// </returns>
+		/// <summary>Returns an enumerator that iterates through the collection.</summary>
+		/// <returns>A IEnumerator that can be used to iterate through the collection.</returns>
 		IEnumerator<KeyValuePair<TKey, TValue>>
 			IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
 		{
@@ -347,19 +266,37 @@ namespace Code_Helpers.System.Collections
 		}
 
 		/// <summary>
-		/// Gets the value associated with the specified key. 
+		/// This method is not supported by the <see cref="T:ReadOnlyDictionary`2"/>.
 		/// </summary>
-		/// <param name="key">
-		/// The key of the value to get. 
-		/// </param>
+		/// <param name="item">The object to remove from the ICollection.</param>
+		/// <returns>Will never return a value.</returns>
+		bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
+		{
+			ThrowNotSupportedException();
+			return false;
+		}
+
+		/// <summary>
+		/// This method is not supported by the <see cref="T:ReadOnlyDictionary`2"/>.
+		/// </summary>
+		/// <param name="key">The key of the element to remove.</param>
+		/// <returns>True if the element is successfully removed; otherwise, false.</returns>
+		bool IDictionary<TKey, TValue>.Remove(TKey key)
+		{
+			ThrowNotSupportedException();
+			return false;
+		}
+
+		/// <summary>Gets the value associated with the specified key.</summary>
+		/// <param name="key">The key of the value to get.</param>
 		/// <param name="value">
 		/// When this method returns, contains the value associated with the specified key, if the
 		/// key is found; otherwise, the default value for the type of the value parameter. This
 		/// parameter is passed uninitialized.
 		/// </param>
 		/// <returns>
-		/// <b> true </b> if the <see cref="T:ReadOnlyDictionary`2"/> contains an element with the
-		/// specified key; otherwise, <b> false </b>.
+		/// <b>true</b> if the <see cref="T:ReadOnlyDictionary`2"/> contains an element with the
+		/// specified key; otherwise, <b>false</b>.
 		/// </returns>
 		public bool TryGetValue(TKey key, out TValue value)
 		{
