@@ -8,6 +8,7 @@ namespace Data_Helpers.GDb.GTbl.GCommon
 	/// <typeparam name="T"></typeparam>
 	public abstract class GTblAbstract<T> : GTblGeneric<T>, IGTbl<T>
 	{
+		int a;
 		#region Public Methods
 
 		/// <summary></summary>
