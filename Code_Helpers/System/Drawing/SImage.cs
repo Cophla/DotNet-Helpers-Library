@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Code_Helpers.System.Drawing
+namespace CodeHelpers.System.Drawing
 {
 	public static class SImage
 	{

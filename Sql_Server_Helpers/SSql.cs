@@ -1,6 +1,6 @@
-﻿using Code_Helpers.ObjectHelper;
-using Code_Helpers.System;
-using Code_Helpers.System.Data.SqlClient;
+﻿using CodeHelpers.ObjectHelper;
+using CodeHelpers.System;
+using CodeHelpers.System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;

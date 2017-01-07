@@ -1,6 +1,6 @@
 ﻿using System.Web.Services;
 
-namespace Code_Helpers.System.Web
+namespace CodeHelpers.System.Web
 {
 	public class GWebService : WebService
 	{

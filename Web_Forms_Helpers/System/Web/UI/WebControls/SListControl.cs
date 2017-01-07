@@ -1,5 +1,5 @@
-﻿using Code_Helpers.System;
-using Code_Helpers.System.Data;
+﻿using CodeHelpers.System;
+using CodeHelpers.System.Data;
 using System;
 using System.Collections;
 using System.ComponentModel;

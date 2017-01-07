@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Caching;
 
-namespace Code_Helpers
+namespace CodeHelpers
 {
 	public static class InMemoryCache
 	{

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Code_Helpers.ObjectHelper
+namespace CodeHelpers.ObjectHelper
 {
 	public class DataPagingHelper
 	{
@@ -39,22 +39,22 @@ namespace Code_Helpers.ObjectHelper
 
 		#region Public Properties
 
-		/// <summary></summary>
+		
 		public int CurrentPage { get; private set; }
 
-		/// <summary></summary>
+		
 		public int EndPage { get; private set; }
 
-		/// <summary></summary>
+		
 		public int PageSize { get; private set; }
 
-		/// <summary></summary>
+		
 		public int StartPage { get; private set; }
 
-		/// <summary></summary>
+		
 		public int TotalItems { get; private set; }
 
-		/// <summary></summary>
+		
 		public int TotalPages { get; private set; }
 
 		#endregion Public Properties

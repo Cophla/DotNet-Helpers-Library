@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web;
 
-namespace Code_Helpers.System.Web
+namespace CodeHelpers.System.Web
 {
 	public class WebServiceHelper : GWebService, IWSHelper
 	{

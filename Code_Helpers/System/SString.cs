@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace Code_Helpers.System
+namespace CodeHelpers.System
 {
 	public static class SString
 	{

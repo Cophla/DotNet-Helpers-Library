@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
 
-namespace Code_Helpers.System.Data.SqlClient
+namespace CodeHelpers.System.Data.SqlClient
 {
 	public static class SSqlParameter
 	{

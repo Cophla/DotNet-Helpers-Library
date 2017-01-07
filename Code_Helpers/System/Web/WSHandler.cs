@@ -1,9 +1,9 @@
-﻿using Code_Helpers.System.Data.SqlClient;
+﻿using CodeHelpers.System.Data.SqlClient;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web;
 
-namespace Code_Helpers.System.Web
+namespace CodeHelpers.System.Web
 {
 	public static class WSHandler
 	{

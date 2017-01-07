@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
 
-namespace Code_Helpers.System.Web
+namespace CodeHelpers.System.Web
 {
 	public interface IWSHelper
 	{

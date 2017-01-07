@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Code_Helpers", "Code_Helpers\Code_Helpers.csproj", "{D3FB9604-B853-40BA-BCDD-7C73E019C83F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeHelpers", "Code_Helpers\CodeHelpers.csproj", "{D3FB9604-B853-40BA-BCDD-7C73E019C83F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sql_Server_Helpers", "Sql_Server_Helpers\Sql_Server_Helpers.csproj", "{737C87E6-102E-4C88-9557-20AD0A2781C2}"
 EndProject

@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-namespace Code_Helpers.System.Collections
+namespace CodeHelpers.System.Collections
 {
 	/// <summary>Provides the base class for a generic read-only dictionary.</summary>
 	/// <typeparam name="TKey">The type of keys in the dictionary.</typeparam>

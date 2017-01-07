@@ -1,4 +1,4 @@
-﻿namespace Code_Helpers.System
+﻿namespace CodeHelpers.System
 {
 	public static class SBool
 	{

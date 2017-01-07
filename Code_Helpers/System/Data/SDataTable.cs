@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Code_Helpers.System.Data
+namespace CodeHelpers.System.Data
 {
 	public static class SDataTable
 	{

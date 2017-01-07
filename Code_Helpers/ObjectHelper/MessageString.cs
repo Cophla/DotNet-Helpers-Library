@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Text;
 
-namespace Code_Helpers.ObjectHelper
+namespace CodeHelpers.ObjectHelper
 {
 	public class MessageString : IDisposable
 	{

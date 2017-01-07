@@ -9,8 +9,8 @@
     <ProjectGuid>{D3FB9604-B853-40BA-BCDD-7C73E019C83F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Code_Helpers</RootNamespace>
-    <AssemblyName>Code_Helpers</AssemblyName>
+    <RootNamespace>CodeHelpers</RootNamespace>
+    <AssemblyName>CodeHelpers</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -53,6 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="InMemoryCache.cs" />
+    <Compile Include="ModelHelper\NoneStatic\TableModel\TableAbstractModel.cs" />
+    <Compile Include="ModelHelper\NoneStatic\TableModel\TableGenericModel.cs" />
+    <Compile Include="ModelHelper\NoneStatic\TableModel\ITableModel.cs" />
+    <Compile Include="ModelHelper\NoneStatic\ModelPrimaryKey\ITableModelPrimaryKey.cs" />
     <Compile Include="ObjectHelper\DataPagingHelper.cs" />
     <Compile Include="ObjectHelper\IDGeneratorHelper.cs" />
     <Compile Include="ObjectHelper\MessageString.cs" />
@@ -94,7 +98,9 @@
       <Name>Guide_Helpers</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ModelHelper\Static\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

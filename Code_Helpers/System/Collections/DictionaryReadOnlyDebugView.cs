@@ -2,23 +2,23 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Code_Helpers.System.Collections
+namespace CodeHelpers.System.Collections
 {
-	/// <summary></summary>
+	
 	/// <typeparam name="TKey"></typeparam>
 	/// <typeparam name="TValue"></typeparam>
 	internal sealed class DictionaryReadOnlyDebugView<TKey, TValue>
 	{
 		#region Private Fields
 
-		/// <summary></summary>
+		
 		private IDictionary<TKey, TValue> dict;
 
 		#endregion Private Fields
 
 		#region Public Constructors
 
-		/// <summary></summary>
+		
 		/// <param name="dictionary"></param>
 		public DictionaryReadOnlyDebugView(
 			DictionaryReadOnly<TKey, TValue> dictionary)
@@ -35,7 +35,7 @@ namespace Code_Helpers.System.Collections
 
 		#region Public Properties
 
-		/// <summary></summary>
+		
 		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
 		public KeyValuePair<TKey, TValue>[] Items {
 			get {

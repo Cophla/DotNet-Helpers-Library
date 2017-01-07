@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.Web.Security;
 
-namespace Code_Helpers
+namespace CodeHelpers
 {
 	public static class SSecurity
 	{

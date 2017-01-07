@@ -1,12 +1,12 @@
-﻿using Code_Helpers.ObjectHelper;
-using Data_Helpers.GDb.GTbl.GCommon;
+﻿using CodeHelpers.ObjectHelper;
+using CodeHelpers.ModelHelper.NoneStatic.TableModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Code_Helpers.System.Data.SqlClient
+namespace CodeHelpers.System.Data.SqlClient
 {
 	public static class SSqlDataReader
 	{
@@ -69,7 +69,7 @@ namespace Code_Helpers.System.Data.SqlClient
 		#endregion Private Methods
 
 		public static IEnumerable<T> GetObjList<T>(this SqlDataReader dataReader, out string errorMsg)
-			where T : IGTbl, new()
+			where T : ITableModel, new()
 		{
 			errorMsg = string.Empty;
 			if (dataReader.IsNull())
@@ -94,7 +94,7 @@ namespace Code_Helpers.System.Data.SqlClient
 		}
 
 		public static IEnumerable<T> GetObjList<T>(this SqlDataReader dataReader, MessageString errorMsg)
-			where T : IGTbl, new()
+			where T : ITableModel, new()
 		{
 			if (dataReader.IsNull())
 				return null;
@@ -117,7 +117,7 @@ namespace Code_Helpers.System.Data.SqlClient
 			return objList;
 		}
 
-		public static IEnumerable<T> GetObjList<T>(this SqlDataReader dataReader) where T : IGTbl, new()
+		public static IEnumerable<T> GetObjList<T>(this SqlDataReader dataReader) where T : ITableModel, new()
 		{
 			string errorMsg;
 			return GetObjList<T>(dataReader, out errorMsg);

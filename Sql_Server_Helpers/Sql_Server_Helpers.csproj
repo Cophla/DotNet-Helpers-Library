@@ -56,9 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Code_Helpers\Code_Helpers.csproj">
+    <ProjectReference Include="..\Code_Helpers\CodeHelpers.csproj">
       <Project>{D3FB9604-B853-40BA-BCDD-7C73E019C83F}</Project>
-      <Name>Code_Helpers</Name>
+      <Name>CodeHelpers</Name>
     </ProjectReference>
     <ProjectReference Include="..\Data_Helpers\Data_Helpers.csproj">
       <Project>{CBC2E068-3422-4B94-92C0-49684E687970}</Project>

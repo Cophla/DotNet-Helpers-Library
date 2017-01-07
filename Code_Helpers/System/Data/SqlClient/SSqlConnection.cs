@@ -1,11 +1,11 @@
-﻿using Code_Helpers.ObjectHelper;
+﻿using CodeHelpers.ObjectHelper;
 using Guide_Helpers.Cst;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Code_Helpers.System.Data.SqlClient
+namespace CodeHelpers.System.Data.SqlClient
 {
 	public static class SSqlConnection
 	{

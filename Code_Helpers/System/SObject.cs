@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Code_Helpers.System
+namespace CodeHelpers.System
 {
 	public static class SObject
 	{
