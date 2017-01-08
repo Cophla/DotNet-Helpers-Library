@@ -68,6 +68,7 @@
     <Compile Include="SSecurity.cs" />
     <Compile Include="System\Collections\DictionaryReadOnly.cs" />
     <Compile Include="System\Collections\DictionaryReadOnlyDebugView.cs" />
+    <Compile Include="System\Collections\PointerQueue.cs" />
     <Compile Include="System\Data\SDataRow.cs" />
     <Compile Include="System\Data\SDataSet.cs" />
     <Compile Include="System\Data\SDataTable.cs" />
