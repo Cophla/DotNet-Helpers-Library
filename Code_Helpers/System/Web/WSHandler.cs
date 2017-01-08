@@ -1,7 +1,7 @@
-﻿using CodeHelpers.System.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using System.Web;
+using CodeHelpers.System.Data.SqlClient;
 
 namespace CodeHelpers.System.Web
 {

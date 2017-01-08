@@ -1,7 +1,7 @@
-﻿using CodeHelpers.System;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using CodeHelpers.System;
 
 namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {

@@ -6,6 +6,12 @@ namespace CodeHelpers.System
 {
 	public class MessageString : IDisposable
 	{
+		#region Protected Fields
+
+		protected StringBuilder messageBuilder = new StringBuilder();
+
+		#endregion Protected Fields
+
 		#region Public Constructors
 
 		public MessageString()
@@ -180,11 +186,5 @@ namespace CodeHelpers.System
 		}
 
 		#endregion Public Methods
-
-		#region Protected Fields
-
-		protected StringBuilder messageBuilder = new StringBuilder();
-
-		#endregion Protected Fields
 	}
 }

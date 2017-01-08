@@ -6,6 +6,12 @@ namespace GuideHelpers.CstConn
 {
 	public static class ApplicationName
 	{
+		#region Private Fields
+
+		private static readonly IReadOnlyDictionary<string, string> connectionKeyValueList;
+
+		#endregion Private Fields
+
 		#region Public Constructors
 
 		static ApplicationName()
@@ -55,11 +61,5 @@ namespace GuideHelpers.CstConn
 		}
 
 		#endregion Public Classes
-
-		#region Private Fields
-
-		private static readonly IReadOnlyDictionary<string, string> connectionKeyValueList;
-
-		#endregion Private Fields
 	}
 }

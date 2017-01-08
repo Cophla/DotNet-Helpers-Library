@@ -6,10 +6,16 @@ namespace CodeHelpers.System.Collections
 {
 	internal sealed class DictionaryReadOnlyDebugView<TKey, TValue>
 	{
+		#region Private Fields
+
+		private IDictionary<TKey, TValue> dict;
+
+		#endregion Private Fields
+
 		#region Public Constructors
 
 		public DictionaryReadOnlyDebugView(
-			DictionaryReadOnly<TKey, TValue> dictionary)
+					DictionaryReadOnly<TKey, TValue> dictionary)
 		{
 			if (dictionary == null)
 			{
@@ -36,11 +42,5 @@ namespace CodeHelpers.System.Collections
 		}
 
 		#endregion Public Properties
-
-		#region Private Fields
-
-		private IDictionary<TKey, TValue> dict;
-
-		#endregion Private Fields
 	}
 }

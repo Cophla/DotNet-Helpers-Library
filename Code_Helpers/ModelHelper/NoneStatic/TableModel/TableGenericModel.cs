@@ -4,6 +4,20 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
 	public class TableGenericModel : IDisposable
 	{
+		#region Protected Fields
+
+		protected bool enabled;
+
+		protected string selectAllStoredProcdureName;
+
+		#endregion Protected Fields
+
+		#region Private Fields
+
+		private string modelName;
+
+		#endregion Private Fields
+
 		#region Public Properties
 
 		public virtual bool Enabled
@@ -29,24 +43,16 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		}
 
 		#endregion Public Methods
-
-		#region Protected Fields
-
-		protected bool enabled;
-
-		protected string selectAllStoredProcdureName;
-
-		#endregion Protected Fields
-
-		#region Private Fields
-
-		private string modelName;
-
-		#endregion Private Fields
 	}
 
 	public class TableGenericModel<T> : TableGenericModel
 	{
+		#region Protected Fields
+
+		protected T primaryKey;
+
+		#endregion Protected Fields
+
 		#region Public Properties
 
 		public T PrimaryKey
@@ -66,11 +72,5 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		}
 
 		#endregion Public Methods
-
-		#region Protected Fields
-
-		protected T primaryKey;
-
-		#endregion Protected Fields
 	}
 }

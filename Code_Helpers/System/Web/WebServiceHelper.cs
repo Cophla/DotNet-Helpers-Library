@@ -14,10 +14,16 @@ namespace CodeHelpers.System.Web
 
 		#endregion Public Fields
 
+		#region Private Fields
+
+		private IDictionary<string, SqlConnection> connectionList = null;
+
+		#endregion Private Fields
+
 		#region Public Constructors
 
 		public WebServiceHelper(string connectionStringKey, string connectionStringValue)
-			: this(new Dictionary<string, string>() { { connectionStringKey, connectionStringValue } }) { }
+					: this(new Dictionary<string, string>() { { connectionStringKey, connectionStringValue } }) { }
 
 		public WebServiceHelper(ICollection<KeyValuePair<string, string>> keyValueList)
 		{
@@ -107,11 +113,5 @@ namespace CodeHelpers.System.Web
 		}
 
 		#endregion Protected Methods
-
-		#region Private Fields
-
-		private IDictionary<string, SqlConnection> connectionList = null;
-
-		#endregion Private Fields
 	}
 }

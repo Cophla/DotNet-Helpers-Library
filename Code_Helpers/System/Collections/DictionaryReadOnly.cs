@@ -14,6 +14,14 @@ namespace CodeHelpers.System.Collections
 	public class DictionaryReadOnly<TKey, TValue> : IDictionary<TKey, TValue>,
 		ICollection
 	{
+		#region Private Fields
+
+		private readonly IDictionary<TKey, TValue> source;
+
+		private object syncRoot;
+
+		#endregion Private Fields
+
 		#region Public Constructors
 
 		public DictionaryReadOnly(IDictionary<TKey, TValue> dictionaryToWrap)
@@ -35,6 +43,16 @@ namespace CodeHelpers.System.Collections
 			get { return this.source.Count; }
 		}
 
+		public ICollection<TKey> Keys
+		{
+			get { return this.source.Keys; }
+		}
+
+		public ICollection<TValue> Values
+		{
+			get { return this.source.Values; }
+		}
+
 		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
 		{
 			get { return true; }
@@ -43,11 +61,6 @@ namespace CodeHelpers.System.Collections
 		bool ICollection.IsSynchronized
 		{
 			get { return false; }
-		}
-
-		public ICollection<TKey> Keys
-		{
-			get { return this.source.Keys; }
 		}
 
 		object ICollection.SyncRoot
@@ -72,11 +85,6 @@ namespace CodeHelpers.System.Collections
 			}
 		}
 
-		public ICollection<TValue> Values
-		{
-			get { return this.source.Values; }
-		}
-
 		#endregion Public Properties
 
 		#region Public Indexers
@@ -91,8 +99,18 @@ namespace CodeHelpers.System.Collections
 
 		#region Public Methods
 
+		public bool ContainsKey(TKey key)
+		{
+			return this.source.ContainsKey(key);
+		}
+
+		public bool TryGetValue(TKey key, out TValue value)
+		{
+			return this.source.TryGetValue(key, out value);
+		}
+
 		void ICollection<KeyValuePair<TKey, TValue>>.Add(
-			KeyValuePair<TKey, TValue> item)
+							KeyValuePair<TKey, TValue> item)
 		{
 			ThrowNotSupportedException();
 		}
@@ -113,11 +131,6 @@ namespace CodeHelpers.System.Collections
 			ICollection<KeyValuePair<TKey, TValue>> collection = this.source;
 
 			return collection.Contains(item);
-		}
-
-		public bool ContainsKey(TKey key)
-		{
-			return this.source.ContainsKey(key);
 		}
 
 		void ICollection.CopyTo(Array array, int index)
@@ -160,20 +173,7 @@ namespace CodeHelpers.System.Collections
 			return false;
 		}
 
-		public bool TryGetValue(TKey key, out TValue value)
-		{
-			return this.source.TryGetValue(key, out value);
-		}
-
 		#endregion Public Methods
-
-		#region Private Fields
-
-		private readonly IDictionary<TKey, TValue> source;
-
-		private object syncRoot;
-
-		#endregion Private Fields
 
 		#region Private Methods
 

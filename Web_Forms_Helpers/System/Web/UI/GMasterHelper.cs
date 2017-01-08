@@ -1,17 +1,23 @@
-﻿using CodeHelpers.System;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using CodeHelpers.System;
 
 namespace WebFormsHelpers.System.Web.UI
 {
 	public class GMasterHelper : GMasterPage, IPageMasterHelper
 	{
+		#region Private Fields
+
+		private Dictionary<string, SqlConnection> connectionList = null;
+
+		#endregion Private Fields
+
 		#region Public Constructors
 
 		public GMasterHelper(string connectionStringKey, string connectionStringValue)
-			: this(new Dictionary<string, string>() { { connectionStringKey, connectionStringValue } })
+					: this(new Dictionary<string, string>() { { connectionStringKey, connectionStringValue } })
 		{
 		}
 
@@ -94,11 +100,5 @@ namespace WebFormsHelpers.System.Web.UI
 		}
 
 		#endregion Public Methods
-
-		#region Private Fields
-
-		private Dictionary<string, SqlConnection> connectionList = null;
-
-		#endregion Private Fields
 	}
 }

@@ -1,8 +1,8 @@
-﻿using CodeHelpers.System;
-using CodeHelpers.System.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using System.Web;
+using CodeHelpers.System;
+using CodeHelpers.System.Data.SqlClient;
 
 namespace WebFormsHelpers.System.Web.UI
 {

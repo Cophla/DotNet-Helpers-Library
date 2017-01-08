@@ -4,6 +4,20 @@ namespace CodeHelpers.System.Collections
 {
 	public class PointerQueue<T> : IDisposable
 	{
+		#region Private Fields
+
+		private readonly object FIRST_NODE_THREAD_LOCK = new object();
+
+		private readonly object LAST_NODE_THREAD_LOCK = new object();
+
+		private int _count;
+
+		private QueueNode<T> _firstNode;
+
+		private QueueNode<T> _lastNode;
+
+		#endregion Private Fields
+
 		#region Public Properties
 
 		public int Count
@@ -86,21 +100,20 @@ namespace CodeHelpers.System.Collections
 
 		#endregion Public Methods
 
-		#region Private Fields
-
-		private readonly object FIRST_NODE_THREAD_LOCK = new object();
-		private readonly object LAST_NODE_THREAD_LOCK = new object();
-		private int _count;
-		private QueueNode<T> _firstNode;
-
-		private QueueNode<T> _lastNode;
-
-		#endregion Private Fields
-
 		#region Private Classes
 
 		private class QueueNode<TValue> : IDisposable
 		{
+			#region Private Fields
+
+			private QueueNode<TValue> _nextNode;
+
+			private TValue _nodeValue;
+
+			private QueueNode<TValue> _prevNode;
+
+			#endregion Private Fields
+
 			#region Public Constructors
 
 			public QueueNode() : this(default(TValue))
@@ -158,14 +171,6 @@ namespace CodeHelpers.System.Collections
 			}
 
 			#endregion Public Methods
-
-			#region Private Fields
-
-			private QueueNode<TValue> _nextNode;
-			private TValue _nodeValue;
-			private QueueNode<TValue> _prevNode;
-
-			#endregion Private Fields
 		}
 
 		#endregion Private Classes

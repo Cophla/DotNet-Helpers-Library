@@ -9,6 +9,14 @@ namespace CodeHelpers
 {
 	public static class SSecurity
 	{
+		#region Private Fields
+
+		private const string AUTHENTICATION_PURPOSE_KEY = "3B3DFB6B5A8A46C4BE8CAC9E45E8642E";
+
+		private static readonly byte[] SYMMETRIC_KEY = Encoding.UTF8.GetBytes("b50a8157a7e24a81818a0d78c0ab1abc");
+
+		#endregion Private Fields
+
 		#region Public Methods
 
 		public static string DecryptString(byte[] data)
@@ -88,12 +96,5 @@ namespace CodeHelpers
 		}
 
 		#endregion Public Methods
-
-		#region Private Fields
-
-		private const string AUTHENTICATION_PURPOSE_KEY = "3B3DFB6B5A8A46C4BE8CAC9E45E8642E";
-		private static readonly byte[] SYMMETRIC_KEY = Encoding.UTF8.GetBytes("b50a8157a7e24a81818a0d78c0ab1abc");
-
-		#endregion Private Fields
 	}
 }

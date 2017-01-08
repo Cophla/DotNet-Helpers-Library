@@ -1,8 +1,8 @@
-﻿using CodeHelpers.ModelHelper.NoneStatic.TableModel;
-using CodeHelpers.System;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using CodeHelpers.ModelHelper.NoneStatic.TableModel;
+using CodeHelpers.System;
 
 namespace CodeHelpers.ModelHelper.Static
 {

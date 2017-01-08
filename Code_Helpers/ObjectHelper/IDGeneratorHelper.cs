@@ -5,15 +5,6 @@ namespace CodeHelpers.ObjectHelper
 {
 	public class IDGeneratorHelper
 	{
-		#region Public Methods
-
-		public static string NewID()
-		{
-			return _instance.GetBase32UniqueId(20);
-		}
-
-		#endregion Public Methods
-
 		#region Private Fields
 
 		private static readonly IDGeneratorHelper _instance = new IDGeneratorHelper();
@@ -31,6 +22,15 @@ namespace CodeHelpers.ObjectHelper
 		}
 
 		#endregion Private Constructors
+
+		#region Public Methods
+
+		public static string NewID()
+		{
+			return _instance.GetBase32UniqueId(20);
+		}
+
+		#endregion Public Methods
 
 		#region Private Methods
 

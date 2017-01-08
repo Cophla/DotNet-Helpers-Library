@@ -4,6 +4,22 @@ namespace CodeHelpers.ObjectHelper
 {
 	public class DataPagingHelper
 	{
+		#region Private Fields
+
+		private int _currentPage;
+
+		private int _endPage;
+
+		private int _pageSize;
+
+		private int _startPage;
+
+		private int _totalItems;
+
+		private int _totalPages;
+
+		#endregion Private Fields
+
 		#region Public Constructors
 
 		public DataPagingHelper(int totalItems, int? page, int pageSize = 10)
@@ -69,16 +85,5 @@ namespace CodeHelpers.ObjectHelper
 		}
 
 		#endregion Public Properties
-
-		#region Private Fields
-
-		private int _currentPage;
-		private int _endPage;
-		private int _pageSize;
-		private int _startPage;
-		private int _totalItems;
-		private int _totalPages;
-
-		#endregion Private Fields
 	}
 }

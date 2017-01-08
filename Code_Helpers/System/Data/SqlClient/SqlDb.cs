@@ -7,6 +7,24 @@ namespace CodeHelpers.System.Data.SqlClient
 {
 	public class SqlDb : IDisposable
 	{
+		#region Private Fields
+
+		private CommandBehavior _commandBehavior;
+
+		private CommandType _commandType;
+
+		private bool _isFullDispose;
+
+		private SqlConnection _sqlConnection;
+
+		private IDictionary<string, SqlParameter> _sqlParmDictionary;
+
+		private string _sqlString;
+
+		private SqlTransaction _sqlTransaction;
+
+		#endregion Private Fields
+
 		#region Public Constructors
 
 		public SqlDb(int capacity) : this(capacity, false)
@@ -166,17 +184,5 @@ namespace CodeHelpers.System.Data.SqlClient
 		}
 
 		#endregion Public Methods
-
-		#region Private Fields
-
-		private CommandBehavior _commandBehavior;
-		private CommandType _commandType;
-		private bool _isFullDispose;
-		private SqlConnection _sqlConnection;
-		private IDictionary<string, SqlParameter> _sqlParmDictionary;
-		private string _sqlString;
-		private SqlTransaction _sqlTransaction;
-
-		#endregion Private Fields
 	}
 }
