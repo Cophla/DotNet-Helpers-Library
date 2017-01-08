@@ -1,32 +1,152 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CodeHelpers.System.Collections
 {
 	public class PointerQueue<T>
 	{
+		#region Public Properties
 
-		private class QueueNode<T>
+		public int Count
 		{
-			private QueueNode<T> _firstNode;
-
-			public QueueNode<T> FirstNode
-			{
-				get { return _firstNode; }
-				set { _firstNode = value; }
-			}
-
-			private QueueNode<T> _lastNode;
-
-			public QueueNode<T> LastNode
-			{
-				get { return _lastNode; }
-				set { _lastNode = value; }
-			}
-
+			get { return _count; }
 		}
+
+		public bool IsEmpty
+		{
+			get
+			{
+				if (_firstNode.IsNull())
+					return true;
+				return false;
+			}
+		}
+
+		#endregion Public Properties
+
+		#region Public Methods
+
+		public void Add(T value)
+		{
+			if (IsEmpty)
+			{
+				lock (FIRST_NODE_THREAD_LOCK)
+				{
+					lock (LAST_NODE_THREAD_LOCK)
+					{
+						_firstNode = new QueueNode<T>(value);
+						_lastNode = _firstNode;
+						_count++;
+					}
+				}
+				return;
+			}
+
+			lock (LAST_NODE_THREAD_LOCK)
+			{
+				_lastNode.NextNode = new QueueNode<T>(_lastNode, value);
+				_lastNode = _lastNode.NextNode;
+				_count++;
+			}
+		}
+
+		public T ExtractFirst()
+		{
+			if (IsEmpty)
+				throw new Exception("Queue is Empty");
+
+			T value;
+			lock (FIRST_NODE_THREAD_LOCK)
+			{
+				value = _firstNode.NodeValue;
+				lock (LAST_NODE_THREAD_LOCK)
+				{
+					if (_count < 2)
+					{
+						_lastNode = _firstNode = null;
+						_count--;
+						return value;
+					}
+				}
+
+				QueueNode<T> temp = _firstNode;
+				_firstNode = _firstNode.NextNode;
+				temp.NextNode = null;
+				temp = null;
+				_count--;
+			}
+			return value;
+		}
+
+		#endregion Public Methods
+
+		#region Private Fields
+
+		private readonly object FIRST_NODE_THREAD_LOCK = new object();
+		private readonly object LAST_NODE_THREAD_LOCK = new object();
+		private int _count;
+		private QueueNode<T> _firstNode;
+
+		private QueueNode<T> _lastNode;
+
+		#endregion Private Fields
+
+		#region Private Classes
+
+		private class QueueNode<TValue>
+		{
+			#region Public Constructors
+
+			public QueueNode() : this(default(TValue))
+			{
+			}
+
+			public QueueNode(TValue value) : this(null, value)
+			{
+			}
+
+			public QueueNode(QueueNode<TValue> prevNode, TValue value) : this(prevNode, value, null)
+			{
+			}
+
+			public QueueNode(QueueNode<TValue> prevNode, TValue value, QueueNode<TValue> nextNode)
+			{
+				_prevNode = prevNode;
+				_nodeValue = value;
+				_nextNode = nextNode;
+			}
+
+			#endregion Public Constructors
+
+			#region Public Properties
+
+			public QueueNode<TValue> NextNode
+			{
+				get { return _nextNode; }
+				set { _nextNode = value; }
+			}
+
+			public TValue NodeValue
+			{
+				get { return _nodeValue; }
+			}
+
+			public QueueNode<TValue> PrevNode
+			{
+				get { return _prevNode; }
+				set { _prevNode = value; }
+			}
+
+			#endregion Public Properties
+
+			#region Private Fields
+
+			private QueueNode<TValue> _nextNode;
+			private TValue _nodeValue;
+			private QueueNode<TValue> _prevNode;
+
+			#endregion Private Fields
+		}
+
+		#endregion Private Classes
 	}
 }

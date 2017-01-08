@@ -4,22 +4,10 @@ using System.Diagnostics;
 
 namespace CodeHelpers.System.Collections
 {
-	
-	
-	
-	
 	internal sealed class DictionaryReadOnlyDebugView<TKey, TValue>
 	{
-		#region Private Fields
-
-		private IDictionary<TKey, TValue> dict;
-
-		#endregion Private Fields
-
 		#region Public Constructors
 
-		
-		
 		public DictionaryReadOnlyDebugView(
 			DictionaryReadOnly<TKey, TValue> dictionary)
 		{
@@ -48,5 +36,11 @@ namespace CodeHelpers.System.Collections
 		}
 
 		#endregion Public Properties
+
+		#region Private Fields
+
+		private IDictionary<TKey, TValue> dict;
+
+		#endregion Private Fields
 	}
 }

@@ -2,8 +2,6 @@
 
 namespace WebFormsHelpers.System.Web.UI
 {
-	
-	
 	public interface IPageMasterHelper
 	{
 		#region Public Methods

@@ -2,16 +2,10 @@
 using System.Globalization;
 using System.Text;
 
-namespace CodeHelpers.ObjectHelper
+namespace CodeHelpers.System
 {
 	public class MessageString : IDisposable
 	{
-		#region Protected Fields
-
-		protected StringBuilder messageBuilder = new StringBuilder();
-
-		#endregion Protected Fields
-
 		#region Public Constructors
 
 		public MessageString()
@@ -113,6 +107,12 @@ namespace CodeHelpers.ObjectHelper
 			return this;
 		}
 
+		public void Dispose()
+		{
+			messageBuilder.Clear();
+			messageBuilder = null;
+		}
+
 		public int EnsureCapacity(int capacity)
 		{
 			return messageBuilder.EnsureCapacity(capacity);
@@ -179,13 +179,12 @@ namespace CodeHelpers.ObjectHelper
 			return messageBuilder.ToString(startIndex, length);
 		}
 
-		public void Dispose()
-		{
-			messageBuilder.Clear();
-			messageBuilder = null;
-		}
-
 		#endregion Public Methods
 
+		#region Protected Fields
+
+		protected StringBuilder messageBuilder = new StringBuilder();
+
+		#endregion Protected Fields
 	}
 }

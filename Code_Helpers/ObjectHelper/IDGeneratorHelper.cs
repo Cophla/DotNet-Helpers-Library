@@ -5,11 +5,19 @@ namespace CodeHelpers.ObjectHelper
 {
 	public class IDGeneratorHelper
 	{
+		#region Public Methods
+
+		public static string NewID()
+		{
+			return _instance.GetBase32UniqueId(20);
+		}
+
+		#endregion Public Methods
+
 		#region Private Fields
 
 		private static readonly IDGeneratorHelper _instance = new IDGeneratorHelper();
 
-		
 		private static char[] _charMap = { '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
 		private RNGCryptoServiceProvider _provider = new RNGCryptoServiceProvider();
@@ -24,15 +32,6 @@ namespace CodeHelpers.ObjectHelper
 
 		#endregion Private Constructors
 
-		#region Public Methods
-
-		public static string NewID()
-		{
-			return _instance.GetBase32UniqueId(20);
-		}
-
-		#endregion Public Methods
-
 		#region Private Methods
 
 		private static IDGeneratorHelper GetInstance()
@@ -40,18 +39,10 @@ namespace CodeHelpers.ObjectHelper
 			return _instance;
 		}
 
-		
-		
-
 		private string GetBase32UniqueId(int numDigits)
 		{
 			return GetBase32UniqueId(new byte[0], numDigits);
 		}
-
-		
-		
-		
-		
 
 		private string GetBase32UniqueId(byte[] basis, int numDigits)
 		{
@@ -62,8 +53,8 @@ namespace CodeHelpers.ObjectHelper
 			Array.Copy(basis, 0, bytes, byteCount - basis.Length, basis.Length);
 			Array.Copy(randBytes, 0, bytes, 0, randBytes.Length);
 
-			ulong lo = (((ulong)BitConverter.ToUInt32(bytes, 8)) << 32) | BitConverter.ToUInt32(bytes, 12); 
-			ulong hi = (((ulong)BitConverter.ToUInt32(bytes, 0)) << 32) | BitConverter.ToUInt32(bytes, 4);  
+			ulong lo = (((ulong)BitConverter.ToUInt32(bytes, 8)) << 32) | BitConverter.ToUInt32(bytes, 12);
+			ulong hi = (((ulong)BitConverter.ToUInt32(bytes, 0)) << 32) | BitConverter.ToUInt32(bytes, 4);
 			ulong mask = 0x1F;
 
 			var chars = new char[26];
@@ -90,8 +81,6 @@ namespace CodeHelpers.ObjectHelper
 			return ret;
 		}
 
-		
-		
 		private void GetNext(byte[] bytes)
 		{
 			_provider.GetBytes(bytes);

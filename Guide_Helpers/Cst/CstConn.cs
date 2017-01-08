@@ -4,16 +4,8 @@ using System.Configuration;
 
 namespace GuideHelpers.CstConn
 {
-	
-	
 	public static class ApplicationName
 	{
-		#region Private Fields
-
-		private static readonly IReadOnlyDictionary<string, string> connectionKeyValueList;
-
-		#endregion Private Fields
-
 		#region Public Constructors
 
 		static ApplicationName()
@@ -42,8 +34,6 @@ namespace GuideHelpers.CstConn
 
 		#region Public Properties
 
-		
-		
 		public static IReadOnlyDictionary<string, string> ConnectionKeyValueList
 		{
 			get { return connectionKeyValueList; }
@@ -53,23 +43,23 @@ namespace GuideHelpers.CstConn
 
 		#region Public Classes
 
-		
-		
 		public static class ConnName
 		{
 			#region Public Fields
 
-			
-			
 			public const string DEFAULT_CONNECTION = "DefaultDbConnection";
 
-			
-			
 			public const string SECOND_CONNECTION = "SecondDbConnection";
 
 			#endregion Public Fields
 		}
 
 		#endregion Public Classes
+
+		#region Private Fields
+
+		private static readonly IReadOnlyDictionary<string, string> connectionKeyValueList;
+
+		#endregion Private Fields
 	}
 }

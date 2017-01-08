@@ -1,5 +1,4 @@
-﻿using CodeHelpers.ObjectHelper;
-using System;
+﻿using System;
 using System.Data.SqlClient;
 
 namespace CodeHelpers.System.Data.SqlClient
@@ -47,10 +46,6 @@ namespace CodeHelpers.System.Data.SqlClient
 			}
 			return result;
 		}
-
-		#endregion Public Methods
-
-		#region Public Methods
 
 		public static bool Apply(this SqlTransaction transaction, MessageString errorMsg)
 		{

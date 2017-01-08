@@ -14,12 +14,6 @@ namespace CodeHelpers.System.Web
 
 		#endregion Public Fields
 
-		#region Private Fields
-
-		private IDictionary<string, SqlConnection> connectionList = null;
-
-		#endregion Private Fields
-
 		#region Public Constructors
 
 		public WebServiceHelper(string connectionStringKey, string connectionStringValue)
@@ -113,5 +107,11 @@ namespace CodeHelpers.System.Web
 		}
 
 		#endregion Protected Methods
+
+		#region Private Fields
+
+		private IDictionary<string, SqlConnection> connectionList = null;
+
+		#endregion Private Fields
 	}
 }

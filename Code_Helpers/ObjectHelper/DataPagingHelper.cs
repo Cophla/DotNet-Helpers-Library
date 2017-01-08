@@ -8,49 +8,77 @@ namespace CodeHelpers.ObjectHelper
 
 		public DataPagingHelper(int totalItems, int? page, int pageSize = 10)
 		{
-			
-			var totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
-			var currentPage = page != null ? (int)page : 1;
-			var startPage = currentPage - 5;
-			var endPage = currentPage + 4;
+			int totalPages = (int)Math.Ceiling((decimal)totalItems / (decimal)pageSize);
+			int currentPage = page ?? 1;
+			int startPage = currentPage - 5;
+			int endPage = currentPage + 4;
+
 			if (startPage <= 0)
 			{
 				endPage -= (startPage - 1);
 				startPage = 1;
 			}
+
 			if (endPage > totalPages)
 			{
 				endPage = totalPages;
 				if (endPage > 10)
-				{
 					startPage = endPage - 9;
-				}
 			}
 
-			TotalItems = totalItems;
-			CurrentPage = currentPage;
-			PageSize = pageSize;
-			TotalPages = totalPages;
-			StartPage = startPage;
-			EndPage = endPage;
+			_totalItems = totalItems;
+			_currentPage = currentPage;
+			_pageSize = pageSize;
+			_totalPages = totalPages;
+			_startPage = startPage;
+			_endPage = endPage;
 		}
 
 		#endregion Public Constructors
 
 		#region Public Properties
 
-		public int CurrentPage { get; private set; }
+		public int CurrentPage
+		{
+			get { return _currentPage; }
+		}
 
-		public int EndPage { get; private set; }
+		public int EndPage
+		{
+			get { return _endPage; }
+		}
 
-		public int PageSize { get; private set; }
+		public int PageSize
+		{
+			get { return _pageSize; }
+		}
 
-		public int StartPage { get; private set; }
+		public int StartPage
+		{
+			get { return _startPage; }
+		}
 
-		public int TotalItems { get; private set; }
+		public int TotalItems
+		{
+			get { return _totalItems; }
+		}
 
-		public int TotalPages { get; private set; }
+		public int TotalPages
+		{
+			get { return _totalPages; }
+		}
 
 		#endregion Public Properties
+
+		#region Private Fields
+
+		private int _currentPage;
+		private int _endPage;
+		private int _pageSize;
+		private int _startPage;
+		private int _totalItems;
+		private int _totalPages;
+
+		#endregion Private Fields
 	}
 }

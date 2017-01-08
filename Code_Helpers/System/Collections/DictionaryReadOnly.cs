@@ -7,29 +7,6 @@ using System.Threading;
 
 namespace CodeHelpers.System.Collections
 {
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	[Serializable]
 	[DebuggerDisplay("Count = {Count}")]
 	[ComVisible(false)]
@@ -37,26 +14,8 @@ namespace CodeHelpers.System.Collections
 	public class DictionaryReadOnly<TKey, TValue> : IDictionary<TKey, TValue>,
 		ICollection
 	{
-		#region Private Fields
-
-		private readonly IDictionary<TKey, TValue> source;
-
-		private object syncRoot;
-
-		#endregion Private Fields
-
 		#region Public Constructors
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		public DictionaryReadOnly(IDictionary<TKey, TValue> dictionaryToWrap)
 		{
 			if (dictionaryToWrap == null)
@@ -71,58 +30,26 @@ namespace CodeHelpers.System.Collections
 
 		#region Public Properties
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		public int Count
 		{
 			get { return this.source.Count; }
 		}
 
-		
-		
-		
-		
 		bool ICollection<KeyValuePair<TKey, TValue>>.IsReadOnly
 		{
 			get { return true; }
 		}
 
-		
-		
-		
 		bool ICollection.IsSynchronized
 		{
 			get { return false; }
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		public ICollection<TKey> Keys
 		{
 			get { return this.source.Keys; }
 		}
 
-		
-		
-		
 		object ICollection.SyncRoot
 		{
 			get
@@ -145,12 +72,6 @@ namespace CodeHelpers.System.Collections
 			}
 		}
 
-		
-		
-		
-		
-		
-		
 		public ICollection<TValue> Values
 		{
 			get { return this.source.Values; }
@@ -160,23 +81,6 @@ namespace CodeHelpers.System.Collections
 
 		#region Public Indexers
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		public TValue this[TKey key]
 		{
 			get { return this.source[key]; }
@@ -187,49 +91,22 @@ namespace CodeHelpers.System.Collections
 
 		#region Public Methods
 
-		
-		
-		
-		
-		
-		
 		void ICollection<KeyValuePair<TKey, TValue>>.Add(
 			KeyValuePair<TKey, TValue> item)
 		{
 			ThrowNotSupportedException();
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		void IDictionary<TKey, TValue>.Add(TKey key, TValue value)
 		{
 			ThrowNotSupportedException();
 		}
 
-		
-		
-		
 		void ICollection<KeyValuePair<TKey, TValue>>.Clear()
 		{
 			ThrowNotSupportedException();
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		bool ICollection<KeyValuePair<TKey, TValue>>.Contains(
 			KeyValuePair<TKey, TValue> item)
 		{
@@ -238,34 +115,11 @@ namespace CodeHelpers.System.Collections
 			return collection.Contains(item);
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		public bool ContainsKey(TKey key)
 		{
 			return this.source.ContainsKey(key);
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		void ICollection.CopyTo(Array array, int index)
 		{
 			ICollection collection =
@@ -274,16 +128,6 @@ namespace CodeHelpers.System.Collections
 			collection.CopyTo(array, index);
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(
 			KeyValuePair<TKey, TValue>[] array, int arrayIndex)
 		{
@@ -291,23 +135,11 @@ namespace CodeHelpers.System.Collections
 			collection.CopyTo(array, arrayIndex);
 		}
 
-		
-		
-		
-		
-		
-		
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.source.GetEnumerator();
 		}
 
-		
-		
-		
-		
-		
-		
 		IEnumerator<KeyValuePair<TKey, TValue>>
 			IEnumerable<KeyValuePair<TKey, TValue>>.GetEnumerator()
 		{
@@ -316,57 +148,32 @@ namespace CodeHelpers.System.Collections
 			return enumerator.GetEnumerator();
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
 		{
 			ThrowNotSupportedException();
 			return false;
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		bool IDictionary<TKey, TValue>.Remove(TKey key)
 		{
 			ThrowNotSupportedException();
 			return false;
 		}
 
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		public bool TryGetValue(TKey key, out TValue value)
 		{
 			return this.source.TryGetValue(key, out value);
 		}
 
 		#endregion Public Methods
+
+		#region Private Fields
+
+		private readonly IDictionary<TKey, TValue> source;
+
+		private object syncRoot;
+
+		#endregion Private Fields
 
 		#region Private Methods
 

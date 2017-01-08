@@ -4,20 +4,6 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
 	public class TableGenericModel : IDisposable
 	{
-		#region Protected Fields
-
-		protected bool enabled;
-
-		protected string selectAllStoredProcdureName;
-
-		#endregion Protected Fields
-
-		#region Private Fields
-
-		private string modelName;
-
-		#endregion Private Fields
-
 		#region Public Properties
 
 		public virtual bool Enabled
@@ -32,23 +18,35 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 			set { modelName = value; }
 		}
 
+		#endregion Public Properties
+
+		#region Public Methods
+
 		public virtual void Dispose()
 		{
 			selectAllStoredProcdureName = null;
 			modelName = null;
 		}
 
-		#endregion Public Properties
+		#endregion Public Methods
+
+		#region Protected Fields
+
+		protected bool enabled;
+
+		protected string selectAllStoredProcdureName;
+
+		#endregion Protected Fields
+
+		#region Private Fields
+
+		private string modelName;
+
+		#endregion Private Fields
 	}
 
 	public class TableGenericModel<T> : TableGenericModel
 	{
-		#region Protected Fields
-
-		protected T primaryKey;
-
-		#endregion Protected Fields
-
 		#region Public Properties
 
 		public T PrimaryKey
@@ -57,12 +55,22 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 			set { primaryKey = value; }
 		}
 
+		#endregion Public Properties
+
+		#region Public Methods
+
 		public override void Dispose()
 		{
 			base.Dispose();
 			primaryKey = default(T);
 		}
 
-		#endregion Public Properties
+		#endregion Public Methods
+
+		#region Protected Fields
+
+		protected T primaryKey;
+
+		#endregion Protected Fields
 	}
 }

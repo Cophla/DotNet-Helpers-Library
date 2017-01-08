@@ -8,12 +8,6 @@ namespace WebFormsHelpers.System.Web.UI
 {
 	public class GPageHelper : GPage, IPageMasterHelper
 	{
-		#region Private Fields
-
-		private Dictionary<string, SqlConnection> connectionList = null;
-
-		#endregion Private Fields
-
 		#region Public Constructors
 
 		public GPageHelper(string connectionStringKey, string connectionStringValue)
@@ -100,5 +94,11 @@ namespace WebFormsHelpers.System.Web.UI
 		}
 
 		#endregion Public Methods
+
+		#region Private Fields
+
+		private Dictionary<string, SqlConnection> connectionList = null;
+
+		#endregion Private Fields
 	}
 }

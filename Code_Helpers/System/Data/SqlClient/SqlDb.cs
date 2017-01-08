@@ -1,27 +1,49 @@
-﻿using CodeHelpers.ObjectHelper;
-using CodeHelpers.System;
-using CodeHelpers.System.Data.SqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace CodeHelpers.DatabaseHelper
+namespace CodeHelpers.System.Data.SqlClient
 {
 	public class SqlDb : IDisposable
 	{
-		#region Private Fields
+		#region Public Constructors
 
-		private CommandBehavior _commandBehavior;
-		private CommandType _commandType;
-		private bool _isFullDispose;
-		private SqlConnection _sqlConnection;
-		private IDictionary<string, SqlParameter> _sqlParmDictionary;
-		private string _sqlString;
+		public SqlDb(int capacity) : this(capacity, false)
+		{
+		}
 
-		#endregion Private Fields
+		public SqlDb(int capacity, bool fullDispose)
+		{
+			_sqlParmDictionary = new Dictionary<string, SqlParameter>(capacity);
+			_isFullDispose = fullDispose;
+			if (_isFullDispose)
+				_commandBehavior = CommandBehavior.CloseConnection;
+			else
+				_commandBehavior = CommandBehavior.Default;
+		}
+
+		#endregion Public Constructors
 
 		#region Public Properties
+
+		public CommandType SQLCommandType
+		{
+			get { return _commandType; }
+			set { _commandType = value; }
+		}
+
+		public SqlConnection SQLConnection
+		{
+			get { return _sqlConnection; }
+			set { _sqlConnection = value; }
+		}
+
+		public string SQLString
+		{
+			get { return _sqlString; }
+			set { _sqlString = value; }
+		}
 
 		public SqlTransaction SQLTransaction
 		{
@@ -30,6 +52,17 @@ namespace CodeHelpers.DatabaseHelper
 		}
 
 		#endregion Public Properties
+
+		#region Public Indexers
+
+		public object this[string parameterName]
+		{
+			get { return GetObjValue(parameterName); }
+
+			set { AddParm(parameterName, value); }
+		}
+
+		#endregion Public Indexers
 
 		#region Public Methods
 
@@ -134,57 +167,16 @@ namespace CodeHelpers.DatabaseHelper
 
 		#endregion Public Methods
 
+		#region Private Fields
+
+		private CommandBehavior _commandBehavior;
+		private CommandType _commandType;
+		private bool _isFullDispose;
+		private SqlConnection _sqlConnection;
+		private IDictionary<string, SqlParameter> _sqlParmDictionary;
+		private string _sqlString;
 		private SqlTransaction _sqlTransaction;
 
-		#region Public Constructors
-
-		public SqlDb(int capacity) : this(capacity, false)
-		{
-		}
-
-		public SqlDb(int capacity, bool fullDispose)
-		{
-			_sqlParmDictionary = new Dictionary<string, SqlParameter>(capacity);
-			_isFullDispose = fullDispose;
-			if (_isFullDispose)
-				_commandBehavior = CommandBehavior.CloseConnection;
-			else
-				_commandBehavior = CommandBehavior.Default;
-		}
-
-		#endregion Public Constructors
-
-		#region Public Properties
-
-		public CommandType SQLCommandType
-		{
-			get { return _commandType; }
-			set { _commandType = value; }
-		}
-
-		public SqlConnection SQLConnection
-		{
-			get { return _sqlConnection; }
-			set { _sqlConnection = value; }
-		}
-
-		public string SQLString
-		{
-			get { return _sqlString; }
-			set { _sqlString = value; }
-		}
-
-		#endregion Public Properties
-
-		#region Public Indexers
-
-		public object this[string parameterName]
-		{
-			get { return GetObjValue(parameterName); }
-
-			set { AddParm(parameterName, value); }
-		}
-
-		#endregion Public Indexers
+		#endregion Private Fields
 	}
 }
