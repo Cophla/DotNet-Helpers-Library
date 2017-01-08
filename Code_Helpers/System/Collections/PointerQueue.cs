@@ -2,7 +2,7 @@
 
 namespace CodeHelpers.System.Collections
 {
-	public class PointerQueue<T>
+	public class PointerQueue<T> : IDisposable
 	{
 		#region Public Properties
 
@@ -49,6 +49,12 @@ namespace CodeHelpers.System.Collections
 			}
 		}
 
+		public void Dispose()
+		{
+			while (!IsEmpty)
+				ExtractFirst();
+		}
+
 		public T ExtractFirst()
 		{
 			if (IsEmpty)
@@ -62,6 +68,7 @@ namespace CodeHelpers.System.Collections
 				{
 					if (_count < 2)
 					{
+						_firstNode.Dispose();
 						_lastNode = _firstNode = null;
 						_count--;
 						return value;
@@ -70,7 +77,7 @@ namespace CodeHelpers.System.Collections
 
 				QueueNode<T> temp = _firstNode;
 				_firstNode = _firstNode.NextNode;
-				temp.NextNode = null;
+				temp.Dispose();
 				temp = null;
 				_count--;
 			}
@@ -92,7 +99,7 @@ namespace CodeHelpers.System.Collections
 
 		#region Private Classes
 
-		private class QueueNode<TValue>
+		private class QueueNode<TValue> : IDisposable
 		{
 			#region Public Constructors
 
@@ -137,6 +144,20 @@ namespace CodeHelpers.System.Collections
 			}
 
 			#endregion Public Properties
+
+			#region Public Methods
+
+			public void Dispose()
+			{
+				_nextNode = null;
+				_prevNode = null;
+
+				using (IDisposable myDispose = _nodeValue as IDisposable) { }
+
+				_nodeValue = default(TValue);
+			}
+
+			#endregion Public Methods
 
 			#region Private Fields
 

@@ -171,6 +171,11 @@ namespace CodeHelpers.System
 			return IsNullOrDBNull(obj).Not();
 		}
 
+		public static bool IsNotType<T>(this Type myType)
+		{
+			return IsType<T>(myType).Not();
+		}
+
 		public static bool IsNull(this object obj)
 		{
 			return obj == null;
@@ -187,6 +192,20 @@ namespace CodeHelpers.System
 		public static bool IsNullOrDBNull(this object obj)
 		{
 			return obj.IsNull() || obj.IsDBNull();
+		}
+
+		public static bool IsType<T>(this Type myType)
+		{
+			if (myType.IsNull())
+				return false;
+
+			Type valueType = typeof(T);
+			if (valueType.IsAssignableFrom(myType))
+				return true;
+
+			valueType = null;
+
+			return false;
 		}
 
 		public static bool IsTypeInList<T>(params Type[] checkList)
