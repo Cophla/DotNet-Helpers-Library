@@ -8,6 +8,11 @@ namespace WebFormsHelpers.System.Web.UI.WebControls
 	{
 		#region Public Methods
 
+		public static void Clear(this DataGrid dataGrid)
+		{
+			SControl.Clear(dataGrid);
+		}
+
 		public static void Fill(this DataGrid dataGrid, SqlDataReader dataReader)
 		{
 			SControl.Fill(dataGrid, dataReader);

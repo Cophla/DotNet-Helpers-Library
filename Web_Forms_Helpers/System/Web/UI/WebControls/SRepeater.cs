@@ -7,7 +7,10 @@ namespace WebFormsHelpers.System.Web.UI.WebControls
 	public static class SRepeater
 	{
 		#region Public Methods
-
+		public static void Clear(this Repeater repeater)
+		{
+			SControl.Clear(repeater);
+		}
 		public static void Fill(this Repeater repeater, SqlDataReader dataReader)
 		{
 			SControl.Fill(repeater, dataReader);

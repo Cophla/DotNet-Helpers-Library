@@ -7,7 +7,10 @@ namespace WebFormsHelpers.System.Web.UI.WebControls
 	public static class SGridView
 	{
 		#region Public Methods
-
+		public static void Clear(this GridView gridView)
+		{
+			SControl.Clear(gridView);
+		}
 		public static void Fill(this GridView gridView, SqlDataReader dataReader)
 		{
 			SControl.Fill(gridView, dataReader);

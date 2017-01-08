@@ -8,6 +8,11 @@ namespace WebFormsHelpers.System.Web.UI.WebControls
 	{
 		#region Public Methods
 
+		public static void Clear(this DataList dataList)
+		{
+			SControl.Clear(dataList);
+		}
+
 		public static void Fill(this DataList dataList, SqlDataReader dataReader)
 		{
 			SControl.Fill(dataList, dataReader);
