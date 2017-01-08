@@ -5,13 +5,13 @@ using System.Diagnostics;
 namespace CodeHelpers.System.Collections
 {
 	
-	/// <typeparam name="TKey"></typeparam>
-	/// <typeparam name="TValue"></typeparam>
+	
+	
+	
 	internal sealed class DictionaryReadOnlyDebugView<TKey, TValue>
 	{
 		#region Private Fields
 
-		
 		private IDictionary<TKey, TValue> dict;
 
 		#endregion Private Fields
@@ -19,7 +19,7 @@ namespace CodeHelpers.System.Collections
 		#region Public Constructors
 
 		
-		/// <param name="dictionary"></param>
+		
 		public DictionaryReadOnlyDebugView(
 			DictionaryReadOnly<TKey, TValue> dictionary)
 		{
@@ -35,10 +35,11 @@ namespace CodeHelpers.System.Collections
 
 		#region Public Properties
 
-		
 		[DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-		public KeyValuePair<TKey, TValue>[] Items {
-			get {
+		public KeyValuePair<TKey, TValue>[] Items
+		{
+			get
+			{
 				KeyValuePair<TKey, TValue>[] array =
 					new KeyValuePair<TKey, TValue>[dict.Count];
 				dict.CopyTo(array, 0);

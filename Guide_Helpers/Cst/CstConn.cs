@@ -2,9 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Configuration;
 
-namespace Guide_Helpers.CstConn
+namespace GuideHelpers.CstConn
 {
-	/// <summary></summary>
+	
+	
 	public static class ApplicationName
 	{
 		#region Private Fields
@@ -41,8 +42,10 @@ namespace Guide_Helpers.CstConn
 
 		#region Public Properties
 
-		/// <summary></summary>
-		public static IReadOnlyDictionary<string, string> ConnectionKeyValueList {
+		
+		
+		public static IReadOnlyDictionary<string, string> ConnectionKeyValueList
+		{
 			get { return connectionKeyValueList; }
 		}
 
@@ -50,15 +53,18 @@ namespace Guide_Helpers.CstConn
 
 		#region Public Classes
 
-		/// <summary></summary>
+		
+		
 		public static class ConnName
 		{
 			#region Public Fields
 
-			/// <summary></summary>
+			
+			
 			public const string DEFAULT_CONNECTION = "DefaultDbConnection";
 
-			/// <summary></summary>
+			
+			
 			public const string SECOND_CONNECTION = "SecondDbConnection";
 
 			#endregion Public Fields

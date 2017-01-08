@@ -1,4 +1,4 @@
-﻿namespace Guide_Helpers.Cst
+﻿namespace CodeHelpers.Constants
 {
 	public static class CstVars
 	{

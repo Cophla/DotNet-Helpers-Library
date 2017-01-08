@@ -6,7 +6,7 @@ using System.Data.Common;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Web_Forms_Helpers.System.Web.UI
+namespace WebFormsHelpers.System.Web.UI
 {
 	public static class SControl
 	{

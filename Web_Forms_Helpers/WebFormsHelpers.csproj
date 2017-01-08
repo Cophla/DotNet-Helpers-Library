@@ -9,8 +9,8 @@
     <ProjectGuid>{0625AAC0-F893-4B05-91F0-489587493613}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Web_Forms_Helpers</RootNamespace>
-    <AssemblyName>Web_Forms_Helpers</AssemblyName>
+    <RootNamespace>WebFormsHelpers</RootNamespace>
+    <AssemblyName>WebFormsHelpers</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -83,10 +83,6 @@
     <ProjectReference Include="..\Code_Helpers\CodeHelpers.csproj">
       <Project>{D3FB9604-B853-40BA-BCDD-7C73E019C83F}</Project>
       <Name>CodeHelpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sql_Server_Helpers\Sql_Server_Helpers.csproj">
-      <Project>{737C87E6-102E-4C88-9557-20AD0A2781C2}</Project>
-      <Name>Sql_Server_Helpers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

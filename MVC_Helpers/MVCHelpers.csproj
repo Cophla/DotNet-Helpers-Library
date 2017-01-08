@@ -6,11 +6,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{737C87E6-102E-4C88-9557-20AD0A2781C2}</ProjectGuid>
+    <ProjectGuid>{2853655C-7995-4E13-8766-2126C4FE9227}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sql_Server_Helpers</RootNamespace>
-    <AssemblyName>Sql_Server_Helpers</AssemblyName>
+    <RootNamespace>MVCHelpers</RootNamespace>
+    <AssemblyName>MVCHelpers</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -49,25 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SSql.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Code_Helpers\CodeHelpers.csproj">
-      <Project>{D3FB9604-B853-40BA-BCDD-7C73E019C83F}</Project>
-      <Name>CodeHelpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Data_Helpers\Data_Helpers.csproj">
-      <Project>{CBC2E068-3422-4B94-92C0-49684E687970}</Project>
-      <Name>Data_Helpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Guide_Helpers\Guide_Helpers.csproj">
-      <Project>{95B073CA-7EF1-44FE-9D0C-AC4644FD01EC}</Project>
-      <Name>Guide_Helpers</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

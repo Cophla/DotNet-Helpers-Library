@@ -52,11 +52,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants\CstRegEx.cs" />
+    <Compile Include="Constants\CstVars.cs" />
+    <Compile Include="DatabaseHelper\SqlDb.cs" />
     <Compile Include="InMemoryCache.cs" />
     <Compile Include="ModelHelper\NoneStatic\TableModel\TableAbstractModel.cs" />
     <Compile Include="ModelHelper\NoneStatic\TableModel\TableGenericModel.cs" />
     <Compile Include="ModelHelper\NoneStatic\TableModel\ITableModel.cs" />
     <Compile Include="ModelHelper\NoneStatic\ModelPrimaryKey\ITableModelPrimaryKey.cs" />
+    <Compile Include="ModelHelper\Static\STableModel.cs" />
     <Compile Include="ObjectHelper\DataPagingHelper.cs" />
     <Compile Include="ObjectHelper\IDGeneratorHelper.cs" />
     <Compile Include="ObjectHelper\MessageString.cs" />
@@ -89,18 +93,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Data_Helpers\Data_Helpers.csproj">
-      <Project>{CBC2E068-3422-4B94-92C0-49684E687970}</Project>
-      <Name>Data_Helpers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Guide_Helpers\Guide_Helpers.csproj">
+    <ProjectReference Include="..\Guide_Helpers\GuideHelpers.csproj">
       <Project>{95B073CA-7EF1-44FE-9D0C-AC4644FD01EC}</Project>
-      <Name>Guide_Helpers</Name>
+      <Name>GuideHelpers</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ModelHelper\Static\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

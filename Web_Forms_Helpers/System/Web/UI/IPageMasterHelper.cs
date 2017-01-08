@@ -1,8 +1,9 @@
 ﻿using System.Data.SqlClient;
 
-namespace Web_Forms_Helpers.System.Web.UI
+namespace WebFormsHelpers.System.Web.UI
 {
-	/// <summary></summary>
+	
+	
 	public interface IPageMasterHelper
 	{
 		#region Public Methods

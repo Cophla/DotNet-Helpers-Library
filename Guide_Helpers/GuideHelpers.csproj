@@ -9,8 +9,8 @@
     <ProjectGuid>{95B073CA-7EF1-44FE-9D0C-AC4644FD01EC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Guide_Helpers</RootNamespace>
-    <AssemblyName>Guide_Helpers</AssemblyName>
+    <RootNamespace>GuideHelpers</RootNamespace>
+    <AssemblyName>GuideHelpers</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -52,9 +52,7 @@
   <ItemGroup>
     <Compile Include="Cst\Cst.cs" />
     <Compile Include="Cst\CstConn.cs" />
-    <Compile Include="Cst\CstRegEx.cs" />
     <Compile Include="Cst\CstSetting.cs" />
-    <Compile Include="Cst\CstVars.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

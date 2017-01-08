@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Sql_Server_Helpers
+namespace CodeHelpers.DatabaseHelper
 {
 	public class SqlDb : IDisposable
 	{
@@ -23,7 +23,8 @@ namespace Sql_Server_Helpers
 
 		#region Public Properties
 
-		public SqlTransaction SQLTransaction {
+		public SqlTransaction SQLTransaction
+		{
 			get { return _sqlTransaction; }
 			set { _sqlTransaction = value; }
 		}
@@ -155,17 +156,20 @@ namespace Sql_Server_Helpers
 
 		#region Public Properties
 
-		public CommandType SQLCommandType {
+		public CommandType SQLCommandType
+		{
 			get { return _commandType; }
 			set { _commandType = value; }
 		}
 
-		public SqlConnection SQLConnection {
+		public SqlConnection SQLConnection
+		{
 			get { return _sqlConnection; }
 			set { _sqlConnection = value; }
 		}
 
-		public string SQLString {
+		public string SQLString
+		{
 			get { return _sqlString; }
 			set { _sqlString = value; }
 		}
@@ -174,7 +178,8 @@ namespace Sql_Server_Helpers
 
 		#region Public Indexers
 
-		public object this[string parameterName] {
+		public object this[string parameterName]
+		{
 			get { return GetObjValue(parameterName); }
 
 			set { AddParm(parameterName, value); }

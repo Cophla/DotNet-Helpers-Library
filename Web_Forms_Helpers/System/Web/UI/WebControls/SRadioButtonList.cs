@@ -1,4 +1,4 @@
-﻿namespace Web_Forms_Helpers.System.Web.UI.WebControls
+﻿namespace WebFormsHelpers.System.Web.UI.WebControls
 {
 	internal class SRadioButtonList
 	{

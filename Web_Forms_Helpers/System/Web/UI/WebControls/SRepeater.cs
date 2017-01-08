@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using System.Web.UI.WebControls;
 
-namespace Web_Forms_Helpers.System.Web.UI.WebControls
+namespace WebFormsHelpers.System.Web.UI.WebControls
 {
 	public static class SRepeater
 	{

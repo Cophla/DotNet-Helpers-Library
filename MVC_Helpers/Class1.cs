@@ -1,6 +1,6 @@
-﻿namespace MVC_Helpers
+﻿namespace MVCHelpers
 {
-	public class Class1
+	internal class Class1
 	{
 	}
 }
