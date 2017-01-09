@@ -42,6 +42,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -54,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Constants\CstVars.cs" />
     <Compile Include="Constants\RegEx\CstInternet.cs" />
+    <Compile Include="System\ComponentModel\DataAnnotations\DateTimeFormatValidation.cs" />
     <Compile Include="System\Data\SqlClient\SqlDb.cs" />
     <Compile Include="InMemoryCache.cs" />
     <Compile Include="ModelHelper\NoneStatic\TableModel\TableAbstractModel.cs" />
@@ -92,12 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Guide_Helpers\GuideHelpers.csproj">
-      <Project>{95B073CA-7EF1-44FE-9D0C-AC4644FD01EC}</Project>
-      <Name>GuideHelpers</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
