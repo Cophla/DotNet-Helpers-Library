@@ -110,6 +110,24 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg);
 
+		bool SetEnabled(string tableName);
+
+		bool SetEnabled(string tableName, out string errorMsg);
+
+		bool SetEnabled(string tableName, MessageString errorMsg);
+
+		bool SetEnabled(SqlConnection connection, string tableName);
+
+		bool SetEnabled(SqlConnection connection, string tableName, out string errorMsg);
+
+		bool SetEnabled(SqlConnection connection, string tableName, MessageString errorMsg);
+
+		bool SetEnabled(SqlConnection connection, SqlTransaction transaction, string tableName);
+
+		bool SetEnabled(SqlConnection connection, SqlTransaction transaction, string tableName, out string errorMsg);
+
+		bool SetEnabled(SqlConnection connection, SqlTransaction transaction, string tableName, MessageString errorMsg);
+
 		bool Update();
 
 		bool Update(out string errorMsg);
@@ -127,24 +145,6 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		bool Update(SqlConnection connection, SqlTransaction transaction, out string errorMsg);
 
 		bool Update(SqlConnection connection, SqlTransaction transaction, MessageString errorMsg);
-
-		bool UpdateEnabilityStatus(string tableName);
-
-		bool UpdateEnabilityStatus(string tableName, out string errorMsg);
-
-		bool UpdateEnabilityStatus(string tableName, MessageString errorMsg);
-
-		bool UpdateEnabilityStatus(SqlConnection connection, string tableName);
-
-		bool UpdateEnabilityStatus(SqlConnection connection, string tableName, out string errorMsg);
-
-		bool UpdateEnabilityStatus(SqlConnection connection, string tableName, MessageString errorMsg);
-
-		bool UpdateEnabilityStatus(SqlConnection connection, SqlTransaction transaction, string tableName);
-
-		bool UpdateEnabilityStatus(SqlConnection connection, SqlTransaction transaction, string tableName, out string errorMsg);
-
-		bool UpdateEnabilityStatus(SqlConnection connection, SqlTransaction transaction, string tableName, MessageString errorMsg);
 
 		#endregion Public Methods
 	}

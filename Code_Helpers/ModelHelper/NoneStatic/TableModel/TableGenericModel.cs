@@ -6,15 +6,18 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 	{
 		#region Protected Fields
 
-		protected bool enabled;
+		protected string _deleteStoredProcdureName;
+		protected bool _enabled;
 
-		protected string selectAllStoredProcdureName;
+		protected string _insertStoredProcdureName;
+		protected string _selectAllStoredProcdureName;
+		protected string _updateStoredProcdureName;
 
 		#endregion Protected Fields
 
 		#region Private Fields
 
-		private string modelName;
+		private string _modelName;
 
 		#endregion Private Fields
 
@@ -22,14 +25,14 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		public virtual bool Enabled
 		{
-			get { return enabled; }
-			set { enabled = value; }
+			get { return _enabled; }
+			set { _enabled = value; }
 		}
 
 		public string ModelName
 		{
-			get { return modelName; }
-			set { modelName = value; }
+			get { return _modelName; }
+			set { _modelName = value; }
 		}
 
 		#endregion Public Properties
@@ -38,8 +41,8 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		public virtual void Dispose()
 		{
-			selectAllStoredProcdureName = null;
-			modelName = null;
+			_selectAllStoredProcdureName = null;
+			_modelName = null;
 		}
 
 		#endregion Public Methods
@@ -49,7 +52,7 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 	{
 		#region Protected Fields
 
-		protected T primaryKey;
+		protected T _primaryKey;
 
 		#endregion Protected Fields
 
@@ -57,8 +60,8 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		public T PrimaryKey
 		{
-			get { return primaryKey; }
-			set { primaryKey = value; }
+			get { return _primaryKey; }
+			set { _primaryKey = value; }
 		}
 
 		#endregion Public Properties
@@ -68,7 +71,7 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		public override void Dispose()
 		{
 			base.Dispose();
-			primaryKey = default(T);
+			_primaryKey = default(T);
 		}
 
 		#endregion Public Methods

@@ -162,6 +162,24 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		public abstract SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg);
 
+		public abstract bool SetEnabled(SqlConnection connection, SqlTransaction transaction, string tableName);
+
+		public abstract bool SetEnabled(string tableName);
+
+		public abstract bool SetEnabled(SqlConnection connection, string tableName);
+
+		public abstract bool SetEnabled(string tableName, out string errorMsg);
+
+		public abstract bool SetEnabled(SqlConnection connection, string tableName, out string errorMsg);
+
+		public abstract bool SetEnabled(SqlConnection connection, SqlTransaction transaction, string tableName, out string errorMsg);
+
+		public abstract bool SetEnabled(string tableName, MessageString errorMsg);
+
+		public abstract bool SetEnabled(SqlConnection connection, string tableName, MessageString errorMsg);
+
+		public abstract bool SetEnabled(SqlConnection connection, SqlTransaction transaction, string tableName, MessageString errorMsg);
+
 		public abstract bool Update();
 
 		public abstract bool Update(SqlConnection connection);
@@ -179,24 +197,6 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		public abstract bool Update(SqlConnection connection, MessageString errorMsg);
 
 		public abstract bool Update(SqlConnection connection, SqlTransaction transaction, MessageString errorMsg);
-
-		public abstract bool UpdateEnabilityStatus(SqlConnection connection, SqlTransaction transaction, string tableName);
-
-		public abstract bool UpdateEnabilityStatus(string tableName);
-
-		public abstract bool UpdateEnabilityStatus(SqlConnection connection, string tableName);
-
-		public abstract bool UpdateEnabilityStatus(string tableName, out string errorMsg);
-
-		public abstract bool UpdateEnabilityStatus(SqlConnection connection, string tableName, out string errorMsg);
-
-		public abstract bool UpdateEnabilityStatus(SqlConnection connection, SqlTransaction transaction, string tableName, out string errorMsg);
-
-		public abstract bool UpdateEnabilityStatus(string tableName, MessageString errorMsg);
-
-		public abstract bool UpdateEnabilityStatus(SqlConnection connection, string tableName, MessageString errorMsg);
-
-		public abstract bool UpdateEnabilityStatus(SqlConnection connection, SqlTransaction transaction, string tableName, MessageString errorMsg);
 
 		#endregion Public Methods
 	}
