@@ -1,9 +1,38 @@
 ﻿using System;
+using CodeHelpers.System;
 
 namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
 	public class TableGenericModel : IDisposable
 	{
+		#region Public Constructors
+
+		public TableGenericModel()
+		{
+			_SetModelFullName(typeof(TableGenericModel));
+		}
+
+		#endregion Public Constructors
+
+		#region Protected Constructors
+
+		protected TableGenericModel(Type type)
+		{
+			_SetModelFullName(type);
+		}
+
+		#endregion Protected Constructors
+
+		#region Private Methods
+
+		private void _SetModelFullName(Type type)
+		{
+			if (type.IsNull()) return;
+			_modelName = type.FullName;
+		}
+
+		#endregion Private Methods
+
 		#region Protected Fields
 
 		protected string _deleteStoredProcdureName;
@@ -17,7 +46,7 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		#region Private Fields
 
-		private string _modelName;
+		protected string _modelName;
 
 		#endregion Private Fields
 
@@ -50,6 +79,22 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 	public class TableGenericModel<T> : TableGenericModel
 	{
+		#region Public Constructors
+
+		public TableGenericModel() : base(typeof(TableGenericModel<T>))
+		{
+		}
+
+		#endregion Public Constructors
+
+		#region Protected Constructors
+
+		protected TableGenericModel(Type type) : base(type)
+		{
+		}
+
+		#endregion Protected Constructors
+
 		#region Protected Fields
 
 		protected T _primaryKey;

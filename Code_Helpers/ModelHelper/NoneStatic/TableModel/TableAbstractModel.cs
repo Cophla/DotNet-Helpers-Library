@@ -7,6 +7,14 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
 	public abstract class TableAbstractModel<T> : TableGenericModel<T>, ITableModel<T>
 	{
+		#region Protected Constructors
+
+		protected TableAbstractModel(Type type) : base(type)
+		{
+		}
+
+		#endregion Protected Constructors
+
 		#region Public Methods
 
 		public abstract bool Delete();
