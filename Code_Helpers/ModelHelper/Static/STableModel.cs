@@ -10,6 +10,24 @@ namespace CodeHelpers.ModelHelper.Static
 	{
 		#region Public Methods
 
+		public static IEnumerable<T> GetObjList<T>() where T : ITableModel, new()
+		{
+			using (T tblModel = new T())
+			using (SqlDataReader dataReader = tblModel.SelectAll())
+			{
+				if (dataReader.IsNull()) return null;
+
+				ICollection<T> objList = new List<T>(40);
+				while (dataReader.Read())
+				{
+					T obj = new T();
+					obj.Fill(dataReader);
+					objList.Add(obj);
+				}
+				return objList;
+			}
+		}
+
 		public static IEnumerable<T> GetObjList<T>(this SqlDataReader dataReader, out string errorMsg)
 			where T : ITableModel, new()
 		{

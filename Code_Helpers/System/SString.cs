@@ -50,6 +50,28 @@ namespace CodeHelpers.System
 			return IsNullOrWhiteSpace(value);
 		}
 
+		public static string IsNone(this string value, string defaultValue)
+		{
+			if (value.IsNull())
+				return defaultValue;
+			if (value == string.Empty)
+				return defaultValue;
+			if (IsNullOrWhiteSpace(value))
+				return defaultValue;
+			return value;
+		}
+
+		public static string IsNone(this string value, string defaultValue, string format)
+		{
+			if (value.IsNull())
+				return defaultValue;
+			if (value == string.Empty)
+				return defaultValue;
+			if (IsNullOrWhiteSpace(value))
+				return defaultValue;
+			return Format(value, format);
+		}
+
 		public static bool IsNotNone(this string value)
 		{
 			return IsNone(value).Not();

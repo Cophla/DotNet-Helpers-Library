@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Caching;
+using CodeHelpers.ModelHelper.NoneStatic.TableModel;
+using CodeHelpers.ModelHelper.Static;
 using CodeHelpers.System;
 
 namespace CodeHelpers
@@ -31,6 +34,8 @@ namespace CodeHelpers
 
 			item = getItemCallback();
 
+			if (item.IsNull()) return null;
+
 			CacheDependency dependencies = null;
 			DateTime expiryDateTime = DateTime.Now.AddMinutes(durationInMinutes);
 			TimeSpan slidingExpiration = Cache.NoSlidingExpiration;
@@ -40,6 +45,11 @@ namespace CodeHelpers
 				cacheKey, item, dependencies, expiryDateTime, slidingExpiration, cachePriority,
 				onRemoveCallback);
 			return item;
+		}
+
+		public static IEnumerable<T> SelectAllList<T>() where T : TableGenericModel, ITableModel, new()
+		{
+			return Get(new T().ModelName, () => { return STableModel.GetObjList<T>(); });
 		}
 
 		#endregion Public Methods

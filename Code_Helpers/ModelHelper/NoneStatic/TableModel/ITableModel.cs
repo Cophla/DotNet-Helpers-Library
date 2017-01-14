@@ -1,10 +1,11 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using CodeHelpers.System;
 
 namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
-	public interface ITableModel
+	public interface ITableModel : IDisposable
 	{
 		#region Public Methods
 

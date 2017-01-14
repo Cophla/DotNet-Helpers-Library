@@ -1,77 +1,41 @@
 ﻿using System;
-using CodeHelpers.System;
 
 namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
-	public class TableGenericModel : IDisposable
+	public class TableGenericModel : GlobalModel
 	{
-		#region Public Constructors
-
-		public TableGenericModel()
-		{
-			_SetModelFullName(typeof(TableGenericModel));
-		}
-
-		#endregion Public Constructors
-
-		#region Protected Constructors
-
-		protected TableGenericModel(Type type)
-		{
-			_SetModelFullName(type);
-		}
-
-		#endregion Protected Constructors
-
-		#region Private Methods
-
-		private void _SetModelFullName(Type type)
-		{
-			if (type.IsNull()) return;
-			_modelName = type.FullName;
-		}
-
-		#endregion Private Methods
-
 		#region Protected Fields
 
 		protected string _deleteStoredProcdureName;
-		protected bool _enabled;
 
 		protected string _insertStoredProcdureName;
+
 		protected string _selectAllStoredProcdureName;
+
 		protected string _updateStoredProcdureName;
 
 		#endregion Protected Fields
 
-		#region Private Fields
+		#region Public Constructors
 
-		protected string _modelName;
-
-		#endregion Private Fields
-
-		#region Public Properties
-
-		public virtual bool Enabled
+		public TableGenericModel() : this(typeof(TableGenericModel))
 		{
-			get { return _enabled; }
-			set { _enabled = value; }
 		}
 
-		public string ModelName
+		protected TableGenericModel(Type type) : base(type)
 		{
-			get { return _modelName; }
-			set { _modelName = value; }
 		}
 
-		#endregion Public Properties
+		#endregion Public Constructors
 
 		#region Public Methods
 
-		public virtual void Dispose()
+		public override void Dispose()
 		{
+			_deleteStoredProcdureName = null;
+			_insertStoredProcdureName = null;
 			_selectAllStoredProcdureName = null;
-			_modelName = null;
+			_updateStoredProcdureName = null;
 		}
 
 		#endregion Public Methods
@@ -79,9 +43,15 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 	public class TableGenericModel<T> : TableGenericModel
 	{
+		#region Protected Fields
+
+		protected T _primaryKey;
+
+		#endregion Protected Fields
+
 		#region Public Constructors
 
-		public TableGenericModel() : base(typeof(TableGenericModel<T>))
+		public TableGenericModel() : this(typeof(TableGenericModel<T>))
 		{
 		}
 
@@ -94,12 +64,6 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		}
 
 		#endregion Protected Constructors
-
-		#region Protected Fields
-
-		protected T _primaryKey;
-
-		#endregion Protected Fields
 
 		#region Public Properties
 

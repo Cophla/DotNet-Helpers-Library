@@ -157,7 +157,9 @@ namespace CodeHelpers.System.Data.SqlClient
 					foreach (SqlParameter parm in parmList)
 						command.Parameters.Add(parm);
 
-				return command.ExecuteNonQuery();
+				int returnValue = command.ExecuteNonQuery();
+				command.Parameters.Clear();
+				return returnValue;
 			}
 		}
 
@@ -210,7 +212,9 @@ namespace CodeHelpers.System.Data.SqlClient
 					foreach (SqlParameter parm in parmList)
 						command.Parameters.Add(parm);
 
-				return SObject.DbValueAs<T>(command.ExecuteScalar(), defaultValue);
+				T returnValue = SObject.DbValueAs<T>(command.ExecuteScalar(), defaultValue);
+				command.Parameters.Clear();
+				return returnValue;
 			}
 		}
 
@@ -278,7 +282,9 @@ namespace CodeHelpers.System.Data.SqlClient
 					foreach (SqlParameter parm in parmList)
 						command.Parameters.Add(parm);
 
-				return command.ExecuteReader(commandBehavior);
+				SqlDataReader dataReader = command.ExecuteReader(commandBehavior);
+				command.Parameters.Clear();
+				return dataReader;
 			}
 		}
 

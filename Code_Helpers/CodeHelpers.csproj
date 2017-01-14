@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Constants\CstVars.cs" />
     <Compile Include="Constants\RegEx\CstInternet.cs" />
+    <Compile Include="ModelHelper\NoneStatic\GlobalModel.cs" />
     <Compile Include="System\ComponentModel\DataAnnotations\DateTimeFormatValidation.cs" />
     <Compile Include="System\Data\SqlClient\SqlDb.cs" />
     <Compile Include="InMemoryCache.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="System\Data\SqlClient\SSqlTransaction.cs" />
     <Compile Include="System\Drawing\SImage.cs" />
     <Compile Include="System\SBool.cs" />
+    <Compile Include="System\SDateTime.cs" />
     <Compile Include="System\SObject.cs" />
     <Compile Include="System\SString.cs" />
     <Compile Include="System\Web\GWebService.cs">

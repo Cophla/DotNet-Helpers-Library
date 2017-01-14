@@ -118,11 +118,8 @@ namespace CodeHelpers.System.Data.SqlClient
 			_sqlParmDictionary = null;
 			if (_isFullDispose)
 			{
-				if (_sqlTransaction.IsNotNull())
-					_sqlTransaction.Dispose();
-
-				if (_sqlConnection.IsNotNull())
-					_sqlConnection.Dispose();
+				using (_sqlTransaction)
+				using (_sqlConnection) { }
 			}
 			_sqlTransaction = null;
 			_sqlConnection = null;
@@ -134,15 +131,44 @@ namespace CodeHelpers.System.Data.SqlClient
 				_sqlString, _commandType, _commandBehavior, _sqlParmDictionary.Values, out errorMsg);
 		}
 
+		public SqlDataReader Get()
+		{
+			return _sqlConnection.Get(
+				_sqlString, _commandType, _commandBehavior, _sqlParmDictionary.Values);
+		}
+
 		public SqlDataReader Get(MessageString errorMsg)
 		{
 			return _sqlConnection.Get(
 				_sqlString, _commandType, _commandBehavior, _sqlParmDictionary.Values, errorMsg);
 		}
 
+		public SqlDataReader GetSingleRow(out string errorMsg)
+		{
+			return _sqlConnection.Get(
+				_sqlString, _commandType, CommandBehavior.SingleRow, _sqlParmDictionary.Values, out errorMsg);
+		}
+
+		public SqlDataReader GetSingleRow()
+		{
+			return _sqlConnection.Get(
+				_sqlString, _commandType, CommandBehavior.SingleRow, _sqlParmDictionary.Values);
+		}
+
+		public SqlDataReader GetSingleRow(MessageString errorMsg)
+		{
+			return _sqlConnection.Get(
+				_sqlString, _commandType, CommandBehavior.SingleRow, _sqlParmDictionary.Values, errorMsg);
+		}
+
 		public DataSet GetDataSet(out string errorMsg)
 		{
 			return Get(out errorMsg).GetDataSet();
+		}
+
+		public DataSet GetDataSet()
+		{
+			return Get().GetDataSet();
 		}
 
 		public DataSet GetDataSet(MessageString errorMsg)
@@ -155,6 +181,11 @@ namespace CodeHelpers.System.Data.SqlClient
 			return Get(out errorMsg).GetDataTable();
 		}
 
+		public DataTable GetDataTable()
+		{
+			return Get().GetDataTable();
+		}
+
 		public DataTable GetDataTable(MessageString errorMsg)
 		{
 			return Get(errorMsg).GetDataTable();
@@ -163,6 +194,11 @@ namespace CodeHelpers.System.Data.SqlClient
 		public DataView GetDataView(out string errorMsg)
 		{
 			return Get(out errorMsg).GetDataView();
+		}
+
+		public DataView GetDataView()
+		{
+			return Get().GetDataView();
 		}
 
 		public DataView GetDataView(MessageString errorMsg)

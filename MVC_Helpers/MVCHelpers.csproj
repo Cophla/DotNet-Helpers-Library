@@ -79,9 +79,16 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\Web\Mvc\GController.cs" />
+    <Compile Include="System\Web\Mvc\GViewsModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Code_Helpers\CodeHelpers.csproj">
+      <Project>{D3FB9604-B853-40BA-BCDD-7C73E019C83F}</Project>
+      <Name>CodeHelpers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
