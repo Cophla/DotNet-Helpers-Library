@@ -113,60 +113,21 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		public abstract bool IsUsed(SqlConnection connection, MessageString errorMsg);
 
-		public SqlDataReader SelectAll()
-		{
-			string errorMsg;
-			return SelectAll(out errorMsg);
-		}
+		public abstract SqlDataReader SelectAll();
 
-		public SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior)
-		{
-			string errorMsg;
-			return SelectAll(connection, commandBehavior, out errorMsg);
-		}
-
-		public SqlDataReader SelectAll(out string errorMsg)
-		{
-			errorMsg = string.Empty;
-			SqlDataReader dataReader = null;
-			SqlConnection connection = null;
-			{
-				try
-				{
-					connection.Open();
-					dataReader = SelectAll(connection, out errorMsg);
-				}
-				catch (Exception) { }
-				finally
-				{
-					if (dataReader == null)
-					{
-						connection.Dispose();
-					}
-				}
-			}
-			return dataReader;
-		}
-
-		public SqlDataReader SelectAll(SqlConnection connection, out string errorMsg)
-		{
-			return SelectAll(connection, CommandBehavior.Default, out errorMsg);
-		}
-
-		public SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg)
-		{
-			errorMsg = string.Empty;
-			return null;
-		}
-
-		public SqlDataReader SelectAll(SqlConnection connection)
-		{
-			throw new NotImplementedException();
-		}
+		public abstract SqlDataReader SelectAll(out string errorMsg);
 
 		public abstract SqlDataReader SelectAll(MessageString errorMsg);
 
+		public abstract SqlDataReader SelectAll(SqlConnection connection);
+
+		public abstract SqlDataReader SelectAll(SqlConnection connection, out string errorMsg);
+
 		public abstract SqlDataReader SelectAll(SqlConnection connection, MessageString errorMsg);
+
+		public abstract SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior);
+
+		public abstract SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg);
 
 		public abstract SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg);
 

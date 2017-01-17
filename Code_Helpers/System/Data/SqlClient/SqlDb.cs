@@ -54,7 +54,12 @@ namespace CodeHelpers.System.Data.SqlClient
 		public SqlConnection SQLConnection
 		{
 			get { return _sqlConnection; }
-			set { _sqlConnection = value; }
+			set
+			{
+				_sqlConnection = value;
+				if (_sqlConnection.State != ConnectionState.Open)
+					_sqlConnection.Open();
+			}
 		}
 
 		public string SQLString
