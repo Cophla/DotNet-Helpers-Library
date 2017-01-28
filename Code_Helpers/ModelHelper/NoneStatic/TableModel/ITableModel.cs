@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using CodeHelpers.System;
+using System.Collections.Generic;
 
 namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
@@ -94,6 +95,8 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		bool IsUsed(SqlConnection connection, MessageString errorMsg);
 
 		SqlDataReader SelectAll();
+
+		IEnumerable<T> SelectAll<T>();
 
 		SqlDataReader SelectAll(out string errorMsg);
 

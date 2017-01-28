@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using CodeHelpers.System;
+using System.Collections.Generic;
 
 namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
@@ -166,6 +167,11 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		public abstract bool Update(SqlConnection connection, MessageString errorMsg);
 
 		public abstract bool Update(SqlConnection connection, SqlTransaction transaction, MessageString errorMsg);
+
+		public IEnumerable<T1> SelectAll<T1>()
+		{
+			throw new NotImplementedException();
+		}
 
 		#endregion Public Methods
 	}
