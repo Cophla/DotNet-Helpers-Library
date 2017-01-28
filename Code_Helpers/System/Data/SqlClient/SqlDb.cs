@@ -7,24 +7,6 @@ namespace CodeHelpers.System.Data.SqlClient
 {
 	public class SqlDb : IDisposable
 	{
-		#region Private Fields
-
-		private CommandBehavior _commandBehavior;
-
-		private CommandType _commandType;
-
-		private bool _isFullDispose;
-
-		private SqlConnection _sqlConnection;
-
-		private IDictionary<string, SqlParameter> _sqlParmDictionary;
-
-		private string _sqlString;
-
-		private SqlTransaction _sqlTransaction;
-
-		#endregion Private Fields
-
 		#region Public Constructors
 
 		public SqlDb(int capacity) : this(capacity, false)
@@ -45,31 +27,29 @@ namespace CodeHelpers.System.Data.SqlClient
 
 		#region Public Properties
 
-		public CommandType SQLCommandType
-		{
+		public CommandType SQLCommandType {
 			get { return _commandType; }
 			set { _commandType = value; }
 		}
 
-		public SqlConnection SQLConnection
-		{
-			get { return _sqlConnection; }
-			set
-			{
+		public SqlConnection SQLConnection {
+			get {
+				return _sqlConnection;
+			}
+
+			set {
 				_sqlConnection = value;
 				if (_sqlConnection.State != ConnectionState.Open)
 					_sqlConnection.Open();
 			}
 		}
 
-		public string SQLString
-		{
+		public string SQLString {
 			get { return _sqlString; }
 			set { _sqlString = value; }
 		}
 
-		public SqlTransaction SQLTransaction
-		{
+		public SqlTransaction SQLTransaction {
 			get { return _sqlTransaction; }
 			set { _sqlTransaction = value; }
 		}
@@ -78,8 +58,7 @@ namespace CodeHelpers.System.Data.SqlClient
 
 		#region Public Indexers
 
-		public object this[string parameterName]
-		{
+		public object this[string parameterName] {
 			get { return GetObjValue(parameterName); }
 
 			set { AddParm(parameterName, value); }
@@ -124,10 +103,64 @@ namespace CodeHelpers.System.Data.SqlClient
 			if (_isFullDispose)
 			{
 				using (_sqlTransaction)
-				using (_sqlConnection) { }
+				using (_sqlConnection)
+				{ }
 			}
 			_sqlTransaction = null;
 			_sqlConnection = null;
+		}
+
+		public int Exec(out string errorMsg)
+		{
+			return _sqlConnection.Exec(
+				_sqlTransaction, _commandType, _sqlString, _sqlParmDictionary.Values, out errorMsg);
+		}
+
+		public int Exec(MessageString errorMsg)
+		{
+			return _sqlConnection.Exec(
+				_sqlTransaction, _commandType, _sqlString, _sqlParmDictionary.Values, errorMsg);
+		}
+
+		public int Exec()
+		{
+			return _sqlConnection.Exec(
+				_sqlTransaction, _commandType, _sqlString, _sqlParmDictionary.Values);
+		}
+
+		public T ExecScalar<T>(out string errorMsg)
+		{
+			return ExecScalar<T>(out errorMsg, default(T));
+		}
+
+		public T ExecScalar<T>(MessageString errorMsg)
+		{
+			return ExecScalar<T>(errorMsg, default(T));
+		}
+
+		public T ExecScalar<T>()
+		{
+			return ExecScalar<T>(default(T));
+		}
+
+		public T ExecScalar<T>(out string errorMsg, T defaultValue)
+		{
+			return _sqlConnection.ExecScalar<T>(
+				_sqlTransaction, _commandType, _sqlString, _sqlParmDictionary.Values, defaultValue,
+				out errorMsg);
+		}
+
+		public T ExecScalar<T>(MessageString errorMsg, T defaultValue)
+		{
+			return _sqlConnection.ExecScalar<T>(
+				_sqlTransaction, _commandType, _sqlString, _sqlParmDictionary.Values, defaultValue,
+				errorMsg);
+		}
+
+		public T ExecScalar<T>(T defaultValue)
+		{
+			return _sqlConnection.ExecScalar<T>(
+				_sqlTransaction, _commandType, _sqlString, _sqlParmDictionary.Values, defaultValue);
 		}
 
 		public SqlDataReader Get(out string errorMsg)
@@ -146,24 +179,6 @@ namespace CodeHelpers.System.Data.SqlClient
 		{
 			return _sqlConnection.Get(
 				_sqlString, _commandType, _commandBehavior, _sqlParmDictionary.Values, errorMsg);
-		}
-
-		public SqlDataReader GetSingleRow(out string errorMsg)
-		{
-			return _sqlConnection.Get(
-				_sqlString, _commandType, CommandBehavior.SingleRow, _sqlParmDictionary.Values, out errorMsg);
-		}
-
-		public SqlDataReader GetSingleRow()
-		{
-			return _sqlConnection.Get(
-				_sqlString, _commandType, CommandBehavior.SingleRow, _sqlParmDictionary.Values);
-		}
-
-		public SqlDataReader GetSingleRow(MessageString errorMsg)
-		{
-			return _sqlConnection.Get(
-				_sqlString, _commandType, CommandBehavior.SingleRow, _sqlParmDictionary.Values, errorMsg);
 		}
 
 		public DataSet GetDataSet(out string errorMsg)
@@ -219,11 +234,47 @@ namespace CodeHelpers.System.Data.SqlClient
 			throw new Exception("Parameter Name not found");
 		}
 
+		public SqlDataReader GetSingleRow(out string errorMsg)
+		{
+			return _sqlConnection.Get(
+				_sqlString, _commandType, CommandBehavior.SingleRow, _sqlParmDictionary.Values, out errorMsg);
+		}
+
+		public SqlDataReader GetSingleRow()
+		{
+			return _sqlConnection.Get(
+				_sqlString, _commandType, CommandBehavior.SingleRow, _sqlParmDictionary.Values);
+		}
+
+		public SqlDataReader GetSingleRow(MessageString errorMsg)
+		{
+			return _sqlConnection.Get(
+				_sqlString, _commandType, CommandBehavior.SingleRow, _sqlParmDictionary.Values, errorMsg);
+		}
+
 		public T GetValue<T>(string parameterName)
 		{
 			return GetObjValue(parameterName).DbValueAs<T>();
 		}
 
 		#endregion Public Methods
+
+		#region Private Fields
+
+		private CommandBehavior _commandBehavior;
+
+		private CommandType _commandType;
+
+		private bool _isFullDispose;
+
+		private SqlConnection _sqlConnection;
+
+		private IDictionary<string, SqlParameter> _sqlParmDictionary;
+
+		private string _sqlString;
+
+		private SqlTransaction _sqlTransaction;
+
+		#endregion Private Fields
 	}
 }

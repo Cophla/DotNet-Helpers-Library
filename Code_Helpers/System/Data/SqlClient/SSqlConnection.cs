@@ -1,8 +1,8 @@
-﻿using System;
+﻿using CodeHelpers.Constants;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using CodeHelpers.Constants;
 
 namespace CodeHelpers.System.Data.SqlClient
 {
@@ -60,7 +60,7 @@ namespace CodeHelpers.System.Data.SqlClient
 			return false;
 		}
 
-		public static bool Exec(
+		public static int Exec(
 			this SqlConnection connection, CommandType commandType, string sqlText, out string errorMsg)
 		{
 			IEnumerable<SqlParameter> parmList = null;
@@ -68,7 +68,7 @@ namespace CodeHelpers.System.Data.SqlClient
 			return Exec(connection, transaction, commandType, sqlText, parmList, out errorMsg);
 		}
 
-		public static bool Exec(
+		public static int Exec(
 			this SqlConnection connection, CommandType commandType, string sqlText, IEnumerable<SqlParameter> parmList,
 			out string errorMsg)
 		{
@@ -76,7 +76,7 @@ namespace CodeHelpers.System.Data.SqlClient
 			return Exec(connection, transaction, commandType, sqlText, parmList, out errorMsg);
 		}
 
-		public static bool Exec(
+		public static int Exec(
 			this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText,
 			out string errorMsg)
 		{
@@ -84,7 +84,7 @@ namespace CodeHelpers.System.Data.SqlClient
 			return Exec(connection, transaction, commandType, sqlText, parmList, out errorMsg);
 		}
 
-		public static bool Exec(
+		public static int Exec(
 			this SqlConnection connection, CommandType commandType, string sqlText, MessageString errorMsg)
 		{
 			IEnumerable<SqlParameter> parmList = null;
@@ -92,7 +92,7 @@ namespace CodeHelpers.System.Data.SqlClient
 			return Exec(connection, transaction, commandType, sqlText, parmList, errorMsg);
 		}
 
-		public static bool Exec(
+		public static int Exec(
 			this SqlConnection connection, CommandType commandType, string sqlText, IEnumerable<SqlParameter> parmList,
 			MessageString errorMsg)
 		{
@@ -100,7 +100,7 @@ namespace CodeHelpers.System.Data.SqlClient
 			return Exec(connection, transaction, commandType, sqlText, parmList, errorMsg);
 		}
 
-		public static bool Exec(
+		public static int Exec(
 			this SqlConnection connection, SqlTransaction transaction, CommandType commandType, string sqlText,
 			MessageString errorMsg)
 		{
@@ -108,38 +108,36 @@ namespace CodeHelpers.System.Data.SqlClient
 			return Exec(connection, transaction, commandType, sqlText, parmList, errorMsg);
 		}
 
-		public static bool Exec(
+		public static int Exec(
 			this SqlConnection connection, SqlTransaction transaction, CommandType commandType,
 			string sqlText, IEnumerable<SqlParameter> parmList, out string errorMsg)
 		{
 			if (IsOpened(connection, out errorMsg).IsNotTrue())
-				return false;
+				return -1;
 
 			try
 			{
-				Exec(connection, transaction, commandType, sqlText, parmList);
-				return true;
+				return Exec(connection, transaction, commandType, sqlText, parmList);
 			}
 			catch (Exception ex) { errorMsg = ex.ToString(); }
 
-			return false;
+			return -1;
 		}
 
-		public static bool Exec(
+		public static int Exec(
 			this SqlConnection connection, SqlTransaction transaction, CommandType commandType,
 			string sqlText, IEnumerable<SqlParameter> parmList, MessageString errorMsg)
 		{
 			if (IsOpened(connection, errorMsg).IsNotTrue())
-				return false;
+				return -1;
 
 			try
 			{
-				Exec(connection, transaction, commandType, sqlText, parmList);
-				return true;
+				return Exec(connection, transaction, commandType, sqlText, parmList);
 			}
 			catch (Exception ex) { errorMsg.Append(ex.ToString()); }
 
-			return false;
+			return -1;
 		}
 
 		public static int Exec(
