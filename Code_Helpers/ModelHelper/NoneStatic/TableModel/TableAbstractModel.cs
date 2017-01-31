@@ -1,21 +1,13 @@
-﻿using System;
+﻿using CodeHelpers.System;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using CodeHelpers.System;
-using System.Collections.Generic;
 
 namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
 	public abstract class TableAbstractModel<T> : TableGenericModel<T>, ITableModel<T>
 	{
-		#region Protected Constructors
-
-		protected TableAbstractModel(Type type) : base(type)
-		{
-		}
-
-		#endregion Protected Constructors
-
 		#region Public Methods
 
 		public abstract bool Delete();
@@ -132,6 +124,24 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		public abstract SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg);
 
+		public abstract IEnumerable<TblModel> SelectAll<TblModel>() where TblModel : ITableModel;
+
+		public abstract IEnumerable<TblModel> SelectAll<TblModel>(out String errorMsg) where TblModel : ITableModel;
+
+		public abstract IEnumerable<TblModel> SelectAll<TblModel>(MessageString errorMsg) where TblModel : ITableModel;
+
+		public abstract IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection) where TblModel : ITableModel;
+
+		public abstract IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, out String errorMsg) where TblModel : ITableModel;
+
+		public abstract IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, MessageString errorMsg) where TblModel : ITableModel;
+
+		public abstract IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior) where TblModel : ITableModel;
+
+		public abstract IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior, out String errorMsg) where TblModel : ITableModel;
+
+		public abstract IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg) where TblModel : ITableModel;
+
 		public abstract bool SetEnabled(SqlConnection connection, SqlTransaction transaction, string tableName);
 
 		public abstract bool SetEnabled(string tableName);
@@ -168,11 +178,14 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		public abstract bool Update(SqlConnection connection, SqlTransaction transaction, MessageString errorMsg);
 
-		public IEnumerable<T1> SelectAll<T1>()
+		#endregion Public Methods
+
+		#region Protected Constructors
+
+		protected TableAbstractModel(Type type) : base(type)
 		{
-			throw new NotImplementedException();
 		}
 
-		#endregion Public Methods
+		#endregion Protected Constructors
 	}
 }

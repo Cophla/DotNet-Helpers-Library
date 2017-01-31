@@ -1,8 +1,8 @@
-﻿using System;
+﻿using CodeHelpers.System;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using CodeHelpers.System;
-using System.Collections.Generic;
 
 namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
@@ -96,23 +96,39 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		SqlDataReader SelectAll();
 
-		IEnumerable<T> SelectAll<T>();
+		IEnumerable<TblModel> SelectAll<TblModel>() where TblModel : ITableModel;
 
 		SqlDataReader SelectAll(out string errorMsg);
 
+		IEnumerable<TblModel> SelectAll<TblModel>(out string errorMsg) where TblModel : ITableModel;
+
 		SqlDataReader SelectAll(MessageString errorMsg);
+
+		IEnumerable<TblModel> SelectAll<TblModel>(MessageString errorMsg) where TblModel : ITableModel;
 
 		SqlDataReader SelectAll(SqlConnection connection);
 
+		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection) where TblModel : ITableModel;
+
 		SqlDataReader SelectAll(SqlConnection connection, out string errorMsg);
+
+		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, out string errorMsg) where TblModel : ITableModel;
 
 		SqlDataReader SelectAll(SqlConnection connection, MessageString errorMsg);
 
+		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, MessageString errorMsg) where TblModel : ITableModel;
+
 		SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior);
+
+		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior) where TblModel : ITableModel;
 
 		SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg);
 
+		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg) where TblModel : ITableModel;
+
 		SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg);
+
+		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg) where TblModel : ITableModel;
 
 		bool SetEnabled(string tableName);
 

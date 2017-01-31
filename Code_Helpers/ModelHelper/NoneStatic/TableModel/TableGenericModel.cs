@@ -4,25 +4,9 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
 	public class TableGenericModel : GlobalModel
 	{
-		#region Protected Fields
-
-		protected string _deleteStoredProcdureName;
-
-		protected string _insertStoredProcdureName;
-
-		protected string _selectAllStoredProcdureName;
-
-		protected string _updateStoredProcdureName;
-
-		#endregion Protected Fields
-
 		#region Public Constructors
 
 		public TableGenericModel() : this(typeof(TableGenericModel))
-		{
-		}
-
-		protected TableGenericModel(Type type) : base(type)
 		{
 		}
 
@@ -39,23 +23,18 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		}
 
 		#endregion Public Methods
-	}
 
-	public class TableGenericModel<T> : TableGenericModel
-	{
 		#region Protected Fields
 
-		protected T _primaryKey;
+		protected string _deleteStoredProcdureName;
+
+		protected string _insertStoredProcdureName;
+
+		protected string _selectAllStoredProcdureName;
+
+		protected string _updateStoredProcdureName;
 
 		#endregion Protected Fields
-
-		#region Public Constructors
-
-		public TableGenericModel() : this(typeof(TableGenericModel<T>))
-		{
-		}
-
-		#endregion Public Constructors
 
 		#region Protected Constructors
 
@@ -64,11 +43,21 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		}
 
 		#endregion Protected Constructors
+	}
+
+	public class TableGenericModel<T> : TableGenericModel
+	{
+		#region Public Constructors
+
+		public TableGenericModel() : this(typeof(TableGenericModel<T>))
+		{
+		}
+
+		#endregion Public Constructors
 
 		#region Public Properties
 
-		public T PrimaryKey
-		{
+		public T PrimaryKey {
 			get { return _primaryKey; }
 			set { _primaryKey = value; }
 		}
@@ -84,5 +73,19 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		}
 
 		#endregion Public Methods
+
+		#region Protected Fields
+
+		protected T _primaryKey;
+
+		#endregion Protected Fields
+
+		#region Protected Constructors
+
+		protected TableGenericModel(Type type) : base(type)
+		{
+		}
+
+		#endregion Protected Constructors
 	}
 }
