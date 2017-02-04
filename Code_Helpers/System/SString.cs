@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace CodeHelpers.System
 {
@@ -199,6 +201,26 @@ namespace CodeHelpers.System
 
 			TextInfo textInfo = CultureInfo.InvariantCulture.TextInfo;
 			return textInfo.ToTitleCase(value);
+		}
+
+		[Pure]
+		public static string Replace(this string source, string oldValue, string newValue, StringComparison comparisonType)
+		{
+			if (source.Length == 0 || oldValue.Length == 0)
+				return source;
+
+			var result = new StringBuilder();
+			int startingPos = 0;
+			int nextMatch;
+			while ((nextMatch = source.IndexOf(oldValue, startingPos, comparisonType)) > -1)
+			{
+				result.Append(source, startingPos, nextMatch - startingPos);
+				result.Append(newValue);
+				startingPos = nextMatch + oldValue.Length;
+			}
+			result.Append(source, startingPos, source.Length - startingPos);
+
+			return result.ToString();
 		}
 
 		#endregion Public Methods
