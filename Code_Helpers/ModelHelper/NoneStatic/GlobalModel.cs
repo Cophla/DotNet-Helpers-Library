@@ -1,5 +1,5 @@
-﻿using System;
-using CodeHelpers.System;
+﻿using CodeHelpers.System;
+using System;
 
 namespace CodeHelpers.ModelHelper.NoneStatic
 {
@@ -8,7 +8,7 @@ namespace CodeHelpers.ModelHelper.NoneStatic
 		#region Protected Fields
 
 		protected bool _enabled;
-		protected string _modelName;
+		protected Type _modelType;
 
 		#endregion Protected Fields
 
@@ -31,16 +31,14 @@ namespace CodeHelpers.ModelHelper.NoneStatic
 
 		#region Public Properties
 
-		public virtual bool Enabled
-		{
+		public virtual bool Enabled {
 			get { return _enabled; }
 			set { _enabled = value; }
 		}
 
-		public string ModelName
-		{
-			get { return _modelName; }
-			set { _modelName = value; }
+		public Type ModelType {
+			get { return _modelType; }
+			set { _modelType = value; }
 		}
 
 		#endregion Public Properties
@@ -49,7 +47,7 @@ namespace CodeHelpers.ModelHelper.NoneStatic
 
 		public virtual void Dispose()
 		{
-			_modelName = null;
+			_modelType = null;
 		}
 
 		#endregion Public Methods
@@ -58,8 +56,9 @@ namespace CodeHelpers.ModelHelper.NoneStatic
 
 		private void _SetModelFullName(Type type)
 		{
-			if (type.IsNull()) return;
-			_modelName = type.FullName;
+			if (type.IsNull())
+				return;
+			_modelType = type;
 		}
 
 		#endregion Private Methods

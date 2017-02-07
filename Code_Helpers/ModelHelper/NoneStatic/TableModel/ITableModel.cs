@@ -52,18 +52,6 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		void Fill(DataRow dataRow, MessageString errorMsg);
 
-		void Fill(SqlConnection connection, SqlDataReader dataReader);
-
-		void Fill(SqlConnection connection, SqlDataReader dataReader, out string errorMsg);
-
-		void Fill(SqlConnection connection, SqlDataReader dataReader, MessageString errorMsg);
-
-		void Fill(SqlConnection connection, DataRow dataRow);
-
-		void Fill(SqlConnection connection, DataRow dataRow, out string errorMsg);
-
-		void Fill(SqlConnection connection, DataRow dataRow, MessageString errorMsg);
-
 		bool Insert();
 
 		bool Insert(out string errorMsg);
@@ -94,41 +82,41 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		bool IsUsed(SqlConnection connection, MessageString errorMsg);
 
-		SqlDataReader SelectAll();
+		SqlDataReader GetAll();
 
-		IEnumerable<TblModel> SelectAll<TblModel>() where TblModel : ITableModel;
+		IEnumerable<TblModel> GetAll<TblModel>() where TblModel : ITableModel, new();
 
-		SqlDataReader SelectAll(out string errorMsg);
+		SqlDataReader GetAll(out string errorMsg);
 
-		IEnumerable<TblModel> SelectAll<TblModel>(out string errorMsg) where TblModel : ITableModel;
+		IEnumerable<TblModel> GetAll<TblModel>(out string errorMsg) where TblModel : ITableModel, new();
 
-		SqlDataReader SelectAll(MessageString errorMsg);
+		SqlDataReader GetAll(MessageString errorMsg);
 
-		IEnumerable<TblModel> SelectAll<TblModel>(MessageString errorMsg) where TblModel : ITableModel;
+		IEnumerable<TblModel> GetAll<TblModel>(MessageString errorMsg) where TblModel : ITableModel, new();
 
-		SqlDataReader SelectAll(SqlConnection connection);
+		SqlDataReader GetAll(SqlConnection connection);
 
-		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection) where TblModel : ITableModel;
+		IEnumerable<TblModel> GetAll<TblModel>(SqlConnection connection) where TblModel : ITableModel, new();
 
-		SqlDataReader SelectAll(SqlConnection connection, out string errorMsg);
+		SqlDataReader GetAll(SqlConnection connection, out string errorMsg);
 
-		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, out string errorMsg) where TblModel : ITableModel;
+		IEnumerable<TblModel> GetAll<TblModel>(SqlConnection connection, out string errorMsg) where TblModel : ITableModel, new();
 
-		SqlDataReader SelectAll(SqlConnection connection, MessageString errorMsg);
+		SqlDataReader GetAll(SqlConnection connection, MessageString errorMsg);
 
-		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, MessageString errorMsg) where TblModel : ITableModel;
+		IEnumerable<TblModel> GetAll<TblModel>(SqlConnection connection, MessageString errorMsg) where TblModel : ITableModel, new();
 
-		SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior);
+		SqlDataReader GetAll(SqlConnection connection, CommandBehavior commandBehavior);
 
-		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior) where TblModel : ITableModel;
+		IEnumerable<TblModel> GetAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior) where TblModel : ITableModel, new();
 
-		SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg);
+		SqlDataReader GetAll(SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg);
 
-		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg) where TblModel : ITableModel;
+		IEnumerable<TblModel> GetAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg) where TblModel : ITableModel, new();
 
-		SqlDataReader SelectAll(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg);
+		SqlDataReader GetAll(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg);
 
-		IEnumerable<TblModel> SelectAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg) where TblModel : ITableModel;
+		IEnumerable<TblModel> GetAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg) where TblModel : ITableModel, new();
 
 		bool SetEnabled(string tableName);
 

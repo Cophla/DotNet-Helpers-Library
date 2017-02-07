@@ -13,7 +13,7 @@ namespace CodeHelpers.ModelHelper.Static
 		public static IEnumerable<T> GetObjList<T>() where T : ITableModel, new()
 		{
 			using (T tblModel = new T())
-			using (SqlDataReader dataReader = tblModel.SelectAll())
+			using (SqlDataReader dataReader = tblModel.GetAll())
 			{
 				if (dataReader.IsNull()) return null;
 

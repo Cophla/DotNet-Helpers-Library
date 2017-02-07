@@ -49,7 +49,7 @@ namespace CodeHelpers
 
 		public static IEnumerable<T> SelectAllList<T>() where T : TableGenericModel, ITableModel, new()
 		{
-			return Get(new T().ModelName, () => { return STableModel.GetObjList<T>(); });
+			return Get(new T().ModelType.FullName, () => { return STableModel.GetObjList<T>(); });
 		}
 
 		#endregion Public Methods
