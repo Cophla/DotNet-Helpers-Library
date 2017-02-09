@@ -6,13 +6,19 @@ using System.Data.SqlClient;
 
 namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
-	public abstract class TableAbstractModel<T> : TableGenericModel<T>, ITableModel<T>
+	public abstract class ATableModel<T> : TableModel<T>, ITableModel<T>
 	{
 
 		#region Protected Constructors
 
-		protected TableAbstractModel(Type type) : base(type)
+		protected ATableModel(Type type) : base(type)
 		{
+		}
+
+		protected void CheckMessageString(MessageString errorMsg)
+		{
+			if (errorMsg.IsNull())
+				throw new NullReferenceException("MessageString object is empty");
 		}
 
 		public virtual bool Delete()
@@ -25,7 +31,13 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 			using (MessageString _errorMsg = new MessageString())
 				return Delete(connection, _errorMsg);
 		}
-		public abstract bool Delete(MessageString errorMsg);
+		public virtual bool Delete(MessageString errorMsg)
+		{
+			CheckMessageString(errorMsg);
+			return OnDelete(errorMsg);
+		}
+
+		protected abstract bool OnDelete(MessageString errorMsg);
 		public virtual bool Delete(out string errorMsg)
 		{
 			using (MessageString _errorMsg = new MessageString())
@@ -50,17 +62,17 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		}
 		public virtual bool Delete(SqlConnection connection, out string errorMsg)
 		{
-			using (MessageString _errorMsg = new MessageString())
-				try
-				{
-					return Delete(connection, _errorMsg);
-				}
-				finally
-				{
-					errorMsg = _errorMsg.ToString();
-				}
+			SqlTransaction transaction = null;
+			return Delete(connection, transaction, out errorMsg);
 		}
-		public abstract bool Delete(
+		public virtual bool Delete(
+			SqlConnection connection, SqlTransaction transaction, MessageString errorMsg)
+		{
+			CheckMessageString(errorMsg);
+			return OnDelete(connection, transaction, errorMsg);
+		}
+
+		protected abstract bool OnDelete(
 			SqlConnection connection, SqlTransaction transaction, MessageString errorMsg);
 		public virtual bool Delete(
 			SqlConnection connection, SqlTransaction transaction, out string errorMsg)
@@ -98,7 +110,12 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 					errorMsg = _errorMsg.ToString();
 				}
 		}
-		public abstract bool Exists(SqlConnection connection, MessageString errorMsg);
+		public virtual bool Exists(SqlConnection connection, MessageString errorMsg)
+		{
+			CheckMessageString(errorMsg);
+			return OnExists(connection, errorMsg);
+		}
+		protected abstract bool OnExists(SqlConnection connection, MessageString errorMsg);
 		public virtual bool Exists(SqlConnection connection, out string errorMsg)
 		{
 			using (MessageString _errorMsg = new MessageString())
@@ -111,72 +128,104 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 					errorMsg = _errorMsg.ToString();
 				}
 		}
-		public virtual void Fill(DataRow dataRow)
+		public virtual bool Fill(DataRow dataRow)
 		{
 			using (MessageString _errorMsg = new MessageString())
-				Fill(dataRow, _errorMsg);
+				return Fill(dataRow, _errorMsg);
 		}
-		public virtual void Fill(SqlDataReader dataReader)
+		public virtual bool Fill(SqlDataReader dataReader)
 		{
 			using (MessageString _errorMsg = new MessageString())
-				Fill(dataReader, _errorMsg);
+				return Fill(dataReader, _errorMsg);
 		}
-		public virtual void Fill(T primaryKey)
+		public virtual bool Fill(T primaryKey)
 		{
 			using (MessageString _errorMsg = new MessageString())
-				Fill(primaryKey, _errorMsg);
+				return Fill(primaryKey, _errorMsg);
 		}
-		public virtual void Fill(DataRow dataRow, out string errorMsg)
+		public virtual bool Fill(DataRow dataRow, out string errorMsg)
 		{
 			using (MessageString _errorMsg = new MessageString())
 				try
 				{
-					Fill(dataRow, _errorMsg);
+					return Fill(dataRow, _errorMsg);
 				}
 				finally
 				{
 					errorMsg = _errorMsg.ToString();
 				}
 		}
-		public abstract void Fill(DataRow dataRow, MessageString errorMsg);
-		public virtual void Fill(SqlConnection connection, T primaryKey)
+		public virtual bool Fill(DataRow dataRow, MessageString errorMsg)
+		{
+			CheckMessageString(errorMsg);
+			return OnFill(dataRow, errorMsg);
+		}
+		protected abstract bool OnFill(DataRow dataRow, MessageString errorMsg);
+		public virtual bool Fill(SqlConnection connection, T primaryKey)
 		{
 			using (MessageString _errorMsg = new MessageString())
-				Fill(connection, primaryKey, _errorMsg);
+				return Fill(connection, primaryKey, _errorMsg);
 		}
-		public abstract void Fill(T primaryKey, MessageString errorMsg);
-		public abstract void Fill(SqlDataReader dataReader, MessageString errorMsg);
-		public virtual void Fill(SqlDataReader dataReader, out string errorMsg)
+		public virtual bool Fill(T primaryKey, MessageString errorMsg)
+		{
+			CheckMessageString(errorMsg);
+			return OnFill(primaryKey, errorMsg);
+		}
+		protected abstract bool OnFill(T primaryKey, MessageString errorMsg);
+		public virtual bool Fill(SqlDataReader dataReader, MessageString errorMsg)
+		{
+			CheckMessageString(errorMsg);
+			if (dataReader.IsNull())
+			{
+				errorMsg.AppendLine($"SqlDataReader is null.");
+				errorMsg.AppendLine($"Filling model object {_modelType.FullName} is broken.");
+				return false;
+			}
+			if (dataReader.HasRows.IsFalse())
+			{
+				errorMsg.AppendLine($"SqlDataReader is empty or has no rows");
+				errorMsg.AppendLine($"Filling model object {_modelType.FullName} is broken.");
+				return false;
+			}
+			return OnFill(dataReader, errorMsg);
+		}
+		protected abstract bool OnFill(SqlDataReader dataReader, MessageString errorMsg);
+		public virtual bool Fill(SqlDataReader dataReader, out string errorMsg)
 		{
 			using (MessageString _errorMsg = new MessageString())
 				try
 				{
-					Fill(dataReader, _errorMsg);
+					return Fill(dataReader, _errorMsg);
 				}
 				finally
 				{
 					errorMsg = _errorMsg.ToString();
 				}
 		}
-		public virtual void Fill(T primaryKey, out string errorMsg)
+		public virtual bool Fill(T primaryKey, out string errorMsg)
 		{
 			using (MessageString _errorMsg = new MessageString())
 				try
 				{
-					Fill(primaryKey, _errorMsg);
+					return Fill(primaryKey, _errorMsg);
 				}
 				finally
 				{
 					errorMsg = _errorMsg.ToString();
 				}
 		}
-		public abstract void Fill(SqlConnection connection, T primaryKey, MessageString errorMsg);
-		public virtual void Fill(SqlConnection connection, T primaryKey, out string errorMsg)
+		public virtual bool Fill(SqlConnection connection, T primaryKey, MessageString errorMsg)
+		{
+			CheckMessageString(errorMsg);
+			return OnFill(connection, primaryKey, errorMsg);
+		}
+		protected abstract bool OnFill(SqlConnection connection, T primaryKey, MessageString errorMsg);
+		public virtual bool Fill(SqlConnection connection, T primaryKey, out string errorMsg)
 		{
 			using (MessageString _errorMsg = new MessageString())
 				try
 				{
-					Fill(connection, primaryKey, _errorMsg);
+					return Fill(connection, primaryKey, _errorMsg);
 				}
 				finally
 				{
@@ -188,7 +237,12 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 			using (MessageString _errorMsg = new MessageString())
 				return GetAll(_errorMsg);
 		}
-		public abstract SqlDataReader GetAll(MessageString errorMsg);
+		public virtual SqlDataReader GetAll(MessageString errorMsg)
+		{
+			CheckMessageString(errorMsg);
+			return OnGetAll(errorMsg);
+		}
+		protected abstract SqlDataReader OnGetAll(MessageString errorMsg);
 		public virtual SqlDataReader GetAll(SqlConnection connection)
 		{
 			using (MessageString _errorMsg = new MessageString())
@@ -217,18 +271,29 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		}
 		public virtual SqlDataReader GetAll(SqlConnection connection, out string errorMsg)
 		{
+			return GetAll(connection, CommandBehavior.Default, out errorMsg);
+		}
+		public virtual SqlDataReader GetAll(
+			SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg)
+		{
+			CheckMessageString(errorMsg);
+			return OnGetAll(connection, commandBehavior, errorMsg);
+		}
+		protected abstract SqlDataReader OnGetAll(
+			SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg);
+		public virtual SqlDataReader GetAll(
+			SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg)
+		{
 			using (MessageString _errorMsg = new MessageString())
 				try
 				{
-					return GetAll(connection, _errorMsg);
+					return GetAll(connection, commandBehavior, _errorMsg);
 				}
 				finally
 				{
 					errorMsg = _errorMsg.ToString();
 				}
 		}
-		public abstract SqlDataReader GetAll(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg);
-		public abstract SqlDataReader GetAll(SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg);
 		public abstract IEnumerable<TblModel> GetAll<TblModel>() where TblModel : ITableModel, new();
 		public abstract IEnumerable<TblModel> GetAll<TblModel>(SqlConnection connection) where TblModel : ITableModel, new();
 		public abstract IEnumerable<TblModel> GetAll<TblModel>(MessageString errorMsg) where TblModel : ITableModel, new();

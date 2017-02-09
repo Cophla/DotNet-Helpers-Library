@@ -1,5 +1,5 @@
-﻿using CodeHelpers.System;
-using System;
+﻿using System;
+using CodeHelpers.System;
 
 namespace CodeHelpers.ModelHelper.NoneStatic
 {
@@ -9,6 +9,7 @@ namespace CodeHelpers.ModelHelper.NoneStatic
 
 		protected bool _enabled;
 		protected Type _modelType;
+		protected int _userExecuterId;
 
 		#endregion Protected Fields
 
@@ -31,14 +32,22 @@ namespace CodeHelpers.ModelHelper.NoneStatic
 
 		#region Public Properties
 
-		public virtual bool Enabled {
+		public virtual bool Enabled
+		{
 			get { return _enabled; }
 			set { _enabled = value; }
 		}
 
-		public Type ModelType {
+		public Type ModelType
+		{
 			get { return _modelType; }
 			set { _modelType = value; }
+		}
+
+		public virtual int UserExecuterId
+		{
+			get { return _userExecuterId; }
+			set { _userExecuterId = value; }
 		}
 
 		#endregion Public Properties

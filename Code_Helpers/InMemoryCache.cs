@@ -47,7 +47,7 @@ namespace CodeHelpers
 			return item;
 		}
 
-		public static IEnumerable<T> SelectAllList<T>() where T : TableGenericModel, ITableModel, new()
+		public static IEnumerable<T> SelectAllList<T>() where T : TableModel, ITableModel, new()
 		{
 			return Get(new T().ModelType.FullName, () => { return STableModel.GetObjList<T>(); });
 		}

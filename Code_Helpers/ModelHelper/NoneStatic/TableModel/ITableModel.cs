@@ -1,8 +1,8 @@
-﻿using CodeHelpers.System;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using CodeHelpers.System;
 
 namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 {
@@ -40,47 +40,17 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		bool Exists(SqlConnection connection, MessageString errorMsg);
 
-		void Fill(SqlDataReader dataReader);
+		bool Fill(SqlDataReader dataReader);
 
-		void Fill(SqlDataReader dataReader, out string errorMsg);
+		bool Fill(SqlDataReader dataReader, out string errorMsg);
 
-		void Fill(SqlDataReader dataReader, MessageString errorMsg);
+		bool Fill(SqlDataReader dataReader, MessageString errorMsg);
 
-		void Fill(DataRow dataRow);
+		bool Fill(DataRow dataRow);
 
-		void Fill(DataRow dataRow, out string errorMsg);
+		bool Fill(DataRow dataRow, out string errorMsg);
 
-		void Fill(DataRow dataRow, MessageString errorMsg);
-
-		bool Insert();
-
-		bool Insert(out string errorMsg);
-
-		bool Insert(MessageString errorMsg);
-
-		bool Insert(SqlConnection connection);
-
-		bool Insert(SqlConnection connection, out string errorMsg);
-
-		bool Insert(SqlConnection connection, MessageString errorMsg);
-
-		bool Insert(SqlConnection connection, SqlTransaction transaction);
-
-		bool Insert(SqlConnection connection, SqlTransaction transaction, out string errorMsg);
-
-		bool Insert(SqlConnection connection, SqlTransaction transaction, MessageString errorMsg);
-
-		bool IsUsed();
-
-		bool IsUsed(out string errorMsg);
-
-		bool IsUsed(MessageString errorMsg);
-
-		bool IsUsed(SqlConnection connection);
-
-		bool IsUsed(SqlConnection connection, out string errorMsg);
-
-		bool IsUsed(SqlConnection connection, MessageString errorMsg);
+		bool Fill(DataRow dataRow, MessageString errorMsg);
 
 		SqlDataReader GetAll();
 
@@ -117,6 +87,36 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		SqlDataReader GetAll(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg);
 
 		IEnumerable<TblModel> GetAll<TblModel>(SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg) where TblModel : ITableModel, new();
+
+		bool Insert();
+
+		bool Insert(out string errorMsg);
+
+		bool Insert(MessageString errorMsg);
+
+		bool Insert(SqlConnection connection);
+
+		bool Insert(SqlConnection connection, out string errorMsg);
+
+		bool Insert(SqlConnection connection, MessageString errorMsg);
+
+		bool Insert(SqlConnection connection, SqlTransaction transaction);
+
+		bool Insert(SqlConnection connection, SqlTransaction transaction, out string errorMsg);
+
+		bool Insert(SqlConnection connection, SqlTransaction transaction, MessageString errorMsg);
+
+		bool IsUsed();
+
+		bool IsUsed(out string errorMsg);
+
+		bool IsUsed(MessageString errorMsg);
+
+		bool IsUsed(SqlConnection connection);
+
+		bool IsUsed(SqlConnection connection, out string errorMsg);
+
+		bool IsUsed(SqlConnection connection, MessageString errorMsg);
 
 		bool SetEnabled(string tableName);
 
@@ -161,17 +161,17 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 	{
 		#region Public Methods
 
-		void Fill(T primaryKey);
+		bool Fill(T primaryKey);
 
-		void Fill(T primaryKey, out string errorMsg);
+		bool Fill(T primaryKey, out string errorMsg);
 
-		void Fill(T primaryKey, MessageString errorMsg);
+		bool Fill(T primaryKey, MessageString errorMsg);
 
-		void Fill(SqlConnection connection, T primaryKey);
+		bool Fill(SqlConnection connection, T primaryKey);
 
-		void Fill(SqlConnection connection, T primaryKey, out string errorMsg);
+		bool Fill(SqlConnection connection, T primaryKey, out string errorMsg);
 
-		void Fill(SqlConnection connection, T primaryKey, MessageString errorMsg);
+		bool Fill(SqlConnection connection, T primaryKey, MessageString errorMsg);
 
 		#endregion Public Methods
 	}
