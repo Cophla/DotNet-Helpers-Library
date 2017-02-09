@@ -5,7 +5,20 @@ namespace MVCHelpers.System.Web.Mvc
 {
 	public class GViewsModel : GlobalModel
 	{
-		public GViewsModel() : this(typeof(GViewsModel)) { }
-		protected GViewsModel(Type type): base(type) { }
+		#region Public Constructors
+
+		public GViewsModel() : this(typeof(GViewsModel))
+		{
+		}
+
+		#endregion Public Constructors
+
+		#region Protected Constructors
+
+		protected GViewsModel(Type type) : base(type)
+		{
+		}
+
+		#endregion Protected Constructors
 	}
 }

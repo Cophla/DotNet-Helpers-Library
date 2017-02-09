@@ -4,14 +4,14 @@
 	{
 		#region Public Methods
 
-		public static bool IsNotTrue(this bool value)
-		{
-			return IsFalse(value);
-		}
-
 		public static bool IsFalse(this bool value)
 		{
 			return value == false;
+		}
+
+		public static bool IsNotTrue(this bool value)
+		{
+			return IsFalse(value);
 		}
 
 		public static bool IsTrue(this bool value)

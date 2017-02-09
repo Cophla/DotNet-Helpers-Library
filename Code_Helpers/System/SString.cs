@@ -194,15 +194,6 @@ namespace CodeHelpers.System
 			return Equals(text, otherText).Not();
 		}
 
-		public static string ToTitleCase(this string value)
-		{
-			if (IsNone(value))
-				return string.Empty;
-
-			TextInfo textInfo = CultureInfo.InvariantCulture.TextInfo;
-			return textInfo.ToTitleCase(value);
-		}
-
 		[Pure]
 		public static string Replace(this string source, string oldValue, string newValue, StringComparison comparisonType)
 		{
@@ -221,6 +212,15 @@ namespace CodeHelpers.System
 			result.Append(source, startingPos, source.Length - startingPos);
 
 			return result.ToString();
+		}
+
+		public static string ToTitleCase(this string value)
+		{
+			if (IsNone(value))
+				return string.Empty;
+
+			TextInfo textInfo = CultureInfo.InvariantCulture.TextInfo;
+			return textInfo.ToTitleCase(value);
 		}
 
 		#endregion Public Methods

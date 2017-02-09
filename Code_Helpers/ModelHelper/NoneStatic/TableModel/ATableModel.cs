@@ -105,7 +105,6 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 			CheckMessageString(errorMsg);
 			return OnExists(errorMsg);
 		}
-		protected abstract bool OnExists(MessageString errorMsg);
 
 		public virtual bool Exists(out string errorMsg)
 		{
@@ -664,6 +663,8 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		protected abstract bool OnDelete(
 			SqlConnection connection, SqlTransaction transaction, MessageString errorMsg);
+
+		protected abstract bool OnExists(MessageString errorMsg);
 
 		protected abstract bool OnExists(SqlConnection connection, MessageString errorMsg);
 
