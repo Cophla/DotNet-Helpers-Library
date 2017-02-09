@@ -49,7 +49,8 @@ namespace CodeHelpers
 
 		public static IEnumerable<T> SelectAllList<T>() where T : TableModel, ITableModel, new()
 		{
-			return Get(new T().ModelType.FullName, () => { return STableModel.GetObjList<T>(); });
+			using (T model = new T())
+				return Get(model.ModelType.FullName, () => { return STableModel.GetObjList<T>(); });
 		}
 
 		#endregion Public Methods

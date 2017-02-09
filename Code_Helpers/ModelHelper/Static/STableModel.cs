@@ -21,8 +21,10 @@ namespace CodeHelpers.ModelHelper.Static
 				while (dataReader.Read())
 				{
 					T obj = new T();
-					obj.Fill(dataReader);
-					objList.Add(obj);
+					if (obj.Fill(dataReader))
+						objList.Add(obj);
+					else
+						obj.Dispose();
 				}
 				return objList;
 			}

@@ -25,7 +25,7 @@ namespace CodeHelpers.System
 
 		public static T ConvertAs<T>(this object obj, T defaultValue)
 		{
-			if (IsNoneInList(obj, defaultValue))
+			if (IsNoneInList(obj))
 				return defaultValue;
 
 			Type normalType = typeof(T);
@@ -40,8 +40,13 @@ namespace CodeHelpers.System
 
 		public static T DbValueAs<T>(this object obj, T defaultValue)
 		{
-			if (defaultValue is string)
-				return CastAs<T>(ConvertAs<string>(obj, defaultValue as string).Trim());
+			if (typeof(T) == typeof(string))
+			{
+				string convertedValue = ConvertAs<string>(obj, defaultValue as string);
+				if (convertedValue.IsNull())
+					return CastAs<T>(convertedValue);
+				return CastAs<T>(convertedValue.Trim());
+			}
 
 			return ConvertAs<T>(obj, defaultValue);
 		}
