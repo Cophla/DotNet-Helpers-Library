@@ -112,16 +112,15 @@ namespace CodeHelpers.System.Data.SqlClient
 			this SqlConnection connection, SqlTransaction transaction, CommandType commandType,
 			string sqlText, IEnumerable<SqlParameter> parmList, out string errorMsg)
 		{
-			if (IsOpened(connection, out errorMsg).IsNotTrue())
-				return -1;
-
-			try
-			{
-				return Exec(connection, transaction, commandType, sqlText, parmList);
-			}
-			catch (Exception ex) { errorMsg = ex.ToString(); }
-
-			return -1;
+			using (MessageString _errorMsg = new MessageString())
+				try
+				{
+					return Exec(connection, transaction, commandType, sqlText, parmList, _errorMsg);
+				}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
 		}
 
 		public static int Exec(
@@ -165,17 +164,16 @@ namespace CodeHelpers.System.Data.SqlClient
 			this SqlConnection connection, SqlTransaction transaction, CommandType commandType,
 			string sqlText, IEnumerable<SqlParameter> parmList, T defaultValue, out string errorMsg)
 		{
-			if (IsOpened(connection, out errorMsg).IsNotTrue())
-				return defaultValue;
-
-			try
-			{
-				return ExecScalar<T>(connection, transaction, commandType, sqlText, parmList,
-					defaultValue);
-			}
-			catch (Exception ex) { errorMsg = ex.ToString(); }
-
-			return defaultValue;
+			using (MessageString _errorMsg = new MessageString())
+				try
+				{
+					return ExecScalar<T>(
+						connection, transaction, commandType, sqlText, parmList, defaultValue, _errorMsg);
+				}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
 		}
 
 		public static T ExecScalar<T>(
@@ -234,19 +232,15 @@ namespace CodeHelpers.System.Data.SqlClient
 			this SqlConnection connection, string sqlText, CommandType commandType,
 			CommandBehavior commandBehavior, IEnumerable<SqlParameter> parmList, out string errorMsg)
 		{
-			if (IsOpened(connection, out errorMsg).IsNotTrue())
-				return null;
-
-			try
-			{
-				return Get(connection, sqlText, commandType, commandBehavior, parmList);
-			}
-			catch (Exception ex)
-			{
-				errorMsg = ex.ToString();
-			}
-
-			return null;
+			using (MessageString _errorMsg = new MessageString())
+				try
+				{
+					return Get(connection, sqlText, commandType, commandBehavior, parmList, _errorMsg);
+				}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
 		}
 
 		public static SqlDataReader Get(
@@ -303,13 +297,15 @@ namespace CodeHelpers.System.Data.SqlClient
 
 		public static bool IsOpened(this SqlConnection connection, out string errorMsg)
 		{
-			errorMsg = string.Empty;
-			if ((connection.State == ConnectionState.Open).IsNotTrue())
-			{
-				errorMsg = "Database connection object is not opened";
-				return false;
-			}
-			return true;
+			using (MessageString _errorMsg = new MessageString())
+				try
+				{
+					return IsOpened(connection, _errorMsg);
+				}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
 		}
 
 		public static bool IsReady(this SqlConnection connection)

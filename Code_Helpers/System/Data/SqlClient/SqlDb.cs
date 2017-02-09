@@ -7,10 +7,45 @@ namespace CodeHelpers.System.Data.SqlClient
 {
 	public class SqlDb : IDisposable
 	{
+		#region Private Fields
+
+		private CommandBehavior _commandBehavior;
+
+		private CommandType _commandType = CommandType.StoredProcedure;
+
+		private bool _isFullDispose;
+
+		private SqlConnection _sqlConnection;
+
+		private IDictionary<string, SqlParameter> _sqlParmDictionary;
+
+		private string _sqlString;
+
+		private SqlTransaction _sqlTransaction;
+
+		#endregion Private Fields
+
 		#region Public Constructors
 
 		public SqlDb(int capacity) : this(capacity, false)
 		{
+		}
+
+		public SqlDb(int capacity, SqlConnection connection) : this(capacity, connection, (SqlTransaction)null)
+		{
+		}
+
+		public SqlDb(int capacity, SqlConnection connection, SqlTransaction transaction)
+			: this(capacity, connection, transaction, (string)null)
+		{
+		}
+
+		public SqlDb(int capacity, SqlConnection connection, SqlTransaction transaction, string sqlString)
+			: this(capacity, false)
+		{
+			_sqlConnection = connection;
+			_sqlTransaction = transaction;
+			_sqlString = sqlString;
 		}
 
 		public SqlDb(int capacity, bool fullDispose)
@@ -27,29 +62,35 @@ namespace CodeHelpers.System.Data.SqlClient
 
 		#region Public Properties
 
-		public CommandType SQLCommandType {
+		public CommandType SQLCommandType
+		{
 			get { return _commandType; }
 			set { _commandType = value; }
 		}
 
-		public SqlConnection SQLConnection {
-			get {
+		public SqlConnection SQLConnection
+		{
+			get
+			{
 				return _sqlConnection;
 			}
 
-			set {
+			set
+			{
 				_sqlConnection = value;
 				if (_sqlConnection.State != ConnectionState.Open)
 					_sqlConnection.Open();
 			}
 		}
 
-		public string SQLString {
+		public string SQLString
+		{
 			get { return _sqlString; }
 			set { _sqlString = value; }
 		}
 
-		public SqlTransaction SQLTransaction {
+		public SqlTransaction SQLTransaction
+		{
 			get { return _sqlTransaction; }
 			set { _sqlTransaction = value; }
 		}
@@ -58,7 +99,8 @@ namespace CodeHelpers.System.Data.SqlClient
 
 		#region Public Indexers
 
-		public object this[string parameterName] {
+		public object this[string parameterName]
+		{
 			get { return GetObjValue(parameterName); }
 
 			set { AddParm(parameterName, value); }
@@ -112,8 +154,15 @@ namespace CodeHelpers.System.Data.SqlClient
 
 		public int Exec(out string errorMsg)
 		{
-			return _sqlConnection.Exec(
-				_sqlTransaction, _commandType, _sqlString, _sqlParmDictionary.Values, out errorMsg);
+			using (MessageString _errorMsg = new MessageString())
+				try
+				{
+					return Exec(_errorMsg);
+				}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
 		}
 
 		public int Exec(MessageString errorMsg)
@@ -145,9 +194,15 @@ namespace CodeHelpers.System.Data.SqlClient
 
 		public T ExecScalar<T>(out string errorMsg, T defaultValue)
 		{
-			return _sqlConnection.ExecScalar<T>(
-				_sqlTransaction, _commandType, _sqlString, _sqlParmDictionary.Values, defaultValue,
-				out errorMsg);
+			using (MessageString _errorMsg = new MessageString())
+				try
+				{
+					return ExecScalar<T>(_errorMsg, defaultValue);
+				}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
 		}
 
 		public T ExecScalar<T>(MessageString errorMsg, T defaultValue)
@@ -165,8 +220,15 @@ namespace CodeHelpers.System.Data.SqlClient
 
 		public SqlDataReader Get(out string errorMsg)
 		{
-			return _sqlConnection.Get(
-				_sqlString, _commandType, _commandBehavior, _sqlParmDictionary.Values, out errorMsg);
+			using (MessageString _errorMsg = new MessageString())
+				try
+				{
+					return Get(_errorMsg);
+				}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
 		}
 
 		public SqlDataReader Get()
@@ -236,8 +298,15 @@ namespace CodeHelpers.System.Data.SqlClient
 
 		public SqlDataReader GetSingleRow(out string errorMsg)
 		{
-			return _sqlConnection.Get(
-				_sqlString, _commandType, CommandBehavior.SingleRow, _sqlParmDictionary.Values, out errorMsg);
+			using (MessageString _errorMsg = new MessageString())
+				try
+				{
+					return GetSingleRow(_errorMsg);
+				}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
 		}
 
 		public SqlDataReader GetSingleRow()
@@ -258,23 +327,5 @@ namespace CodeHelpers.System.Data.SqlClient
 		}
 
 		#endregion Public Methods
-
-		#region Private Fields
-
-		private CommandBehavior _commandBehavior;
-
-		private CommandType _commandType;
-
-		private bool _isFullDispose;
-
-		private SqlConnection _sqlConnection;
-
-		private IDictionary<string, SqlParameter> _sqlParmDictionary;
-
-		private string _sqlString;
-
-		private SqlTransaction _sqlTransaction;
-
-		#endregion Private Fields
 	}
 }

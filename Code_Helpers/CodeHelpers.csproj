@@ -63,7 +63,7 @@
     <Compile Include="System\ComponentModel\DataAnnotations\DateTimeFormatValidation.cs" />
     <Compile Include="System\Data\SqlClient\SqlDb.cs" />
     <Compile Include="InMemoryCache.cs" />
-    <Compile Include="ModelHelper\NoneStatic\TableModel\TableAbstractModel.cs" />
+    <Compile Include="ModelHelper\NoneStatic\TableModel\ATableModel.cs" />
     <Compile Include="ModelHelper\NoneStatic\TableModel\TableModel.cs" />
     <Compile Include="ModelHelper\NoneStatic\TableModel\ITableModel.cs" />
     <Compile Include="ModelHelper\NoneStatic\ModelPrimaryKey\ITableModelPrimaryKey.cs" />
