@@ -20,23 +20,29 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 
 		public override void Dispose()
 		{
-			_deleteStoredProcdureName = null;
-			_insertStoredProcdureName = null;
-			_selectAllStoredProcdureName = null;
-			_updateStoredProcdureName = null;
-		}
+			_spnDelete = null;
+			_spnInsert = null;
+			_spnGetAll = null;
+			_spnUpdate = null;
+			_spnExists = null;
+			_spnIsUsed = null;
+			_spnSetEnabled = null;
+	}
 
 		#endregion Public Methods
 
 		#region Protected Fields
 
-		protected string _deleteStoredProcdureName;
+		protected string _spnDelete;
 
-		protected string _insertStoredProcdureName;
+		protected string _spnInsert;
 
-		protected string _selectAllStoredProcdureName;
+		protected string _spnGetAll;
 
-		protected string _updateStoredProcdureName;
+		protected string _spnUpdate;
+		protected string _spnExists;
+		protected string _spnIsUsed;
+		protected string _spnSetEnabled;
 
 		#endregion Protected Fields
 
@@ -55,36 +61,39 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 				return GetAllDataReader<TblModel>(errorMsg);
 		}
 
-		public static IEnumerable<TblModel> GetAll<TblModel>() where TblModel : ITableModel, new()
+		public static IEnumerable<TblModel> GetAllObjList<TblModel>() where TblModel : ITableModel, new()
 		{
 			using (MessageString errorMsg = new MessageString())
-				return GetAll<TblModel>(errorMsg);
+				return GetAllObjList<TblModel>(errorMsg);
 		}
 
 		public static SqlDataReader GetAllDataReader<TblModel>(out string errorMsg) 
 			where TblModel : ITableModel, new()
 		{
-			using (TblModel model = new TblModel())
-				return model.GetAll(out errorMsg);
+			using (MessageString _errorMsg = new MessageString())
+				try
+				{
+					return GetAllDataReader<TblModel>(_errorMsg);
+				}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
+			
 		}
 
-		public static IEnumerable<TblModel> GetAll<TblModel>(out string errorMsg) 
+		public static IEnumerable<TblModel> GetAllObjList<TblModel>(out string errorMsg)
 			where TblModel : ITableModel, new()
 		{
-			using (SqlDataReader dataReader = GetAllDataReader<TblModel>(out errorMsg))
-			{
-				if (dataReader.IsNull())
-					return null;
-
-				ICollection<TblModel> objList = new List<TblModel>(40);
-				while (dataReader.Read())
+			using (MessageString _errorMsg = new MessageString())
+				try
 				{
-					TblModel model = new TblModel();
-					model.Fill(dataReader);
-					objList.Add(model);
+					return GetAllObjList<TblModel>(_errorMsg);
 				}
-				return objList;
-			}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
 		}
 
 		public static SqlDataReader GetAllDataReader<TblModel>(MessageString errorMsg) 
@@ -94,7 +103,7 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 				return model.GetAll(errorMsg);
 		}
 
-		public static IEnumerable<TblModel> GetAll<TblModel>(MessageString errorMsg) 
+		public static IEnumerable<TblModel> GetAllObjList<TblModel>(MessageString errorMsg) 
 			where TblModel : ITableModel, new()
 		{
 			using (SqlDataReader dataReader = GetAllDataReader<TblModel>(errorMsg))
@@ -120,11 +129,11 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 				return GetAllDataReader<TblModel>(connection, errorMsg);
 		}
 
-		public static IEnumerable<TblModel> GetAll<TblModel>(SqlConnection connection) 
+		public static IEnumerable<TblModel> GetAllObjList<TblModel>(SqlConnection connection) 
 			where TblModel : ITableModel, new()
 		{
 			using(MessageString errorMsg = new MessageString())
-				return GetAll<TblModel>(connection, errorMsg);
+				return GetAllObjList<TblModel>(connection, errorMsg);
 		}
 
 		public static SqlDataReader GetAllDataReader<TblModel>(
@@ -133,10 +142,10 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 			return GetAllDataReader<TblModel>(connection, CommandBehavior.Default, out errorMsg);
 		}
 
-		public static IEnumerable<TblModel> GetAll<TblModel>(
+		public static IEnumerable<TblModel> GetAllObjList<TblModel>(
 			SqlConnection connection, out string errorMsg) where TblModel : ITableModel, new()
 		{
-			return GetAll<TblModel>(connection, CommandBehavior.Default, out errorMsg);
+			return GetAllObjList<TblModel>(connection, CommandBehavior.Default, out errorMsg);
 		}
 
 		public static SqlDataReader GetAllDataReader<TblModel>(
@@ -145,10 +154,10 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 			return GetAllDataReader<TblModel>(connection, CommandBehavior.Default, errorMsg);
 		}
 
-		public static IEnumerable<TblModel> GetAll<TblModel>(
+		public static IEnumerable<TblModel> GetAllObjList<TblModel>(
 			SqlConnection connection, MessageString errorMsg) where TblModel : ITableModel, new()
 		{
-			return GetAll<TblModel>(connection, CommandBehavior.Default, errorMsg);
+			return GetAllObjList<TblModel>(connection, CommandBehavior.Default, errorMsg);
 		}
 
 		public static SqlDataReader GetAllDataReader<TblModel>(
@@ -159,41 +168,42 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 				return GetAllDataReader<TblModel>(connection, commandBehavior, errorMsg);
 		}
 
-		public static IEnumerable<TblModel> GetAll<TblModel>(
+		public static IEnumerable<TblModel> GetAllObjList<TblModel>(
 			SqlConnection connection, CommandBehavior commandBehavior) 
 			where TblModel : ITableModel, new()
 		{
 			using (MessageString errorMsg = new MessageString())
-				return GetAll<TblModel>(connection, commandBehavior, errorMsg);
+				return GetAllObjList<TblModel>(connection, commandBehavior, errorMsg);
 		}
 
 		public static SqlDataReader GetAllDataReader<TblModel>(
 			SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg) 
 			where TblModel : ITableModel, new()
 		{
-			using (TblModel model = new TblModel())
-				return model.GetAll(connection, commandBehavior, out errorMsg);
+			using (MessageString _errorMsg = new MessageString())
+				try
+				{
+					return GetAllDataReader<TblModel>(connection, commandBehavior, _errorMsg);
+				}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
 		}
 
-		public static IEnumerable<TblModel> GetAll<TblModel>(
+		public static IEnumerable<TblModel> GetAllObjList<TblModel>(
 			SqlConnection connection, CommandBehavior commandBehavior, out string errorMsg) 
 			where TblModel : ITableModel, new()
 		{
-			using (SqlDataReader dataReader = GetAllDataReader<TblModel>(
-				connection, commandBehavior, out errorMsg))
-			{
-				if (dataReader.IsNull())
-					return null;
-
-				ICollection<TblModel> objList = new List<TblModel>(40);
-				while (dataReader.Read())
+			using (MessageString _errorMsg = new MessageString())
+				try
 				{
-					TblModel model = new TblModel();
-					model.Fill(dataReader);
-					objList.Add(model);
+					return GetAllObjList<TblModel>(connection, commandBehavior, _errorMsg);
 				}
-				return objList;
-			}
+				finally
+				{
+					errorMsg = _errorMsg.ToString();
+				}
 		}
 
 		public static SqlDataReader GetAllDataReader<TblModel>(
@@ -204,7 +214,7 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 				return model.GetAll(connection, commandBehavior, errorMsg);
 		}
 
-		public static IEnumerable<TblModel> GetAll<TblModel>(
+		public static IEnumerable<TblModel> GetAllObjList<TblModel>(
 			SqlConnection connection, CommandBehavior commandBehavior, MessageString errorMsg) 
 			where TblModel : ITableModel, new()
 		{
@@ -250,6 +260,10 @@ namespace CodeHelpers.ModelHelper.NoneStatic.TableModel
 		public override void Dispose()
 		{
 			base.Dispose();
+
+			if (_primaryKey is IDisposable)
+				(_primaryKey as IDisposable).Dispose();
+
 			_primaryKey = default(T);
 		}
 

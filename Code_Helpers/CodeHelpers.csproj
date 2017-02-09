@@ -60,6 +60,7 @@
     <Compile Include="Constants\CstVars.cs" />
     <Compile Include="Constants\RegEx\CstInternet.cs" />
     <Compile Include="ModelHelper\NoneStatic\GlobalModel.cs" />
+    <Compile Include="ModelHelper\NoneStatic\TableModel\ATableModel.cs" />
     <Compile Include="System\ComponentModel\DataAnnotations\DateTimeFormatValidation.cs" />
     <Compile Include="System\Data\SqlClient\SqlDb.cs" />
     <Compile Include="InMemoryCache.cs" />
