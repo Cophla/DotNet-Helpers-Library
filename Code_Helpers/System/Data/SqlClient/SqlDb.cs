@@ -35,6 +35,11 @@ namespace CodeHelpers.System.Data.SqlClient
 		{
 		}
 
+		public SqlDb(int capacity, SqlConnection connection, string sqlString)
+			: this(capacity, connection, (SqlTransaction)null, sqlString)
+		{
+		}
+
 		public SqlDb(int capacity, SqlConnection connection, SqlTransaction transaction)
 			: this(capacity, connection, transaction, (string)null)
 		{
